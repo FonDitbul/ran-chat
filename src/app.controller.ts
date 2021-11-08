@@ -9,4 +9,10 @@ export class AppController {
   getHello() {
     return { title: 'Random-Chatting' };
   }
+
+  @Get('chat')
+  @Render('layouts/chat')
+  getChat() {
+    return { title: '??' };
+  }
 }
