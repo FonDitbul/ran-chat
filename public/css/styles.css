@@ -1,0 +1,15 @@
+h1{
+    font-size: 24px;
+    margin: 10px;
+}
+
+input{
+    height: 50px;
+    width:300px;
+    margin: 10px;
+}
+button{
+    color: white;
+    background: aqua;
+    margin 10px;
+}
