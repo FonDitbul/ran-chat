@@ -47,7 +47,10 @@ export class ChatsGateway
 
   @SubscribeMessage('chatting')
   async handleChatting(@MessageBody() data, @ConnectedSocket() socket: Socket) {
-    socket.broadcast.emit('chatting', data);
+    socket.broadcast.emit('chatting', {
+      id: socket.id,
+      text: data,
+    });
     return 'Hello world!';
   }
 }
