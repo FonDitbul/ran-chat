@@ -37,7 +37,14 @@ export class UsersService {
     //     HttpStatus.BAD_REQUEST,
     //   );
     // } else {}
-    return await this.userRepository.save(newUser);
+    return await this.userRepository.save(newUser).then((user) => {
+      return {
+        user: {
+          id: user.id,
+          username: user.username,
+        },
+      };
+    });
   }
 
   findAll() {
