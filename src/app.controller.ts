@@ -16,8 +16,8 @@ export class AppController {
     return { title: '??' };
   }
 
-  @Get('friend')
-  @Render('layouts/friend')
+  @Get('chattingRoom')
+  @Render('layouts/chattingRoom')
   friendPage() {
     return { title: '??' };
   }
