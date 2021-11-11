@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [ChatsModule, TypeOrmModule.forRoot(), UsersModule],
+  imports: [ChatsModule, UsersModule, TypeOrmModule.forRoot({})],
   controllers: [AppController],
   providers: [],
 })
