@@ -8,12 +8,12 @@ export class UserEntity {
   @Column({ length: 32 })
   username: string;
 
-  @Column({ unique: true })
-  email: string;
+  // @Column({ unique: true })
+  // email: string;
 
   @Column()
   password: string;
 
-  @Column({ default: '' })
-  imageLink: string;
+  // @Column({ default: '' })
+  // imageLink: string;
 }
