@@ -6,13 +6,31 @@ export class AppController {
 
   @Get()
   @Render('index')
-  getHello() {
+  homePage() {
     return { title: 'Random-Chatting' };
   }
 
   @Get('chat')
   @Render('layouts/chat')
-  getChat() {
+  chattingPage() {
+    return { title: '??' };
+  }
+
+  @Get('friend')
+  @Render('layouts/friend')
+  friendPage() {
+    return { title: '??' };
+  }
+
+  @Get('board')
+  @Render('layouts/board')
+  boardPage() {
+    return { title: '??' };
+  }
+
+  @Get('login')
+  @Render('layouts/login')
+  loginPage() {
     return { title: '??' };
   }
 }
