@@ -47,12 +47,19 @@ export class UsersService {
     });
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    const getAllUser = getRepository(UserEntity)
+      .createQueryBuilder('user')
+      .getMany();
+    return await getAllUser;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(username: string) {
+    const getOneUser = getRepository(UserEntity)
+      .createQueryBuilder('user')
+      .where('user.username = :username', { username })
+      .getOne();
+    return await getOneUser;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
