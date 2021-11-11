@@ -3,7 +3,7 @@
   "host": "localhost",
   "port": 5432,
   "username": "postgres",
-  "password": "rnjsrl9064",
+  "password": "postgres",
   "database": "ran-chat",
   "entities": ["dist/**/**.entity{.ts,.js}"],
   "synchronize": true
