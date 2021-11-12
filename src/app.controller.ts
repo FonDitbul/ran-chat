@@ -16,9 +16,15 @@ export class AppController {
     return { title: '??' };
   }
 
-  @Get('chattingRoom')
-  @Render('layouts/chattingRoom')
-  friendPage() {
+  @Get('publicChat')
+  @Render('layouts/publicChat')
+  publicChatPage() {
+    return { title: '??' };
+  }
+
+  @Get('personalchat')
+  @Render('layouts/personalchat')
+  personalChatPage() {
     return { title: '??' };
   }
 
