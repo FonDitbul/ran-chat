@@ -1,13 +1,13 @@
 const socket = io('/chats');
 
 //socket on 리스트
-socket.on('new_user', (username) => {
+socket.on('user_entry', (username) => {
   //신규 유저 접속
-  drawUserConnect(username);
+  drawUserEntry(username);
 });
-socket.on('user_disconnect', (username) => {
+socket.on('user_exit', (username) => {
   //유저 disconnect
-  drawUserDisconnect(username);
+  drawUserExit(username);
 });
 socket.on('chatting', (chat) => {
   //채팅 받았을 때
@@ -20,12 +20,12 @@ const userInfoForm = document.getElementById('user-info-form'); //유저 input t
 const chatInfoForm = document.getElementById('chat-info-form'); //채팅 input tag
 
 // draw 함수
-const drawUserConnect = (username) => {
+const drawUserEntry = (username) => {
   const textDiv = document.createElement('div');
   textDiv.innerText = username + '님이 입장하셨습니다.';
   chatlistDiv.appendChild(textDiv);
 };
-const drawUserDisconnect = (username) => {
+const drawUserExit = (username) => {
   const textDiv = document.createElement('div');
   textDiv.innerText = username + '님이 퇴장하셨습니다.';
   chatlistDiv.appendChild(textDiv);
@@ -41,15 +41,21 @@ const onUserFormSubmit = (event) => {
   //User 이름 정보 전송
   event.preventDefault();
   const inputValue = event.target.elements[0].value;
-  socket.emit('user_info', inputValue);
+  sessionStorage.setItem('username', inputValue);
+  socket.emit('username', inputValue);
+  event.target.elements[0].value = '';
 };
 
 const onChatFormSubmit = (event) => {
   //chatting 내역 전송
   event.preventDefault();
   const inputValue = event.target.elements[0].value;
-  socket.emit('chatting', inputValue);
+  socket.emit('chatting', {
+    username: sessionStorage.getItem('username'),
+    text: inputValue,
+  });
   drawChattingContent('나', inputValue);
+  event.target.elements[0].value = '';
 };
 
 //Form event 추가
