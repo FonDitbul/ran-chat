@@ -13,12 +13,14 @@ import { ChatRepository } from './chats.repository';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { chatEntity } from './entities/history-chat.entity';
 import { UsersService } from '../users/users.service';
+
 @WebSocketGateway({ namespace: 'chats' })
 export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(
     private readonly chatRepository: ChatRepository,
     private readonly usersService: UsersService,
   ) {}
+
   private logger = new Logger('chat');
 
   async handleConnection(@ConnectedSocket() socket: Socket) {
@@ -39,7 +41,7 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     chatting.text = chat.text;
 
     await this.chatRepository.save(chatting);
-
+    // socket.to('');
     socket.broadcast.emit('chatting', {
       id: socket.id,
       username: chat.username,
@@ -50,8 +52,14 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @SubscribeMessage('username')
   async handleUserInfo(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     await this.usersService.findOne(data.username);
+  }
 
-    console.log(data);
+  @SubscribeMessage('joinRoom')
+  async handleJoin(@MessageBody() data, @ConnectedSocket() socket: Socket) {
+    socket.join(data.roomNumber);
+    socket.on('reqMsg', function (data) {
+      socket.broadcast.emit('recMsg', data);
+    });
   }
 
   // 입장 퇴장 코드
