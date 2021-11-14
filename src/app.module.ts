@@ -4,7 +4,7 @@ import { ChatsModule } from './chats/chats.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { BoardsModule } from './boards/boards.module';
-import { ChattingRoomModule } from './chatting-room/chatting-room.module';
+import { PublicChatModule } from './public-chat/public-chat.module';
 
 @Module({
   imports: [
@@ -12,7 +12,7 @@ import { ChattingRoomModule } from './chatting-room/chatting-room.module';
     UsersModule,
     BoardsModule,
     ChatsModule,
-    ChattingRoomModule,
+    PublicChatModule,
   ],
   controllers: [AppController],
   providers: [],
