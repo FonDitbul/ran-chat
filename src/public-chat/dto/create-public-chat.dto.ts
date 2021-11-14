@@ -1,10 +1,10 @@
 import { IsNotEmpty } from 'class-validator';
 export class CreatePublicChatDto {
   @IsNotEmpty()
-  readonly username: string;
+  readonly title: string;
 
   @IsNotEmpty()
-  readonly text: string;
+  readonly uid: number;
 
   // @IsNotEmpty()
   // readonly date;

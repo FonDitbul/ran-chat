@@ -18,8 +18,12 @@ export class PublicChatController {
 
   @Get()
   @Render('layouts/publicChat')
-  publicChatPage() {
-    return { title: '공개 채팅방' };
+  async publicChatPage() {
+    // this.publicChatService.findAll();
+    const roomList = await this.publicChatService.findAll();
+    return {
+      data: roomList,
+    };
   }
 
   @Post()

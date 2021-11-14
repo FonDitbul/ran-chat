@@ -2,20 +2,40 @@ import { Injectable } from '@nestjs/common';
 import { CreatePublicChatDto } from './dto/create-public-chat.dto';
 import { UpdatePublicChatDto } from './dto/update-public-chat.dto';
 import { getRepository } from 'typeorm';
+import { PublicChatRepository } from './public-chat.repostiroy';
+import { PublicChatEntity } from './entities/public-chat.entity';
 
 @Injectable()
 export class PublicChatService {
-  constructor() {}
-  create(createPublicChatDto: CreatePublicChatDto) {
-    return 'This action adds a new publicChat';
+  constructor(private readonly publicChatRepositry: PublicChatRepository) {}
+  async create(createPublicChatDto: CreatePublicChatDto) {
+    const newPublicChat = new PublicChatEntity();
+    newPublicChat.title = createPublicChatDto.title;
+    newPublicChat.uid = createPublicChatDto.uid;
+    return await this.publicChatRepositry
+      .save(newPublicChat)
+      .then((Room) => {
+        return Room;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  findAll() {
-    return `This action returns all publicChat`;
+  async findAll() {
+    const getAllChat = getRepository(PublicChatEntity)
+      .createQueryBuilder('publicChat')
+      .getMany();
+    return getAllChat;
   }
 
   async findOne(id: number) {
-    return `this is action `;
+    const getOneChat = getRepository(PublicChatEntity)
+      .createQueryBuilder('publicChat')
+      .where('publicChat.id = :id', { id })
+      .getOne();
+    // console.log(getOneChat);
+    return getOneChat;
   }
 
   update(id: number, updatePublicChatDto: UpdatePublicChatDto) {

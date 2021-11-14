@@ -1,14 +1,20 @@
-import { Column, CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-export class PublicChat {
+@Entity('publicChat')
+export class PublicChatEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ length: 32 })
-  name: string;
+  title: string;
 
   @Column()
-  title: string;
+  uid: number;
 
   @CreateDateColumn()
   readonly createdAt: Date;
