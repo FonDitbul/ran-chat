@@ -12,47 +12,21 @@ import { HttpException, Logger } from '@nestjs/common';
 import { ChatRepository } from './chats.repository';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { chatEntity } from './entities/history-chat.entity';
+import { UsersService } from '../users/users.service';
 @WebSocketGateway({ namespace: 'chats' })
-export class ChatsGateway
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
-{
-  constructor(private readonly chatRepository: ChatRepository) {}
+export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
+  constructor(
+    private readonly chatRepository: ChatRepository,
+    private readonly usersService: UsersService,
+  ) {}
   private logger = new Logger('chat');
 
   async handleConnection(@ConnectedSocket() socket: Socket) {
-    // this.logger.log(`connected : ${socket.id}`);
-    await this.handleUserEntry(socket);
+    this.logger.log(`connected : ${socket.id}`);
   }
 
   async handleDisconnect(@ConnectedSocket() socket: Socket) {
-    // this.logger.log(`disconnected : ${socket.id}`);
-    await this.handleUserExit(socket);
-  }
-
-  afterInit(server: any): any {
-    // this.logger.log('init');
-  }
-
-  @SubscribeMessage('user_entry')
-  async handleUserEntry(@ConnectedSocket() socket: Socket) {
-    const newUserEntry = new chatEntity();
-    newUserEntry.username = socket.id;
-    newUserEntry.text = '님이 입장하셨습니다.';
-
-    await this.chatRepository.save(newUserEntry).catch((error) => {
-      throw new HttpException('Server ERROR', error);
-    });
-    socket.broadcast.emit('new_user', socket.id);
-  }
-
-  @SubscribeMessage('user_exit')
-  async handleUserExit(@ConnectedSocket() socket: Socket) {
-    const newUserDisconnect = new chatEntity();
-    newUserDisconnect.username = socket.id;
-    newUserDisconnect.text = '님이 퇴장하셨습니다.';
-
-    await this.chatRepository.save(newUserDisconnect);
-    socket.broadcast.emit('user_disconnect', socket.id);
+    this.logger.log(`disconnected : ${socket.id}`);
   }
 
   @SubscribeMessage('chatting')
@@ -68,12 +42,56 @@ export class ChatsGateway
 
     socket.broadcast.emit('chatting', {
       id: socket.id,
-      text: chat,
+      username: chat.username,
+      text: chat.text,
     });
   }
 
   @SubscribeMessage('username')
   async handleUserInfo(@MessageBody() data, @ConnectedSocket() socket: Socket) {
+    await this.usersService.findOne(data.username);
+
     console.log(data);
   }
+
+  // 입장 퇴장 코드
+  /*
+@SubscribeMessage('user_entry')
+async handleUserEntry(@ConnectedSocket() socket: Socket) {
+  const username = socket.id;
+  const text = '님이 입장하셨습니다.';
+
+  const newUserEntry = new chatEntity();
+  newUserEntry.username = username;
+  newUserEntry.text = text;
+
+  await this.chatRepository.save(newUserEntry).catch((error) => {
+    throw new HttpException('Server ERROR', error);
+  });
+  socket.broadcast.emit('new_user', {
+    id: socket.id,
+    username,
+    text,
+  });
+}
+
+@SubscribeMessage('user_exit')
+async handleUserExit(@ConnectedSocket() socket: Socket) {
+  const username = socket.id;
+  const text = '님이 퇴장하셨습니다.';
+
+  const newUserDisconnect = new chatEntity();
+  newUserDisconnect.username = username;
+  newUserDisconnect.text = text;
+
+  await this.chatRepository.save(newUserDisconnect).catch((error) => {
+    throw new HttpException('Server ERROR', error);
+  });
+  socket.broadcast.emit('user_disconnect', {
+    id: socket.id,
+    username,
+    text,
+  });
+}
+*/
 }
