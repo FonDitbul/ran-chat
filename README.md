@@ -36,6 +36,18 @@ JWT 토큰
 작성자, 내용 
 페이징 CRUD
 
+## view & JS
+### layouts
+nav 태그 따른 layout
+
+### partials
+header, footer등 반복 템플릿
+### template
+게시판 안에 게시물 템플릿,
+공개채팅방, 1대1, 랜챗등에 사용되는 템플릿
+
+
+
 
 ## Description
 

@@ -12,3 +12,5 @@ async function createPublicRoom() {
 }
 // Modal 생성 Click 이벤트로 parameter 받기
 createRoomButton.addEventListener('click', createPublicRoom);
+
+console.log(chatTable);
