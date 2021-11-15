@@ -37,23 +37,23 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @ConnectedSocket() socket: Socket,
   ) {
     const chatting = new chatEntity();
-    chatting.username = chat.username;
+    chatting.userName = chat.userName;
     chatting.text = chat.text;
 
     await this.chatRepository.save(chatting);
     socket.broadcast.emit('chatting', {
       id: socket.id,
-      username: chat.username,
+      userName: chat.userName,
       text: chat.text,
     });
   }
 
-  @SubscribeMessage('username')
+  @SubscribeMessage('userName')
   async handleUserInfo(@MessageBody() data, @ConnectedSocket() socket: Socket) {
-    await this.usersService.findOne(data.username);
+    await this.usersService.findOne(data.userName);
   }
 
-  @SubscribeMessage('joinRoom')
+  @SubscribeMessage('joinRoom') //공개 채팅방 별 기능 구현
   async handleJoin(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     await socket.join(data.roomID);
     socket.on('reqMsg', function (Msg) {
@@ -73,11 +73,11 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   /*
 @SubscribeMessage('user_entry')
 async handleUserEntry(@ConnectedSocket() socket: Socket) {
-  const username = socket.id;
+  const userName = socket.id;
   const text = '님이 입장하셨습니다.';
 
   const newUserEntry = new chatEntity();
-  newUserEntry.username = username;
+  newUserEntry.userName = userName;
   newUserEntry.text = text;
 
   await this.chatRepository.save(newUserEntry).catch((error) => {
@@ -85,18 +85,18 @@ async handleUserEntry(@ConnectedSocket() socket: Socket) {
   });
   socket.broadcast.emit('new_user', {
     id: socket.id,
-    username,
+    userName,
     text,
   });
 }
 
 @SubscribeMessage('user_exit')
 async handleUserExit(@ConnectedSocket() socket: Socket) {
-  const username = socket.id;
+  const userName = socket.id;
   const text = '님이 퇴장하셨습니다.';
 
   const newUserDisconnect = new chatEntity();
-  newUserDisconnect.username = username;
+  newUserDisconnect.userName = userName;
   newUserDisconnect.text = text;
 
   await this.chatRepository.save(newUserDisconnect).catch((error) => {
@@ -104,7 +104,7 @@ async handleUserExit(@ConnectedSocket() socket: Socket) {
   });
   socket.broadcast.emit('user_disconnect', {
     id: socket.id,
-    username,
+    userName,
     text,
   });
 }

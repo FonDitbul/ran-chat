@@ -2,7 +2,7 @@ import { IsNotEmpty } from 'class-validator';
 
 export class CreateChatDto {
   @IsNotEmpty()
-  readonly username: string;
+  readonly userName: string;
 
   @IsNotEmpty()
   readonly text: string;
