@@ -4,6 +4,7 @@ import {
   PrimaryColumn,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity('chats')
@@ -12,11 +13,17 @@ export class chatEntity {
   id: number;
 
   @Column({ length: 32 })
-  username: string;
+  userName: string;
 
   @Column()
   text: string;
 
   @CreateDateColumn()
   readonly createdAt: Date;
+
+  // @UpdateDateColumn()
+  // readonly updatedAt: Date;
+
+  @Column({ default: 1 })
+  roomID: number;
 }
