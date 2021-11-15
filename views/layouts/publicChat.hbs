@@ -6,25 +6,21 @@
   <table id='chat-table' border='1'>
     <tr>
       <th>번호 </th>
-      <th>방 이름 </th>
+      <th>방 이름</th>
       <th>생성 시간</th>
-      <th>입장 버튼 </th>
-      <th>수정 버튼 </th>
+      <th>입장</th>
+      <th>수정</th>
     </tr>
-
     {{#each data}}
     <tr>
       <td>{{this.id}}</td>
-      <td><a>{{this.title}}</a></td>
+      <td><a href='/public-chat/chatting/{{this.id}}'+>{{this.title}}</a></td>
       <td>{{this.createdAt}}</td>
       <td><button>입장</button></td>
       <td><button>수정</button></td>
     </tr>
     {{/each}}
   </table>
-
-
-
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src='js/layouts/publicChat.js'></script>

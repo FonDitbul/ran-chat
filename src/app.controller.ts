@@ -14,10 +14,4 @@ export class AppController {
   personalChatPage() {
     return { title: '??' };
   }
-
-  @Get('chatting')
-  @Render('template/chatting')
-  testChatPage() {
-    return { title: '??' };
-  }
 }

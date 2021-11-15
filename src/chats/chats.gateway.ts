@@ -41,7 +41,6 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     chatting.text = chat.text;
 
     await this.chatRepository.save(chatting);
-    // socket.to('');
     socket.broadcast.emit('chatting', {
       id: socket.id,
       username: chat.username,
@@ -56,11 +55,19 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('joinRoom')
   async handleJoin(@MessageBody() data, @ConnectedSocket() socket: Socket) {
-    socket.join(data.roomNumber);
-    socket.on('reqMsg', function (data) {
-      socket.broadcast.emit('recMsg', data);
+    await socket.join(data.roomID);
+    socket.on('reqMsg', function (Msg) {
+      socket.in(data.roomID).emit('recMsg', Msg);
     });
   }
+
+  // @SubscribeMessage('connection')
+  // async handletest(@MessageBody() data, @ConnectedSocket() socket: Socket) {
+  //   socket.on('joinRoom', function (room) {
+  //     console.log(room);
+  //   });
+  //   socket.join
+  // }
 
   // 입장 퇴장 코드
   /*

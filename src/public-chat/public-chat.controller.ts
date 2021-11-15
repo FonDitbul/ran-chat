@@ -31,9 +31,10 @@ export class PublicChatController {
     return this.publicChatService.create(createPublicChatDto);
   }
 
-  @Get(':id')
+  @Get('chatting/:id')
+  @Render('template/chatting')
   findOne(@Param('id') id: string) {
-    return this.publicChatService.findOne(+id);
+    return { roomID: id };
   }
 
   @Patch(':id')
