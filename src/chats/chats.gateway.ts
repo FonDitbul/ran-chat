@@ -53,14 +53,23 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     await this.usersService.findOne(data.userName);
   }
 
-  @SubscribeMessage('joinRoom') //공개 채팅방 별 기능 구현
+  @SubscribeMessage('joinRoom') //공개 채팅방 join
   async handleJoin(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     await socket.join(data.roomID);
-    socket.on('reqMsg', function (req) {
-      socket.in(data.roomID).emit('recMsg', {
-        userName: req.userName,
-        text: req.text,
-      });
+  }
+
+  @SubscribeMessage('reqMsg') //공개 채팅방 데이터 주고 받기
+  async handleRequest(@MessageBody() data, @ConnectedSocket() socket: Socket) {
+    const chatting = new chatEntity();
+    chatting.roomID = +data.roomID;
+    chatting.userName = data.userName;
+    chatting.text = data.text;
+    await this.chatRepository.save(chatting).catch((error) => {
+      this.logger.log(`error : ${error}`);
+    });
+    socket.in(data.roomID).emit('recMsg', {
+      userName: data.userName,
+      text: data.text,
     });
   }
 

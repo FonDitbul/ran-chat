@@ -19,6 +19,7 @@ const chatSubmit = (event) => {
   const value = event.target.elements[0].value;
   drawFunction('나', value);
   socket.emit('reqMsg', {
+    roomID: roomID,
     userName: sessionStorage.getItem('userName'),
     text: value,
   });
