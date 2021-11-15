@@ -56,8 +56,11 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @SubscribeMessage('joinRoom') //공개 채팅방 별 기능 구현
   async handleJoin(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     await socket.join(data.roomID);
-    socket.on('reqMsg', function (Msg) {
-      socket.in(data.roomID).emit('recMsg', Msg);
+    socket.on('reqMsg', function (req) {
+      socket.in(data.roomID).emit('recMsg', {
+        userName: req.userName,
+        text: req.text,
+      });
     });
   }
 
