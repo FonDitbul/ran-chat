@@ -15,11 +15,8 @@ const createPublicRoom = async (event) => {
     title: title,
     uid: uid,
   });
-  location.reload();
+  return location.reload();
 };
-createPublicRoom().then((r) => {
-  console.log(r);
-});
 createRoomform.addEventListener('submit', createPublicRoom);
 
 createModalButton.onclick = function () {
