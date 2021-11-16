@@ -33,8 +33,7 @@ export class PublicChatService {
     const getOneChat = getRepository(PublicChatEntity)
       .createQueryBuilder('publicChat')
       .where('publicChat.id = :id', { id })
-      .getOne();
-    // console.log(getOneChat);
+      .getRawOne();
     return getOneChat;
   }
 
