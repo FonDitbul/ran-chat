@@ -50,7 +50,7 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('userName')
   async handleUserInfo(@MessageBody() data, @ConnectedSocket() socket: Socket) {
-    await this.usersService.findOne(data.userName);
+    await this.usersService.findOneByUserName(data.userName);
   }
 
   @SubscribeMessage('joinRoom') //공개 채팅방 join
