@@ -32,9 +32,9 @@ export class UsersController {
     return { title: '??' };
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+  @Get(':userName')
+  findOneByUserName(@Param('userName') userName: string) {
+    return this.usersService.findOneByUserName(userName);
   }
 
   @Patch(':id')
