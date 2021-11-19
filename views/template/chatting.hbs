@@ -7,7 +7,9 @@
     <button id="sub-button">전송</button>
   </form>
   <div id='chat-text'>
-
+    {{#each chatHistory}}
+      <h3>{{this.userName}} : {{this.text}}</h3>
+    {{/each}}
   </div>
 
 </div>
