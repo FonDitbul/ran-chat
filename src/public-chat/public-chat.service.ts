@@ -4,10 +4,15 @@ import { UpdatePublicChatDto } from './dto/update-public-chat.dto';
 import { getRepository } from 'typeorm';
 import { PublicChatRepository } from './public-chat.repostiroy';
 import { PublicChatEntity } from './entities/public-chat.entity';
+import { ChatRepository } from '../chats/chats.repository';
+import { chatEntity as Chat } from '../chats/entities/history-chat.entity';
 
 @Injectable()
 export class PublicChatService {
-  constructor(private readonly publicChatRepositry: PublicChatRepository) {}
+  constructor(
+    private readonly publicChatRepositry: PublicChatRepository,
+    private readonly chatRepository: ChatRepository,
+  ) {}
   async create(createPublicChatDto: CreatePublicChatDto) {
     const newPublicChat = new PublicChatEntity();
     newPublicChat.title = createPublicChatDto.title;
@@ -35,6 +40,15 @@ export class PublicChatService {
       .where('publicChat.id = :id', { id })
       .getRawOne();
     return getOneChat;
+  }
+
+  async findChatHistory(roomID) {
+    console.log(roomID);
+    const getChatting = getRepository(Chat)
+      .createQueryBuilder('chats')
+      .where('chats.roomID = :roomID', { roomID })
+      .getMany();
+    return await getChatting;
   }
 
   update(id: number, updatePublicChatDto: UpdatePublicChatDto) {

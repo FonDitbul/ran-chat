@@ -36,7 +36,8 @@ export class PublicChatController {
   async findOne(@Param('id') id: string) {
     const { publicChat_title, publicChat_uid, publicChat_createdAt } =
       await this.publicChatService.findOne(+id);
-    return { roomID: id, roomTitle: publicChat_title };
+    const chatHistory = await this.publicChatService.findChatHistory(+id);
+    return { roomID: id, roomTitle: publicChat_title, chatHistory };
   }
 
   @Patch(':id')
