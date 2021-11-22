@@ -19,8 +19,10 @@ export class PublicChatController {
   @Get()
   @Render('layouts/publicChat')
   async publicChatPage() {
-    // this.publicChatService.findAll();
     const roomList = await this.publicChatService.findAll();
+    for (const room of roomList) {
+      room['userName'] = await this.publicChatService.findOneByUserID(room.uid);
+    }
     return {
       data: roomList,
     };
