@@ -1,21 +1,29 @@
+<html lang='en'>
+<head>
+  <title>Random-Chatting</title>
+  <link href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css' rel='stylesheet'/>
+  <link href='../../css/chatting.css' rel='stylesheet' />
+</head>
 {{>header}}
-<div>
+<body>
+<div id='chatting'>
   <div><h1>{{roomTitle}}</h1></div>
   <div id='room-id'>{{roomID}}</div>
-  <form id='chat-form'>
-    <input type="text" id="user">
-    <button id="sub-button">전송</button>
-  </form>
-  <div id='chat-text'>
+  <div class='mt-20 mb-16 overflow-auto' id='chat-text'>
     {{#each chatHistory}}
+    <div class='bg-gray-400 w-3/4 mx-4 my-2 p-2 rounded-lg clearfix break-all text-white'>
       <h3>{{this.userName}} : {{this.text}}</h3>
+    </div>
     {{/each}}
   </div>
-
+  <form id='chat-form'>
+    <input type="text" id="user">
+    <button id="sub-button" class='inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>전송</button>
+  </form>
 </div>
 <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
-<script
-  src='https://polyfill.io/v3/polyfill.min.js?features=default%2Ces2015%2Ces2016%2Ces2017%2Ces2018%2Ces2019'
-></script>
+<script src='https://polyfill.io/v3/polyfill.min.js?features=default%2Ces2015%2Ces2016%2Ces2017%2Ces2018%2Ces2019'></script>
 <script src="https://cdn.socket.io/4.3.2/socket.io.min.js" integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs" crossorigin="anonymous"></script>
 <script src='../../js/template/chatting.js'></script>
+</body>
+</html>
