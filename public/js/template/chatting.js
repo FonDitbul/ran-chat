@@ -29,6 +29,13 @@ const chatSubmit = (event) => {
 const drawFunction = (userName, data) => {
   const textDiv = document.createElement('div');
   textDiv.innerText = userName + ':' + data;
+  if (userName === '나') {
+    textDiv.className =
+      'bg-indigo-600 w-3/4 ml-auto mr-4 my-2 p-2 rounded-lg clearfix break-all text-white';
+  } else {
+    textDiv.className =
+      'bg-gray-300 w-3/4 mx-4 my-2 p-2 rounded-lg clearfix break-all text-white';
+  }
   chatText.appendChild(textDiv);
 };
 chatForm.addEventListener('submit', chatSubmit);
