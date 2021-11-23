@@ -1,4 +1,10 @@
-<link href='css/styles.css' rel='stylesheet' />
+<html lang='en'>
+<head>
+  <title>Random-Chatting</title>
+  <link href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css' rel='stylesheet'/>
+  <link href='css/styles.css' rel='stylesheet' />
+</head>
+
 {{> header }}
 <div>
   <h1>공개채팅방 페이지</h1>
@@ -11,29 +17,29 @@
         <button id='create-room-button' class='close'>생성</button>
         <button id='modal-close' class='close'>닫기</button>
       </form>
-
     </div>
-
   </div>
+
   <hr>
-  <table id='chat-table' border='1'>
-    <tr>
-      <th>번호 </th>
-      <th>방 이름</th>
-      <th>방장</th>
-      <th>생성 시간</th>
-      <th>수정</th>
+  <table id='chat-table'class='table-fixed' style='width: 100%'>
+    <tr style='text-align: center'>
+      <th class='w-12 border border-black bg-indigo-600 text-white '>번호 </th>
+      <th class='w-3/4 border border-black bg-indigo-600 text-white'>방 이름</th>
+      <th class='w-1/8 border border-black bg-indigo-600 text-white'>방장</th>
+      <th class='w-1/8 border border-black bg-indigo-600 text-white'>생성 시간</th>
+      <th class='w-12 border border-black bg-indigo-600 text-white'>수정</th>
     </tr>
     {{#each data}}
-    <tr>
-      <td>{{this.id}}</td>
-      <td><a href='/public-chat/chatting/{{this.id}}'+>{{this.title}}</a></td>
-      <td>{{this.userName}}</td>
-      <td>{{this.createdAt}}</td>
-      <td><button>수정</button></td>
+    <tr style='text-align: center'>
+      <td class='w-12 border border-black'>{{this.id}}</td>
+      <td class='border border-black'><a href='/public-chat/chatting/{{this.id}}'+>{{this.title}}</a></td>
+      <td class='border border-black'>{{this.userName}}</td>
+      <td class='border border-black'>{{this.createdTime}}</td>
+      <td class='w-12 border border-black'><button>수정</button></td>
     </tr>
     {{/each}}
   </table>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src='js/layouts/publicChat.js'></script>
+</html>
