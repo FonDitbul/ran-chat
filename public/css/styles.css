@@ -3,22 +3,6 @@ h1{
     margin: 10px;
 }
 
-input{
-    height: 50px;
-    width:300px;
-    margin: 10px;
-    overflow: auto;
-}
-
-button {
-    color: white;
-    background: #000000;
-    margin: 10px;
-}
-
-form{
-    overflow: auto;
-}
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */

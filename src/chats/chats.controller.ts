@@ -13,7 +13,6 @@ export class ChatsController {
   @Get(':id')
   async getChatHistory() {
     const chatHistory = await this.chatsService.findChatHistory();
-    console.log(chatHistory);
     return chatHistory;
   }
 }

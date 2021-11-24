@@ -11,7 +11,6 @@ socket.on('user_exit', (data) => {
 });
 socket.on('chatting', (data) => {
   //채팅 받았을 때
-  console.log(data);
   drawChattingContent(data.userName, data.text);
 });
 
