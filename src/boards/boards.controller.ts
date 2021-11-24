@@ -6,23 +6,25 @@ import {
   Patch,
   Param,
   Delete,
+  Render,
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 
-@Controller('boards')
+@Controller('board')
 export class BoardsController {
   constructor(private readonly boardsService: BoardsService) {}
+
+  @Get('')
+  @Render('layouts/board')
+  boardPage() {
+    return { title: '자유 게시판' };
+  }
 
   @Post()
   create(@Body() createBoardDto: CreateBoardDto) {
     return this.boardsService.create(createBoardDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.boardsService.findAll();
   }
 
   @Get(':id')
