@@ -10,7 +10,6 @@ const createPublicRoom = async (event) => {
   const userName = sessionStorage.getItem('userName');
   const response = await axios.get('/users/' + userName);
   const uid = response.data.id;
-
   await axios.post('/public-chat', {
     title: title,
     uid: uid,
@@ -24,6 +23,7 @@ createModalButton.onclick = function () {
 };
 
 closeButton.onclick = function () {
+  event.preventDefault();
   createRoomModal.style.display = 'none';
 };
 
