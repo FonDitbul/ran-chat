@@ -1,6 +1,23 @@
+<html lang='en'>
+<head>
+  <title>Random-Chatting</title>
+  <link href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css' rel='stylesheet'/>
+  <link href='css/styles.css' rel='stylesheet' />
+</head>
 {{> header }}
 <div>
   <h1>자유게시판 페이지</h1>
+  <div id='create-board-modal' class='modal'>
+    <div class='modal-content'>
+      <p>게시판 생성 modal</p>
+      <form id='create-board-form' class='modal-form'>
+        <input placeholder='채팅방 이름'>
+        <button class='close'>생성</button>
+        <button id='modal-close' class='close'>닫기</button>
+      </form>
+    </div>
+  </div>
+
   <button id='create-board-button'>게시판 생성</button>
   <hr>
   <table id='borad-table' border='1'>
@@ -36,3 +53,6 @@
   </table>
 
 </div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src='js/layouts/boards.js'></script>
+</html>
