@@ -1,29 +1,17 @@
 import { Column, CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
 
-export class BoardEntity {
+export class CommentEntity {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column({ length: 32 })
-  title: string;
 
   @Column()
   uid: number;
 
-  @CreateDateColumn()
-  readonly createdAt: Date;
-
   @Column()
   content: string;
 
-  @Column()
-  comment: string;
-
-  @Column()
-  like: number;
-
-  @Column()
-  dislike: number;
+  @CreateDateColumn()
+  readonly createdAt: Date;
 
   // @UpdateDateColumn()
   // readonly updatedAt: Date;
