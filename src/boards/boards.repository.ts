@@ -5,5 +5,5 @@ import { CommentEntity } from './entities/comment.entity';
 @EntityRepository(BoardEntity)
 export class BoardsRepository extends Repository<BoardEntity> {}
 
-@EntityRepository()
+@EntityRepository(CommentEntity)
 export class CommentRepository extends Repository<CommentEntity> {}
