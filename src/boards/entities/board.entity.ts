@@ -1,11 +1,20 @@
-import { Column, CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
+@Entity('board')
 export class BoardEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ length: 32 })
   title: string;
+
+  @Column()
+  category: number;
 
   @Column()
   uid: number;
@@ -16,13 +25,13 @@ export class BoardEntity {
   @Column()
   content: string;
 
-  @Column()
-  comment: string;
+  @Column({ default: 0 })
+  comment: number;
 
-  @Column()
+  @Column({ default: 0 })
   like: number;
 
-  @Column()
+  @Column({ default: 0 })
   dislike: number;
 
   // @UpdateDateColumn()

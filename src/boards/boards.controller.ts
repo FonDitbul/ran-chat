@@ -18,8 +18,9 @@ export class BoardsController {
 
   @Get('')
   @Render('layouts/board')
-  boardsPage() {
-    return { title: '자유 게시판' };
+  async boardsPage() {
+    const boardAll = await this.boardsService.findAll();
+    return { title: '자유 게시판', data: boardAll };
   }
 
   @Get(':id')
