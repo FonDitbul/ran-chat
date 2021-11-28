@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from './users.repository';
 import { getRepository } from 'typeorm';
-import { UserEntity } from './entities/user.entity';
+import { UserEntity as User, UserEntity } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -60,6 +60,14 @@ export class UsersService {
       .where('user.userName = :userName', { userName })
       .getOne();
     return await getOneUser;
+  }
+
+  async findOneByUserID(id: number) {
+    const getOneUser = await getRepository(User)
+      .createQueryBuilder('user')
+      .where('user.id = :id', { id })
+      .getOne();
+    return getOneUser.userName;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
