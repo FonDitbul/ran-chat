@@ -4,10 +4,14 @@ import { UpdateBoardDto } from './dto/update-board.dto';
 import { BoardsRepository } from './boards.repository';
 import { BoardEntity as Board } from '../boards/entities/board.entity';
 import { getRepository } from 'typeorm';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class BoardsService {
-  constructor(private readonly boardsRepository: BoardsRepository) {}
+  constructor(
+    private readonly boardsRepository: BoardsRepository,
+    private readonly usersService: UsersService,
+  ) {}
   async create(createBoardDto: CreateBoardDto) {
     const newBoard = new Board();
     newBoard.title = createBoardDto.title;
@@ -28,11 +32,18 @@ export class BoardsService {
     const getAllBoards = await getRepository(Board)
       .createQueryBuilder('Board')
       .getMany();
+    for (const board of getAllBoards) {
+      board['userName'] = await this.usersService.findOneByUserID(board.uid);
+    }
     return getAllBoards;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} board`;
+  async findOne(id: number) {
+    const getOneBoard = await getRepository(Board)
+      .createQueryBuilder('Board')
+      .where('Board.id = :id', { id })
+      .getOne();
+    return getOneBoard;
   }
 
   update(id: number, updateBoardDto: UpdateBoardDto) {

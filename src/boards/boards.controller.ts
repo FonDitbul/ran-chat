@@ -19,14 +19,15 @@ export class BoardsController {
   @Get('')
   @Render('layouts/board')
   async boardsPage() {
-    const boardAll = await this.boardsService.findAll();
-    return { title: '자유 게시판', data: boardAll };
+    const boardList = await this.boardsService.findAll();
+    return { title: '자유 게시판', data: boardList };
   }
 
   @Get(':id')
   @Render('template/boards')
-  boardPage(@Param('id') id: string) {
-    return { title: '게시판 test' };
+  async boardPage(@Param('id') id: string) {
+    const board = await this.boardsService.findOne(+id);
+    return { title: '게시판 test', data: board };
   }
 
   @Post()
