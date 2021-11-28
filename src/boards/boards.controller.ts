@@ -18,8 +18,14 @@ export class BoardsController {
 
   @Get('')
   @Render('layouts/board')
-  boardPage() {
+  boardsPage() {
     return { title: '자유 게시판' };
+  }
+
+  @Get(':id')
+  @Render('template/boards')
+  boardPage(@Param('id') id: string) {
+    return { title: '게시판 test' };
   }
 
   @Post()
