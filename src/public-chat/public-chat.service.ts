@@ -5,11 +5,14 @@ import { getRepository } from 'typeorm';
 import { PublicChatRepository } from './public-chat.repostiroy';
 import { PublicChatEntity as PublicChat } from './entities/public-chat.entity';
 import { chatEntity as Chat } from '../chats/entities/history-chat.entity';
-import { UserEntity as User } from '../users/entities/user.entity';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class PublicChatService {
-  constructor(private readonly publicChatRepositry: PublicChatRepository) {}
+  constructor(
+    private readonly publicChatRepositry: PublicChatRepository,
+    private readonly usersService: UsersService,
+  ) {}
   async create(createPublicChatDto: CreatePublicChatDto) {
     const newPublicChat = new PublicChat();
     newPublicChat.title = createPublicChatDto.title;
@@ -59,6 +62,7 @@ export class PublicChatService {
     }
     for (const list of getAllChat) {
       list['createdTime'] = getDate(list.createdAt);
+      list['userName'] = await this.usersService.findOneByUserID(list.uid);
     }
     return getAllChat;
   }
@@ -69,14 +73,6 @@ export class PublicChatService {
       .where('publicChat.id = :id', { id })
       .getRawOne();
     return getOneChat;
-  }
-
-  async findOneByUserID(id: number) {
-    const getOneUser = await getRepository(User)
-      .createQueryBuilder('user')
-      .where('user.id = :id', { id })
-      .getOne();
-    return getOneUser.userName;
   }
 
   async findChatHistory(roomID: number) {
