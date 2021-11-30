@@ -9,7 +9,7 @@ const submitLogin = async () => {
     return alert('유저 아이디를 입력해 주세요!');
   }
   sessionStorage.setItem('userName', uid);
-  return (window.location.href = '/');
+  return window.location.replace('/');
 };
 
 loginButton.addEventListener('click', submitLogin);
