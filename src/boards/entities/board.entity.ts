@@ -2,8 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { UserEntity } from '../../users/entities/user.entity';
 
 @Entity('board')
 export class BoardEntity {
@@ -16,8 +19,9 @@ export class BoardEntity {
   @Column()
   category: number;
 
-  @Column()
-  uid: number;
+  @ManyToOne((type) => UserEntity, (user) => user.board)
+  @JoinColumn()
+  user: UserEntity;
 
   @CreateDateColumn()
   readonly createdAt: Date;

@@ -2,8 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { UserEntity } from '../../users/entities/user.entity';
 
 @Entity('publicChat')
 export class PublicChatEntity {
@@ -13,8 +17,8 @@ export class PublicChatEntity {
   @Column({ length: 32 })
   title: string;
 
-  @Column()
-  uid: number;
+  @ManyToOne(() => UserEntity, (user) => user.publicChat)
+  user: UserEntity;
 
   @CreateDateColumn()
   readonly createdAt: Date;

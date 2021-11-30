@@ -1,4 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { PublicChatEntity } from '../../public-chat/entities/public-chat.entity';
+import { BoardEntity } from '../../boards/entities/board.entity';
+import { chatEntity } from '../../chats/entities/history-chat.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -13,6 +22,15 @@ export class UserEntity {
 
   @Column()
   password: string;
+
+  @OneToMany((type) => PublicChatEntity, (publicChat) => publicChat.user)
+  publicChat: PublicChatEntity[];
+
+  @OneToMany((type) => BoardEntity, (board) => board.user)
+  board: BoardEntity[];
+
+  // @OneToMany((type) => PublicChatEntity, (publicChat) => publicChat.user)
+  // chat: chatEntity[];
 
   // @Column({ default: '' })
   // imageLink: string;
