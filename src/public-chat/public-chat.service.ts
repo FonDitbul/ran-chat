@@ -6,20 +6,24 @@ import { PublicChatRepository } from './public-chat.repostiroy';
 import { PublicChatEntity as PublicChat } from './entities/public-chat.entity';
 import { chatEntity as Chat } from '../chats/entities/history-chat.entity';
 import { UsersService } from '../users/users.service';
+import { UserRepository } from '../users/users.repository';
 
 @Injectable()
 export class PublicChatService {
   constructor(
     private readonly publicChatRepositry: PublicChatRepository,
     private readonly usersService: UsersService,
+    private readonly userRepository: UserRepository,
   ) {}
   async create(createPublicChatDto: CreatePublicChatDto) {
-    const newPublicChat = new PublicChat();
-    newPublicChat.title = createPublicChatDto.title;
-    newPublicChat.uid = createPublicChatDto.uid;
+    const user = await this.userRepository.findOne(createPublicChatDto.uid, {
+      relations: ['publicChat'],
+    });
     return await this.publicChatRepositry
-      .save(newPublicChat)
-      .then((Room) => {
+      .save(createPublicChatDto)
+      .then(async (Room) => {
+        user.publicChat.push(Room);
+        await this.userRepository.save(user);
         return Room;
       })
       .catch((error) => {
@@ -30,6 +34,7 @@ export class PublicChatService {
   async findAll() {
     const getAllChat = await getRepository(PublicChat)
       .createQueryBuilder('publicChat')
+      .leftJoinAndSelect('publicChat.user', 'user')
       .getMany();
     function getDate(date) {
       const year = (date.getFullYear() - 2000).toString();
@@ -62,7 +67,6 @@ export class PublicChatService {
     }
     for (const list of getAllChat) {
       list['createdTime'] = getDate(list.createdAt);
-      list['userName'] = await this.usersService.findOneByUserID(list.uid);
     }
     return getAllChat;
   }

@@ -5,23 +5,25 @@ import { BoardsRepository } from './boards.repository';
 import { BoardEntity as Board } from '../boards/entities/board.entity';
 import { getRepository } from 'typeorm';
 import { UsersService } from '../users/users.service';
+import { UserRepository } from '../users/users.repository';
 
 @Injectable()
 export class BoardsService {
   constructor(
     private readonly boardsRepository: BoardsRepository,
     private readonly usersService: UsersService,
+    private readonly userRepository: UserRepository,
   ) {}
   async create(createBoardDto: CreateBoardDto) {
-    const newBoard = new Board();
-    newBoard.title = createBoardDto.title;
-    newBoard.uid = createBoardDto.uid;
-    newBoard.category = createBoardDto.category;
-    newBoard.content = 'test게시판';
+    const user = await this.userRepository.findOne(createBoardDto.uid, {
+      relations: ['board'],
+    });
     return await this.boardsRepository
-      .save(newBoard)
-      .then((board) => {
-        return board;
+      .save(createBoardDto)
+      .then(async (Board) => {
+        user.board.push(Board);
+        await this.userRepository.save(user);
+        return Board;
       })
       .catch((error) => {
         return error;
@@ -31,10 +33,8 @@ export class BoardsService {
   async findAll() {
     const getAllBoards = await getRepository(Board)
       .createQueryBuilder('Board')
+      .leftJoinAndSelect('Board.user', 'user')
       .getMany();
-    for (const board of getAllBoards) {
-      board['userName'] = await this.usersService.findOneByUserID(board.uid);
-    }
     return getAllBoards;
   }
 
