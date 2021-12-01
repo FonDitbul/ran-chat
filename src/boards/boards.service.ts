@@ -6,6 +6,8 @@ import { BoardEntity as Board } from '../boards/entities/board.entity';
 import { getRepository } from 'typeorm';
 import { UsersService } from '../users/users.service';
 import { UserRepository } from '../users/users.repository';
+import { LikeService } from './servies/like.service';
+import { UpdateLikeDto } from './dto/update-like.dto';
 
 @Injectable()
 export class BoardsService {
@@ -13,6 +15,7 @@ export class BoardsService {
     private readonly boardsRepository: BoardsRepository,
     private readonly usersService: UsersService,
     private readonly userRepository: UserRepository,
+    private readonly likeService: LikeService,
   ) {}
   async create(createBoardDto: CreateBoardDto) {
     const user = await this.userRepository.findOne(createBoardDto.uid, {
@@ -46,8 +49,21 @@ export class BoardsService {
     return getOneBoard;
   }
 
-  update(id: number, updateBoardDto: UpdateBoardDto) {
+  async update(id: number, updateBoardDto: UpdateBoardDto) {
+    const { content } = updateBoardDto;
+    const updateOneBoard = await getRepository(Board)
+      .createQueryBuilder()
+      .update('board')
+      .set({ content: content })
+      .where('board.id = :id', { id })
+      .execute();
     return `This action updates a #${id} board`;
+  }
+
+  async updateLike(id: number, updateLikeDto: UpdateLikeDto) {
+    const { like, dislike } = updateLikeDto;
+    await this.likeService.updateLike(id, updateLikeDto);
+    return `${like}, ${dislike}`;
   }
 
   remove(id: number) {

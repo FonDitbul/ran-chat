@@ -11,6 +11,7 @@ import {
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
+import { UpdateLikeDto } from './dto/update-like.dto';
 
 @Controller('board')
 export class BoardsController {
@@ -45,6 +46,10 @@ export class BoardsController {
     return this.boardsService.update(+id, updateBoardDto);
   }
 
+  @Patch('like/:id')
+  updateLike(@Param('id') id: string, @Body() updateLikeDto: UpdateLikeDto) {
+    return this.boardsService.updateLike(+id, updateLikeDto);
+  }
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.boardsService.remove(+id);
