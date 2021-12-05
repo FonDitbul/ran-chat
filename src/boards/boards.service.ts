@@ -6,7 +6,7 @@ import { BoardEntity as Board } from '../boards/entities/board.entity';
 import { getRepository } from 'typeorm';
 import { UsersService } from '../users/users.service';
 import { UserRepository } from '../users/users.repository';
-import { LikeService } from './servies/like.service';
+import { LikeService } from './services/like.service';
 import { UpdateLikeDto } from './dto/update-like.dto';
 
 @Injectable()

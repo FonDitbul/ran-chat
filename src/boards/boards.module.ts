@@ -4,7 +4,7 @@ import { BoardsController } from './boards.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BoardsRepository } from './boards.repository';
 import { UsersModule } from '../users/users.module';
-import { LikeService } from './servies/like.service';
+import { LikeService } from './services/like.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([BoardsRepository]), UsersModule],
