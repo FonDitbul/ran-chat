@@ -17,10 +17,10 @@
     </tr>
     {{#each data}}
     <tr style='text-align: center'>
-      <td class='w-12 border border-black'>{{this.id}}</td>
-      <td class='border border-black'><a href='/public-chat/chatting/{{this.id}}'+>{{this.title}}</a></td>
-      <td class='border border-black'>{{this.user.userName}}</td>
-      <td class='border border-black'>{{this.createdTime}}</td>
+      <td class='w-12 border border-black'>{{this.publicChat_id}}</td>
+      <td class='border border-black'><a href='/public-chat/chatting/{{this.publicChat_id}}'+>{{this.publicChat_title}}</a></td>
+      <td class='border border-black'>{{this.user_userName}}</td>
+      <td class='border border-black'>{{this.publicChat_createdTime}}</td>
     </tr>
     {{/each}}
   </table>
