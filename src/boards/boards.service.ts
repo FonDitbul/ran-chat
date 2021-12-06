@@ -3,11 +3,12 @@ import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 import { BoardsRepository } from './boards.repository';
 import { BoardEntity as Board } from '../boards/entities/board.entity';
-import { getRepository } from 'typeorm';
+import { createQueryBuilder, getRepository } from 'typeorm';
 import { UsersService } from '../users/users.service';
 import { UserRepository } from '../users/users.repository';
 import { LikeService } from './services/like.service';
 import { UpdateLikeDto } from './dto/update-like.dto';
+import { UserEntity } from '../users/entities/user.entity';
 
 @Injectable()
 export class BoardsService {
@@ -18,14 +19,9 @@ export class BoardsService {
     private readonly likeService: LikeService,
   ) {}
   async create(createBoardDto: CreateBoardDto) {
-    const user = await this.userRepository.findOne(createBoardDto.uid, {
-      relations: ['board'],
-    });
     return await this.boardsRepository
       .save(createBoardDto)
       .then(async (Board) => {
-        user.board.push(Board);
-        await this.userRepository.save(user);
         return Board;
       })
       .catch((error) => {
@@ -35,9 +31,33 @@ export class BoardsService {
 
   async findAll() {
     const getAllBoards = await getRepository(Board)
-      .createQueryBuilder('Board')
-      .leftJoinAndSelect('Board.user', 'user')
+      .createQueryBuilder('board')
+      .select([
+        'board.id AS board_id',
+        'board.title',
+        'board.uid', // 게시판 작성유저 아이디
+        'board.category', // 게시판 카테고리
+        'board.createdAt', //생성 날짜
+        'board.like', // 좋아요
+        'board.dislike', // 싫어요
+      ])
+      .leftJoin('board', 'user', 'board.uid = user.id')
+      .addSelect((subQuery) => {
+        return subQuery
+          .select(['user.userName'])
+          .from(UserEntity, 'user')
+          .where('board.uid = user.id')
+          .limit(1);
+      }, 'user_userName')
+      .getRawMany();
+    const user = await getRepository(UserEntity)
+      .createQueryBuilder('user')
+      .select(['user.userName'])
+      // .addSelect('board.title', 'title')
+      .innerJoin(Board, 'board', 'user.id = board.uid')
       .getMany();
+    // console.log(user);
+    console.log(getAllBoards);
     return getAllBoards;
   }
 
