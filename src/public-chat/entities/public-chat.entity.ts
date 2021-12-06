@@ -17,8 +17,8 @@ export class PublicChatEntity {
   @Column({ length: 32 })
   title: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.publicChat)
-  user: UserEntity;
+  @Column()
+  uid: number;
 
   @CreateDateColumn()
   readonly createdAt: Date;

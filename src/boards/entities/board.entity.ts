@@ -4,9 +4,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { UserEntity } from '../../users/entities/user.entity';
+import { CategoryEntity } from './category.entity';
+import { CommentEntity } from './comment.entity';
 
 @Entity('board')
 export class BoardEntity {
@@ -19,18 +22,14 @@ export class BoardEntity {
   @Column()
   category: number;
 
-  @ManyToOne((type) => UserEntity, (user) => user.board)
-  @JoinColumn()
-  user: UserEntity;
+  @Column()
+  uid: number;
 
   @CreateDateColumn()
   readonly createdAt: Date;
 
   @Column()
   content: string;
-
-  @Column({ default: 0 })
-  comment: number;
 
   @Column({ default: 0 })
   like: number;

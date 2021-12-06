@@ -2,12 +2,14 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { PublicChatEntity } from '../../public-chat/entities/public-chat.entity';
 import { BoardEntity } from '../../boards/entities/board.entity';
 import { chatEntity } from '../../chats/entities/history-chat.entity';
+import { CommentEntity } from '../../boards/entities/comment.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -22,12 +24,6 @@ export class UserEntity {
 
   @Column()
   password: string;
-
-  @OneToMany((type) => PublicChatEntity, (publicChat) => publicChat.user)
-  publicChat: PublicChatEntity[];
-
-  @OneToMany((type) => BoardEntity, (board) => board.user)
-  board: BoardEntity[];
 
   // @OneToMany((type) => PublicChatEntity, (publicChat) => publicChat.user)
   // chat: chatEntity[];

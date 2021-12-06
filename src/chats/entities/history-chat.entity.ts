@@ -12,6 +12,9 @@ export class chatEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({})
+  uid: number;
+
   @Column({ length: 32 })
   userName: string;
 

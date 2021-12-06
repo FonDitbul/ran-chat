@@ -11,7 +11,7 @@ export class CategoryEntity {
   id: number;
 
   @Column()
-  category: string;
+  name: string;
 
   // @CreateDateColumn()
   // readonly createdAt: Date;

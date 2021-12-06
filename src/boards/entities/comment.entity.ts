@@ -2,8 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { UserEntity } from '../../users/entities/user.entity';
+import { BoardEntity } from './board.entity';
 
 @Entity('comment')
 export class CommentEntity {
@@ -12,6 +16,9 @@ export class CommentEntity {
 
   @Column()
   uid: number;
+
+  @Column()
+  boardID: number;
 
   @Column()
   content: string;
