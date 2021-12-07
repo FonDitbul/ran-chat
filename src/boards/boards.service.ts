@@ -41,7 +41,7 @@ export class BoardsService {
         'board.like', // 좋아요
         'board.dislike', // 싫어요
       ])
-      .leftJoin('board', 'user', 'board.uid = user.id')
+      // .leftJoin('board', 'user', 'board.uid = user.id')
       .addSelect((subQuery) => {
         return subQuery
           .select(['user.userName'])
@@ -50,14 +50,6 @@ export class BoardsService {
           .limit(1);
       }, 'user_userName')
       .getRawMany();
-    const user = await getRepository(UserEntity)
-      .createQueryBuilder('user')
-      .select(['user.userName'])
-      // .addSelect('board.title', 'title')
-      .innerJoin(Board, 'board', 'user.id = board.uid')
-      .getMany();
-    // console.log(user);
-    console.log(getAllBoards);
     return getAllBoards;
   }
 
