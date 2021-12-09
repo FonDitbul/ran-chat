@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Render,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { PublicChatService } from './public-chat.service';
 import { CreatePublicChatDto } from './dto/create-public-chat.dto';
@@ -32,23 +33,23 @@ export class PublicChatController {
 
   @Get('chatting/:id')
   @Render('template/chatting')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id', ParseIntPipe) id: number) {
     const { publicChat_title, publicChat_uid, publicChat_createdAt } =
-      await this.publicChatService.findOne(+id);
-    const chatHistory = await this.publicChatService.findChatHistory(+id);
+      await this.publicChatService.findOne(id);
+    const chatHistory = await this.publicChatService.findChatHistory(id);
     return { roomID: id, roomTitle: publicChat_title, chatHistory };
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updatePublicChatDto: UpdatePublicChatDto,
   ) {
-    return this.publicChatService.update(+id, updatePublicChatDto);
+    return this.publicChatService.update(id, updatePublicChatDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.publicChatService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.publicChatService.remove(id);
   }
 }

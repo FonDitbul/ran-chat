@@ -7,6 +7,7 @@ import {
   Body,
   Param,
   Render,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
@@ -32,8 +33,8 @@ export class BoardsController {
 
   @Get(':id')
   @Render('template/boards')
-  async oneBoardPage(@Param('id') id: string) {
-    const board = await this.boardsService.findOne(+id);
+  async oneBoardPage(@Param('id', ParseIntPipe) id: number) {
+    const board = await this.boardsService.findOne(id);
     return { title: '게시판 test', data: board };
   }
 
@@ -43,36 +44,53 @@ export class BoardsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.boardsService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.boardsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBoardDto: UpdateBoardDto) {
-    return this.boardsService.update(+id, updateBoardDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateBoardDto: UpdateBoardDto,
+  ) {
+    return this.boardsService.update(id, updateBoardDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.boardsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.boardsService.remove(id);
   }
 
-  @Post('comment/:id')
-  createComment(
-    @Param('id') id: string,
-    @Body() createCommentDto: CreateCommentDto,
-  ) {
+  @Get('comment/:boardID')
+  getBoardAllComment(@Param('boardID', ParseIntPipe) boardID: number) {
+    return this.commentService.findAll(boardID);
+  }
+
+  @Get('comment/:boardID')
+  getBoardOneComment(@Param('boardID', ParseIntPipe) boardID: number) {
+    return this.commentService.findOne(boardID);
+  }
+
+  @Post('comment')
+  createComment(@Body() createCommentDto: CreateCommentDto) {
     return this.commentService.create(createCommentDto);
   }
 
-  @Patch('comment/:id')
-  updateComment(
-    @Param('id') id: string,
-    @Body() updateCommentDto: UpdateCommentDto,
-  ) {}
+  @Patch('comment')
+  updateComment(@Body() updateCommentDto: UpdateCommentDto) {
+    return this.commentService.update(updateCommentDto);
+  }
 
-  @Patch('like/:id')
-  updateLike(@Param('id') id: string, @Body() updateLikeDto: UpdateLikeDto) {
-    return this.boardsService.updateLike(+id, updateLikeDto);
+  @Delete('comment')
+  removeComment(@Body() updateCommentDto: UpdateCommentDto) {
+    return this.commentService.remove();
+  }
+
+  @Patch('like/:boardID')
+  updateLike(
+    @Param('boardID', ParseIntPipe) boardID: number,
+    @Body() updateLikeDto: UpdateLikeDto,
+  ) {
+    return this.lkeService.updateLike(boardID, updateLikeDto);
   }
 }
