@@ -62,13 +62,17 @@ export class BoardsController {
   }
 
   @Get('comment/:boardID')
-  getBoardAllComment(@Param('boardID', ParseIntPipe) boardID: number) {
-    return this.commentService.findAll(boardID);
+  async getBoardAllComment(@Param('boardID', ParseIntPipe) boardID: number) {
+    console.log(await this.commentService.findAll(boardID));
+    return await this.commentService.findAll(boardID);
   }
 
   @Get('comment/:boardID')
-  getBoardOneComment(@Param('boardID', ParseIntPipe) boardID: number) {
-    return this.commentService.findOne(boardID);
+  getBoardOneComment(
+    @Param('boardID', ParseIntPipe) boardID: number,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    return this.commentService.findOne(boardID, id);
   }
 
   @Post('comment')

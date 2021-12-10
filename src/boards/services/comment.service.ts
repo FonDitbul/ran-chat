@@ -8,16 +8,18 @@ import { CommentEntity as Comment } from '../entities/comment.entity';
 @Injectable()
 export class CommentService {
   constructor(private readonly commentRepository: CommentRepository) {}
-  async findAll() {
+  async findAll(boardID: number) {
     const getAllComment = await getRepository(Comment)
-      .createQueryBuilder('Comment')
-      .getMany();
+      .createQueryBuilder('comment')
+      .where('comment.boardID = :boardID', { boardID })
+      .getRawMany();
     return getAllComment;
   }
-  async findOne(id: number) {
+  async findOne(boardID: number, id: number) {
     const getAllComment = await getRepository(Comment)
-      .createQueryBuilder('Comment')
-      .where('Comment.id = :id', { id })
+      .createQueryBuilder('comment')
+      .andWhere('comment.id = :id', { id })
+      .andWhere('comment.boardID = :boardID', { boardID })
       .getRawMany();
     return getAllComment;
   }
@@ -35,7 +37,7 @@ export class CommentService {
   async update(updateCommentDto: UpdateCommentDto) {
     return `update Comment `;
   }
-  async remove(id: number) {
-    return `${id} remove`;
+  async remove() {
+    return 'remove';
   }
 }
