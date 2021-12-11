@@ -4,6 +4,7 @@ import { CreateCommentDto } from '../dto/create-comment.dto';
 import { UpdateCommentDto } from '../dto/update-comment.dto';
 import { getRepository } from 'typeorm';
 import { CommentEntity as Comment } from '../entities/comment.entity';
+import { UserEntity } from '../../users/entities/user.entity';
 
 @Injectable()
 export class CommentService {
@@ -12,6 +13,13 @@ export class CommentService {
     const getAllComment = await getRepository(Comment)
       .createQueryBuilder('comment')
       .where('comment.boardID = :boardID', { boardID })
+      .addSelect((subQuery) => {
+        return subQuery
+          .select(['user.userName'])
+          .from(UserEntity, 'user')
+          .where('comment.uid = user.id')
+          .limit(1);
+      }, 'user_userName')
       .getRawMany();
     return getAllComment;
   }
