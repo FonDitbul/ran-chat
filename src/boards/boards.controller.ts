@@ -14,14 +14,16 @@ import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
 import { CreateCommentDto } from './dto/create-comment.dto';
-import { UpdateCommentDto } from './dto/update-board.dto';
+import { UpdateCommentDto } from './dto/update-comment.dto';
 import { CommentService } from './services/comment.service';
+import { LikeService } from './services/like.service';
 
 @Controller('board')
 export class BoardsController {
   constructor(
     private readonly boardsService: BoardsService,
     private readonly commentService: CommentService,
+    private readonly lkeService: LikeService,
   ) {}
 
   @Get('')
@@ -63,16 +65,15 @@ export class BoardsController {
 
   @Get('comment/:boardID')
   async getBoardAllComment(@Param('boardID', ParseIntPipe) boardID: number) {
-    console.log(await this.commentService.findAll(boardID));
     return await this.commentService.findAll(boardID);
   }
 
   @Get('comment/:boardID')
-  getBoardOneComment(
+  async getBoardOneComment(
     @Param('boardID', ParseIntPipe) boardID: number,
     @Param('id', ParseIntPipe) id: number,
   ) {
-    return this.commentService.findOne(boardID, id);
+    return await this.commentService.findOne(boardID, id);
   }
 
   @Post('comment')
@@ -85,16 +86,13 @@ export class BoardsController {
     return this.commentService.update(updateCommentDto);
   }
 
-  @Delete('comment')
-  removeComment(@Body() updateCommentDto: UpdateCommentDto) {
-    return this.commentService.remove();
+  @Delete('comment/:id')
+  removeComment(@Param('id', ParseIntPipe) id: number) {
+    return this.commentService.remove(id);
   }
 
-  @Patch('like/:boardID')
-  updateLike(
-    @Param('boardID', ParseIntPipe) boardID: number,
-    @Body() updateLikeDto: UpdateLikeDto,
-  ) {
-    return this.lkeService.updateLike(boardID, updateLikeDto);
+  @Patch('like')
+  updateLike(@Body() updateLikeDto: UpdateLikeDto) {
+    return this.lkeService.update(updateLikeDto);
   }
 }
