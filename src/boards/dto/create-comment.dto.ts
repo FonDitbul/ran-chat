@@ -2,7 +2,7 @@ import { IsNotEmpty } from 'class-validator';
 
 export class CreateCommentDto {
   @IsNotEmpty()
-  readonly board: string;
+  readonly boardID: number;
 
   @IsNotEmpty()
   readonly uid: number;
