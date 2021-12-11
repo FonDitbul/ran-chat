@@ -1,8 +1,9 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateBoardDto } from './create-board.dto';
 import { IsNotEmpty } from 'class-validator';
 
 export class UpdateLikeDto {
+  @IsNotEmpty()
+  readonly boardID: number;
+
   readonly like: number;
 
   readonly dislike: number;
