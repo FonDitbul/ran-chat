@@ -8,6 +8,7 @@ import {
   Param,
   Render,
   ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
@@ -71,7 +72,7 @@ export class BoardsController {
   @Get('comment/:boardID')
   async getBoardOneComment(
     @Param('boardID', ParseIntPipe) boardID: number,
-    @Param('id', ParseIntPipe) id: number,
+    @Query('id', ParseIntPipe) id: number,
   ) {
     return await this.commentService.findOne(boardID, id);
   }
