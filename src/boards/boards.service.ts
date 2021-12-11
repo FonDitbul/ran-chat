@@ -69,16 +69,11 @@ export class BoardsService {
       .set({ content: content })
       .where('board.id = :id', { id })
       .execute();
-    return `This action updates a #${id} board`;
+    return updateOneBoard;
   }
 
-  async updateLike(id: number, updateLikeDto: UpdateLikeDto) {
-    const { like, dislike } = updateLikeDto;
-    await this.likeService.updateLike(id, updateLikeDto);
-    return `${like}, ${dislike}`;
-  }
-
-  remove(id: number) {
+  async remove(id: number) {
+    const removedData = await this.boardsRepository.delete({ id: id });
     return `This action removes a #${id} board`;
   }
 }
