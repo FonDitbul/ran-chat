@@ -7,6 +7,7 @@ const chatText = document.getElementById('chat-text');
 
 socket.emit('joinRoom', {
   userName: sessionStorage.getItem('userName'),
+  uid: sessionStorage.getItem('uid'),
   roomID: roomID,
 });
 
@@ -20,6 +21,7 @@ const chatSubmit = (event) => {
   drawFunction('나', value);
   socket.emit('reqMsg', {
     roomID: roomID,
+    uid: sessionStorage.getItem('uid'),
     userName: sessionStorage.getItem('userName'),
     text: value,
   });
