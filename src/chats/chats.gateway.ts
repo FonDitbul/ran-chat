@@ -24,11 +24,11 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   private logger = new Logger('chat');
 
   async handleConnection(@ConnectedSocket() socket: Socket) {
-    this.logger.log(`connected : ${socket.id}`);
+    // this.logger.log(`connected : ${socket.id}`);
   }
 
   async handleDisconnect(@ConnectedSocket() socket: Socket) {
-    this.logger.log(`disconnected : ${socket.id}`);
+    // this.logger.log(`disconnected : ${socket.id}`);
   }
 
   @SubscribeMessage('chatting')
@@ -62,6 +62,7 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async handleRequest(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     const chatting = new chatEntity();
     chatting.roomID = +data.roomID;
+    chatting.uid = data.uid;
     chatting.userName = data.userName;
     chatting.text = data.text;
     await this.chatRepository.save(chatting).catch((error) => {
