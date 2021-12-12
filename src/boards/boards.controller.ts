@@ -42,6 +42,7 @@ export class BoardsController {
   @Render('template/boards')
   async oneBoardPage(@Param('id', ParseIntPipe) id: number) {
     const board = await this.boardsService.findOne(id);
+    const comment = await this.commentService.findAll(id);
     return {
       title: '게시판 test',
       breads: [
@@ -51,6 +52,7 @@ export class BoardsController {
         { name: board.title },
       ],
       data: board,
+      comment: comment,
     };
   }
 
@@ -77,10 +79,10 @@ export class BoardsController {
     return this.boardsService.remove(id);
   }
 
-  @Get('comment/:boardID')
-  async getBoardAllComment(@Param('boardID', ParseIntPipe) boardID: number) {
-    return await this.commentService.findAll(boardID);
-  }
+  // @Get('comment/:boardID')
+  // async getBoardAllComment(@Param('boardID', ParseIntPipe) boardID: number) {
+  //   return await this.commentService.findAll(boardID);
+  // }
 
   @Get('comment/:boardID')
   async getBoardOneComment(
