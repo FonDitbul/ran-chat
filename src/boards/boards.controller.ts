@@ -31,14 +31,27 @@ export class BoardsController {
   @Render('layouts/board')
   async allBoardsPage() {
     const boardList = await this.boardsService.findAll();
-    return { title: '자유 게시판', data: boardList };
+    return {
+      title: '자유 게시판',
+      breads: [{ name: '자유 게시판' }],
+      data: boardList,
+    };
   }
 
   @Get(':id')
   @Render('template/boards')
   async oneBoardPage(@Param('id', ParseIntPipe) id: number) {
     const board = await this.boardsService.findOne(id);
-    return { title: '게시판 test', data: board };
+    return {
+      title: '게시판 test',
+      breads: [
+        {
+          name: '자유 게시판',
+        },
+        { name: board.title },
+      ],
+      data: board,
+    };
   }
 
   @Post()

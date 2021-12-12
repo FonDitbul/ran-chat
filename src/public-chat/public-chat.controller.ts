@@ -22,6 +22,7 @@ export class PublicChatController {
   async publicChatPage() {
     const roomList = await this.publicChatService.findAll();
     return {
+      breads: [{ name: '공개 채팅방' }],
       data: roomList,
     };
   }
@@ -37,7 +38,12 @@ export class PublicChatController {
     const { publicChat_title, publicChat_uid, publicChat_createdAt } =
       await this.publicChatService.findOne(id);
     const chatHistory = await this.publicChatService.findChatHistory(id);
-    return { roomID: id, roomTitle: publicChat_title, chatHistory };
+    return {
+      breads: [{ name: '공개 채팅방' }, { name: publicChat_title }],
+      roomID: id,
+      roomTitle: publicChat_title,
+      chatHistory,
+    };
   }
 
   @Patch(':id')
