@@ -33,7 +33,7 @@ export class PublicChatController {
   }
 
   @Get('chatting/:id')
-  @Render('template/chatting')
+  @Render('template/publicChatting')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const { publicChat_title, publicChat_uid, publicChat_createdAt } =
       await this.publicChatService.findOne(id);
