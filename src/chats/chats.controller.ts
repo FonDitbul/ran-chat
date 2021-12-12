@@ -7,7 +7,7 @@ export class ChatsController {
   @Get()
   @Render('layouts/chat')
   chattingPage() {
-    return { title: '채팅창' };
+    return { title: '채팅창', breads: [{ name: '랜덤 채팅' }] };
   }
 
   @Get(':id')

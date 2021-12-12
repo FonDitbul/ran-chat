@@ -12,6 +12,6 @@ export class AppController {
   @Get('personalChat')
   @Render('layouts/personalChat')
   personalChatPage() {
-    return { title: '??' };
+    return { title: '??', breads: [{ name: '1대1 채팅방' }] };
   }
 }
