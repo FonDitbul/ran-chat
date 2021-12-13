@@ -15,7 +15,7 @@ export class chatEntity {
   @Column({})
   uid: number;
 
-  @Column({ length: 32 })
+  @Column({})
   userName: string;
 
   @Column()
@@ -27,6 +27,6 @@ export class chatEntity {
   // @UpdateDateColumn()
   // readonly updatedAt: Date;
 
-  @Column({ default: 1 })
+  @Column({})
   roomID: number;
 }
