@@ -33,6 +33,12 @@ export class UsersController {
     return { title: '??' };
   }
 
+  @Get('profile')
+  @Render('template/profile')
+  profilePage() {
+    return { title: 'profile' };
+  }
+
   @Get(':userName')
   findOneByUserName(@Param('userName') userName: string) {
     return this.usersService.findOneByUserName(userName);
