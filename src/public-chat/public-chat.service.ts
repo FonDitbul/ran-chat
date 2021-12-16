@@ -8,6 +8,7 @@ import { chatEntity as Chat } from '../chats/entities/history-chat.entity';
 import { UsersService } from '../users/users.service';
 import { UserRepository } from '../users/users.repository';
 import { UserEntity } from '../users/entities/user.entity';
+import { getDateAndTimeParser } from '../common/lib/time';
 
 @Injectable()
 export class PublicChatService {
@@ -17,9 +18,7 @@ export class PublicChatService {
     private readonly userRepository: UserRepository,
   ) {}
   async create(createPublicChatDto: CreatePublicChatDto) {
-    const user = await this.userRepository.findOne(createPublicChatDto.uid, {
-      relations: ['publicChat'],
-    });
+    const { uid } = createPublicChatDto;
     return await this.publicChatRepositry
       .save(createPublicChatDto)
       .then(async (Room) => {
@@ -42,37 +41,11 @@ export class PublicChatService {
           .limit(1);
       }, 'user_userName')
       .getRawMany();
-    function getDate(date) {
-      const year = (date.getFullYear() - 2000).toString();
-      const month: number = date.getMonth() + 1;
-      const day: number = date.getDate();
-      const hours = date.getHours(); // 시
-      const minutes = date.getMinutes(); // 분
-      const seconds = date.getSeconds(); // 초
-      const monthStr: string =
-        month < 10 ? '0' + month.toString() : month.toString();
-      const dayStr: string = day < 10 ? '0' + day.toString() : day.toString();
-      const hoursStr: string =
-        hours < 10 ? '0' + hours.toString() : hours.toString();
-      const minutesStr: string =
-        minutes < 10 ? '0' + minutes.toString() : minutes.toString();
-      const secondsStr: string =
-        seconds < 10 ? '0' + seconds.toString() : seconds.toString();
-      return (
-        year +
-        '/' +
-        monthStr +
-        '/' +
-        dayStr +
-        ' [' +
-        hoursStr +
-        ':' +
-        minutesStr +
-        ']'
-      );
-    }
+
     for (const list of getAllChat) {
-      list['publicChat_createdTime'] = getDate(list.publicChat_createdAt);
+      list['publicChat_createdTime'] = getDateAndTimeParser(
+        list.publicChat_createdAt,
+      );
     }
     return getAllChat;
   }
