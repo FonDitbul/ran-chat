@@ -1,0 +1,19 @@
+<html lang='en'>
+<head>
+  <title>Random-Chatting</title>
+  <link href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css' rel='stylesheet'/>
+  <link href='css/styles.css' rel='stylesheet' />
+</head>
+{{> header }}
+<body>
+<div>
+  게시판 생성 페이지
+  <form id='write-form'>
+    <textarea placeholder='제목'></textarea>
+    <textarea placeholder='본문 내용'></textarea>
+  </form>
+  <button>저장</button>
+</div>
+</body>
+<script src='js/template/createBoard.js'></script>
+</html>

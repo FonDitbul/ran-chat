@@ -38,6 +38,12 @@ export class BoardsController {
     };
   }
 
+  @Get('create')
+  @Render('template/createBoard')
+  async createBoardPage() {
+    return '';
+  }
+
   @Get(':id')
   @Render('template/boards')
   async oneBoardPage(@Param('id', ParseIntPipe) id: number) {
