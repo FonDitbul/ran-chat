@@ -20,6 +20,9 @@ export class CommentEntity {
   @Column()
   boardID: number;
 
+  @Column({ nullable: true })
+  groupID: number;
+
   @Column()
   content: string;
 

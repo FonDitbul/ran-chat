@@ -2,10 +2,12 @@ import { IsNotEmpty } from 'class-validator';
 
 export class CreateCommentDto {
   @IsNotEmpty()
-  readonly boardID: number;
+  readonly uid: number;
 
   @IsNotEmpty()
-  readonly uid: number;
+  readonly boardID: number;
+
+  readonly groupID: number;
 
   readonly content: string;
 
