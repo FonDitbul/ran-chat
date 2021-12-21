@@ -1,19 +1,23 @@
 <html lang='en'>
 <head>
   <title>Random-Chatting</title>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/summernote/summernote-lite.css">
   <link href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css' rel='stylesheet'/>
-  <link href='css/styles.css' rel='stylesheet' />
+  <link href='../css/styles.css' rel='stylesheet' />
 </head>
 {{> header }}
 <body>
 <div>
-  게시판 생성 페이지
-  <form id='write-form'>
-    <textarea placeholder='제목'></textarea>
-    <textarea placeholder='본문 내용'></textarea>
+  <form method="post">
+    <textarea id="summernote" name="editordata"></textarea>
   </form>
   <button>저장</button>
 </div>
 </body>
-<script src='js/template/createBoard.js'></script>
+<script src="../js/summernote/summernote-lite.js"></script>
+<script src="../js/summernote/summernote-ko-KR.js"></script>
+<script src='../js/template/createBoard.js'></script>
 </html>
