@@ -48,6 +48,7 @@ export class BoardsController {
   async createBoardPage() {
     return {
       title: '게시판 만들기',
+      breads: [{ name: '자유 게시판' }, { name: '게시판 생성' }],
     };
   }
 
