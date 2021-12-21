@@ -3,12 +3,12 @@ import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 import { BoardsRepository } from './boards.repository';
 import { BoardEntity as Board } from '../boards/entities/board.entity';
-import { createQueryBuilder, getRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import { UsersService } from '../users/users.service';
 import { UserRepository } from '../users/users.repository';
 import { LikeService } from './services/like.service';
-import { UpdateLikeDto } from './dto/update-like.dto';
 import { UserEntity } from '../users/entities/user.entity';
+import { getDateAndTimeParser } from '../common/lib/time';
 
 @Injectable()
 export class BoardsService {
@@ -58,9 +58,17 @@ export class BoardsService {
 
   async findOne(id: number) {
     const getOneBoard = await getRepository(Board)
-      .createQueryBuilder('Board')
-      .where('Board.id = :id', { id })
-      .getOne();
+      .createQueryBuilder('board')
+      .where('board.id = :id', { id })
+      .addSelect((subQuery) => {
+        return subQuery
+          .select(['user.userName'])
+          .from(UserEntity, 'user')
+          .where('board.uid = user.id')
+          .limit(1);
+      }, 'user_userName')
+      .getRawOne();
+    console.log(getOneBoard);
     return getOneBoard;
   }
 
