@@ -68,7 +68,6 @@ export class BoardsService {
           .limit(1);
       }, 'user_userName')
       .getRawOne();
-    console.log(getOneBoard);
     return getOneBoard;
   }
 

@@ -3,6 +3,10 @@ h1{
     margin: 10px;
 }
 
+h2{
+    font-size: 18px
+}
+
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */

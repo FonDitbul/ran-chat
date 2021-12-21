@@ -67,6 +67,13 @@ export class CommentService {
   async findReplyComment(groupID: number) {
     const replyComment = await getRepository(Comment)
       .createQueryBuilder('comment')
+      .addSelect((subQuery) => {
+        return subQuery
+          .select(['user.userName'])
+          .from(UserEntity, 'user')
+          .where('comment.uid = user.id')
+          .limit(1);
+      }, 'user_userName')
       .andWhere('comment.groupID = :groupID', { groupID })
       .getRawMany();
     return replyComment;
