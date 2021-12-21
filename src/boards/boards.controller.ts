@@ -9,6 +9,7 @@ import {
   Query,
   Render,
   ParseIntPipe,
+  DefaultValuePipe,
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
@@ -18,6 +19,7 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { CommentService } from './services/comment.service';
 import { LikeService } from './services/like.service';
+import { ParsePagePipe } from '../common/pipes/ParsePage.pipe';
 
 @Controller('board')
 export class BoardsController {
@@ -30,8 +32,10 @@ export class BoardsController {
   // 게시판 Render
   @Get('')
   @Render('layouts/board')
-  async allBoardsPage() {
-    const boardList = await this.boardsService.findAll();
+  async allBoardsPage(
+    @Query('page', new DefaultValuePipe(1), ParsePagePipe) page: number,
+  ) {
+    const boardList = await this.boardsService.findAll(page);
     return {
       title: '자유 게시판',
       breads: [{ name: '자유 게시판' }],

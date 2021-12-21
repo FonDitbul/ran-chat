@@ -29,7 +29,8 @@ export class BoardsService {
       });
   }
 
-  async findAll() {
+  async findAll(page) {
+    const SHOW_LIMIT_BOARD = 10;
     const getAllBoards = await getRepository(Board)
       .createQueryBuilder('board')
       .select([
@@ -49,6 +50,8 @@ export class BoardsService {
           .where('board.uid = user.id')
           .limit(1);
       }, 'user_userName')
+      .offset(page * SHOW_LIMIT_BOARD)
+      .limit(SHOW_LIMIT_BOARD)
       .getRawMany();
     return getAllBoards;
   }
