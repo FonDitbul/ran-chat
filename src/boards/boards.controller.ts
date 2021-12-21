@@ -6,9 +6,9 @@ import {
   Delete,
   Body,
   Param,
+  Query,
   Render,
   ParseIntPipe,
-  Query,
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
@@ -27,6 +27,7 @@ export class BoardsController {
     private readonly lkeService: LikeService,
   ) {}
 
+  // 게시판 Render
   @Get('')
   @Render('layouts/board')
   async allBoardsPage() {
@@ -41,7 +42,9 @@ export class BoardsController {
   @Get('create')
   @Render('template/createBoard')
   async createBoardPage() {
-    return '';
+    return {
+      title: '게시판 만들기',
+    };
   }
 
   @Get(':id')
@@ -61,15 +64,10 @@ export class BoardsController {
       comment: comment,
     };
   }
-
+  //게시판 CRUD
   @Post()
   create(@Body() createBoardDto: CreateBoardDto) {
     return this.boardsService.create(createBoardDto);
-  }
-
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.boardsService.findOne(id);
   }
 
   @Patch(':id')
@@ -85,17 +83,10 @@ export class BoardsController {
     return this.boardsService.remove(id);
   }
 
-  // @Get('comment/:boardID')
-  // async getBoardAllComment(@Param('boardID', ParseIntPipe) boardID: number) {
-  //   return await this.commentService.findAll(boardID);
-  // }
-
-  @Get('comment/:boardID')
-  async getBoardOneComment(
-    @Param('boardID', ParseIntPipe) boardID: number,
-    @Query('id', ParseIntPipe) id: number,
-  ) {
-    return await this.commentService.findOne(boardID, id);
+  //댓글 서비스
+  @Get('comment/:boardID') //게시판 전체
+  async getBoardAllComment(@Param('boardID', ParseIntPipe) boardID: number) {
+    return await this.commentService.findAll(boardID);
   }
 
   @Post('comment')
@@ -108,11 +99,11 @@ export class BoardsController {
     return this.commentService.update(updateCommentDto);
   }
 
-  @Delete('comment/:id')
-  removeComment(@Param('id', ParseIntPipe) id: number) {
+  @Delete('comment')
+  removeComment(@Query('id', ParseIntPipe) id: number) {
     return this.commentService.remove(id);
   }
-
+  //좋아요 싫어요 기능
   @Patch('like')
   updateLike(@Body() updateLikeDto: UpdateLikeDto) {
     return this.lkeService.update(updateLikeDto);

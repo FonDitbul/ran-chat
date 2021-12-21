@@ -9,6 +9,8 @@ export class CreateCommentDto {
 
   readonly groupID: number;
 
+  readonly replyID: number;
+
   readonly content: string;
 
   // @IsNotEmpty()

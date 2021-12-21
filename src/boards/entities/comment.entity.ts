@@ -20,8 +20,11 @@ export class CommentEntity {
   @Column()
   boardID: number;
 
+  @Column({ default: 0 })
+  groupID: number; // group ID
+
   @Column({ nullable: true })
-  groupID: number;
+  replyID: number; //대댓글 ID
 
   @Column()
   content: string;

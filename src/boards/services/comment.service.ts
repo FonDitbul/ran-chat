@@ -12,7 +12,6 @@ export class CommentService {
   async findAll(boardID: number) {
     const getAllComment = await getRepository(Comment)
       .createQueryBuilder('comment')
-      .where('comment.boardID = :boardID', { boardID })
       .addSelect((subQuery) => {
         return subQuery
           .select(['user.userName'])
@@ -20,17 +19,22 @@ export class CommentService {
           .where('comment.uid = user.id')
           .limit(1);
       }, 'user_userName')
+      .andWhere('comment.boardID = :boardID', { boardID })
+      .andWhere('comment.groupID = 0')
       .getRawMany();
+    for (const reply of getAllComment) {
+      reply['comment_reply'] = await this.findReplyComment(reply.comment_id);
+    }
     return getAllComment;
   }
 
   async findOne(boardID: number, id: number) {
-    const getAllComment = await getRepository(Comment)
+    const getOneComment = await getRepository(Comment)
       .createQueryBuilder('comment')
       .andWhere('comment.id = :id', { id })
       .andWhere('comment.boardID = :boardID', { boardID })
       .getRawMany();
-    return getAllComment;
+    return getOneComment;
   }
 
   async create(createCommentDto: CreateCommentDto) {
@@ -45,7 +49,7 @@ export class CommentService {
   }
 
   async update(updateCommentDto: UpdateCommentDto) {
-    const { id, boardID, uid, content } = updateCommentDto;
+    const { id, boardID, content } = updateCommentDto;
 
     const updateComment = await getRepository(Comment)
       .createQueryBuilder('comment')
@@ -59,5 +63,12 @@ export class CommentService {
   async remove(id: number) {
     const removedData = await this.commentRepository.delete({ id: id });
     return 'remove';
+  }
+  async findReplyComment(groupID: number) {
+    const replyComment = await getRepository(Comment)
+      .createQueryBuilder('comment')
+      .andWhere('comment.groupID = :groupID', { groupID })
+      .getRawMany();
+    return replyComment;
   }
 }
