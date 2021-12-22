@@ -41,12 +41,6 @@ export class PublicChatService {
           .limit(1);
       }, 'user_userName')
       .getRawMany();
-
-    for (const list of getAllChat) {
-      list['publicChat_createdTime'] = getDateAndTimeParser(
-        list.publicChat_createdAt,
-      );
-    }
     return getAllChat;
   }
 
