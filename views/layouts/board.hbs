@@ -51,8 +51,8 @@
             <td class="px-4 py-4"><a href='/board/{{this.board_id}}'>{{this.board_title}}</a></td>
             <td class="px-4 py-4">{{this.user_userName}}</td>
             <td class="px-4 py-4">858</td>
-            <td class="px-4 py-4">858</td>
-            <td class="px-4 py-4">21/20/09</td>
+            <td class="px-4 py-4">0</td>
+            <td class="px-4 py-4">{{dateParser this.board_createdAt}}</td>
           </tr>
         {{/each}}
         </tbody>
