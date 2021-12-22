@@ -37,6 +37,9 @@ export class BoardEntity {
   @Column({ default: 0 })
   dislike: number;
 
+  @Column({ default: 0 })
+  views: number;
+
   // @UpdateDateColumn()
   // readonly updatedAt: Date;
 }

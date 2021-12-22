@@ -8,7 +8,7 @@ import { UsersService } from '../users/users.service';
 import { UserRepository } from '../users/users.repository';
 import { LikeService } from './services/like.service';
 import { UserEntity } from '../users/entities/user.entity';
-import { getDateAndTimeParser } from '../common/lib/time';
+import { CommentEntity } from './entities/comment.entity';
 
 @Injectable()
 export class BoardsService {
@@ -41,6 +41,7 @@ export class BoardsService {
         'board.createdAt', //생성 날짜
         'board.like', // 좋아요
         'board.dislike', // 싫어요
+        'board.views', //조회수
       ])
       // .leftJoin('board', 'user', 'board.uid = user.id')
       .addSelect((subQuery) => {
@@ -50,6 +51,12 @@ export class BoardsService {
           .where('board.uid = user.id')
           .limit(1);
       }, 'user_userName')
+      .addSelect((subQuery) => {
+        return subQuery
+          .select('COUNT(*) AS comment_count')
+          .from(CommentEntity, 'comment')
+          .where('board.id = comment.boardID');
+      }, 'comment_count')
       .offset(page * SHOW_LIMIT_BOARD)
       .limit(SHOW_LIMIT_BOARD)
       .getRawMany();
