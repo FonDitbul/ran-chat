@@ -57,9 +57,12 @@ export class BoardsService {
           .from(CommentEntity, 'comment')
           .where('board.id = comment.boardID');
       }, 'comment_count')
+      .orderBy('id', 'DESC')
       .offset(page * SHOW_LIMIT_BOARD)
       .limit(SHOW_LIMIT_BOARD)
       .getRawMany();
+
+    //임시 board pagination
     const countBoard = await this.boardsRepository.count({});
     const curPage = page + 1;
     const startPage = parseInt(String(curPage / 10 - 1)) + 1;
@@ -68,7 +71,7 @@ export class BoardsService {
         ? parseInt(String(countBoard % 10)) * 10
         : countBoard;
     const pageArr = [];
-    for (let i = startPage; i <= endPage; i++) {
+    for (let i = startPage; i <= 10; i++) {
       pageArr.push(i);
     }
     return { getAllBoards, countBoard, pageArr };

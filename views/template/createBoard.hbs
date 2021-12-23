@@ -24,8 +24,8 @@
       {{/each}}
     </ol>
   </nav>
-  <form method="post">
-    <input id='title' placeholder='게시판 제목' style='margin: 40px 10px 0px 10px; font-size:30px' class='w-full flex'></input>
+  <form id='create-board-form'>
+    <input id='title' placeholder='게시판 제목' style='margin: 40px 10px 0px 10px; font-size:30px' class='w-full flex'>
     <hr style='margin: 10px'>
     <textarea id="summernote" name="editordata" style='margin: 40px 10px 0px 10px;'></textarea>
     <button class="px-4 py-2 rounded-md text-sm font-medium border-0 focus:outline-none focus:ring transition text-white bg-gray-500 hover:bg-gray-600 active:bg-gray-700 focus:ring-gray-300">저장</button>
@@ -33,6 +33,7 @@
 
 </div>
 </body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="../js/summernote/summernote-lite.js"></script>
 <script src="../js/summernote/summernote-ko-KR.js"></script>
 <script src='../js/template/createBoard.js'></script>
