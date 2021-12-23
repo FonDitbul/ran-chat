@@ -35,11 +35,13 @@ export class BoardsController {
   async allBoardsPage(
     @Query('page', new DefaultValuePipe(1), ParsePagePipe) page: number,
   ) {
-    const boardList = await this.boardsService.findAll(page);
+    const { getAllBoards, countBoard, pageArr } =
+      await this.boardsService.findAll(page);
     return {
       title: '자유 게시판',
       breads: [{ name: '자유 게시판' }],
-      data: boardList,
+      data: getAllBoards,
+      page: { cur: page, total: countBoard, pageArr: pageArr },
     };
   }
 

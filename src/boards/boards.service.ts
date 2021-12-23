@@ -60,7 +60,18 @@ export class BoardsService {
       .offset(page * SHOW_LIMIT_BOARD)
       .limit(SHOW_LIMIT_BOARD)
       .getRawMany();
-    return getAllBoards;
+    const countBoard = await this.boardsRepository.count({});
+    const curPage = page + 1;
+    const startPage = parseInt(String(curPage / 10 - 1)) + 1;
+    const endPage =
+      parseInt(String(countBoard / 10)) * 10 < countBoard
+        ? parseInt(String(countBoard % 10)) * 10
+        : countBoard;
+    const pageArr = [];
+    for (let i = startPage; i <= endPage; i++) {
+      pageArr.push(i);
+    }
+    return { getAllBoards, countBoard, pageArr };
   }
 
   async findOne(id: number) {
