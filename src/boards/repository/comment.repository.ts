@@ -15,7 +15,7 @@ import { UpdateCommentDto } from '../dto/update-comment.dto';
 
 @EntityRepository(CommentEntity)
 export class CommentRepository extends Repository<CommentEntity> {
-  async findAllBoard(boardID: number) {
+  async findAllComment(boardID: number) {
     const getAllComment = await getRepository(Comment)
       .createQueryBuilder('comment')
       .addSelect((subQuery) => {
@@ -31,7 +31,7 @@ export class CommentRepository extends Repository<CommentEntity> {
     return getAllComment;
   }
 
-  async findOneBoard(boardID: number, id: number) {
+  async findOneComment(boardID: number, id: number) {
     const getOneComment = await getRepository(Comment)
       .createQueryBuilder('comment')
       .andWhere('comment.id = :id', { id })
@@ -39,7 +39,7 @@ export class CommentRepository extends Repository<CommentEntity> {
       .getRawMany();
     return getOneComment;
   }
-  async updateBoard(updateCommentDto: UpdateCommentDto) {
+  async updateComment(updateCommentDto: UpdateCommentDto) {
     const { id, boardID, content } = updateCommentDto;
 
     const updateComment = await getRepository(Comment)

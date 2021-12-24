@@ -8,7 +8,7 @@ export class CommentService {
   constructor(private readonly commentRepository: CommentRepository) {}
 
   async findAll(boardID: number) {
-    const getAllComment = await this.commentRepository.findAllBoard(boardID);
+    const getAllComment = await this.commentRepository.findAllComment(boardID);
     for (const reply of getAllComment) {
       reply['comment_reply'] = await this.findReplyComment(reply.comment_id);
     }
@@ -16,7 +16,7 @@ export class CommentService {
   }
 
   async findOne(boardID: number, id: number) {
-    return this.commentRepository.findOneBoard(boardID, id);
+    return this.commentRepository.findOneComment(boardID, id);
   }
 
   async create(createCommentDto: CreateCommentDto) {
@@ -31,7 +31,7 @@ export class CommentService {
   }
 
   async update(updateCommentDto: UpdateCommentDto) {
-    return await this.commentRepository.updateBoard(updateCommentDto);
+    return await this.commentRepository.updateComment(updateCommentDto);
   }
 
   async remove(id: number) {
