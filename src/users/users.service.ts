@@ -48,26 +48,15 @@ export class UsersService {
   }
 
   async findAll() {
-    const getAllUser = getRepository(UserEntity)
-      .createQueryBuilder('user')
-      .getMany();
-    return await getAllUser;
+    return await this.userRepository.findAll();
   }
 
   async findOneByUserName(userName: string) {
-    const getOneUser = getRepository(UserEntity)
-      .createQueryBuilder('user')
-      .where('user.userName = :userName', { userName })
-      .getOne();
-    return await getOneUser;
+    return await this.userRepository.findOneByUserName(userName);
   }
 
   async findOneByUserID(id: number) {
-    const getOneUser = await getRepository(User)
-      .createQueryBuilder('user')
-      .where('user.id = :id', { id })
-      .getOne();
-    return getOneUser.userName;
+    return await this.userRepository.findOneByUserID(id);
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
@@ -75,6 +64,6 @@ export class UsersService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return this.userRepository.delete(id);
   }
 }
