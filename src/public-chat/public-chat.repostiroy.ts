@@ -23,14 +23,14 @@ export class PublicChatRepository extends Repository<PublicChatEntity> {
     return getAllChat;
   }
   async findOnePublicchat(id: number) {
-    const getOneChat = getRepository(PublicChat)
+    const getOneChat = await getRepository(PublicChat)
       .createQueryBuilder('publicChat')
       .where('publicChat.id = :id', { id })
       .getRawOne();
     return getOneChat;
   }
   async findChatHistory(roomID: number) {
-    const getChatting = getRepository(Chat)
+    const getChatting = await getRepository(Chat)
       .createQueryBuilder('chats')
       .where('chats.roomID = :roomID', { roomID })
       .getMany();

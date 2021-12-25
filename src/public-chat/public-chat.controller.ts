@@ -27,16 +27,10 @@ export class PublicChatController {
     };
   }
 
-  @Post()
-  create(@Body() createPublicChatDto: CreatePublicChatDto) {
-    return this.publicChatService.create(createPublicChatDto);
-  }
-
   @Get('chatting/:id')
   @Render('template/publicChatting')
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    const { publicChat_title, publicChat_uid, publicChat_createdAt } =
-      await this.publicChatService.findOne(id);
+    const { publicChat_title } = await this.publicChatService.findOne(id);
     const chatHistory = await this.publicChatService.findChatHistory(id);
     return {
       breads: [{ name: '공개 채팅방' }, { name: publicChat_title }],
@@ -44,6 +38,11 @@ export class PublicChatController {
       roomTitle: publicChat_title,
       chatHistory,
     };
+  }
+
+  @Post()
+  create(@Body() createPublicChatDto: CreatePublicChatDto) {
+    return this.publicChatService.create(createPublicChatDto);
   }
 
   @Patch(':id')

@@ -4,7 +4,6 @@ import { PublicChatController } from './public-chat.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PublicChatRepository } from './public-chat.repostiroy';
 import { ChatRepository } from '../chats/chats.repository';
-import { UsersService } from '../users/users.service';
 import { UsersModule } from '../users/users.module';
 
 @Module({
