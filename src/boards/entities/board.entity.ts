@@ -2,15 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
+  ManyToMany,
+  JoinTable,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { UserEntity } from '../../users/entities/user.entity';
-import { CategoryEntity } from './category.entity';
-import { CommentEntity } from './comment.entity';
-
 @Entity('board')
 export class BoardEntity {
   @PrimaryGeneratedColumn()
@@ -30,6 +26,10 @@ export class BoardEntity {
 
   @Column()
   content: string;
+
+  @ManyToMany(() => UserEntity)
+  @JoinTable()
+  userLikes: UserEntity[];
 
   @Column({ default: 0 })
   like: number;
