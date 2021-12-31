@@ -30,7 +30,7 @@ export class BoardsController {
     private readonly likeService: LikeService,
   ) {}
 
-  // 게시판 Render
+  // 전체 게시판 불러오기
   @Get('')
   @Render('layouts/board')
   async allBoardsPage(
@@ -54,13 +54,14 @@ export class BoardsController {
       breads: [{ name: '자유 게시판' }, { name: '게시판 생성' }],
     };
   }
-  // 한 게시판 불러오기
+  // one 게시판 불러오기
   @Get(':id')
   @Render('template/boards')
   async oneBoardPage(@Param('id', ParseIntPipe) id: number) {
     const board = await this.boardsService.findOne(id);
     const comment = await this.commentService.findAll(id);
     const like = await this.likeService.find(id);
+    console.log(like);
     return {
       title: '게시판 test',
       breads: [
@@ -74,12 +75,12 @@ export class BoardsController {
       comment: comment,
     };
   }
-  //게시판 CRUD
+  //게시판 create
   @Post()
   create(@Body() createBoardDto: CreateBoardDto) {
     return this.boardsService.create(createBoardDto);
   }
-
+  // 게시판 update
   @Patch('')
   update(
     @Query('id', ParseIntPipe) id: number,
@@ -87,12 +88,11 @@ export class BoardsController {
   ) {
     return this.boardsService.update(id, updateBoardDto);
   }
-
+  // 게시판 delete
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.boardsService.remove(id);
   }
-
   //댓글 서비스
   @Get('comment/:boardID')
   @UseInterceptors(dataInterceptor)
@@ -114,7 +114,13 @@ export class BoardsController {
   removeComment(@Query('id', ParseIntPipe) id: number) {
     return this.commentService.remove(id);
   }
+
   //좋아요 싫어요 기능
+  @Get('like/:boardID')
+  async getLike(@Param('boardID', ParseIntPipe) id: number) {
+    const like = await this.likeService.find(id);
+    return like.userLikes;
+  }
   @Patch('like')
   updateLike(
     @Query('id', ParseIntPipe) id: number,
