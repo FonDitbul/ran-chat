@@ -21,6 +21,7 @@ import { CommentService } from './services/comment.service';
 import { LikeService } from './services/like.service';
 import { ParsePagePipe } from '../common/pipes/ParsePage.pipe';
 import { dataInterceptor } from '../common/interceptors/data.interceptor';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('board')
 export class BoardsController {
@@ -31,6 +32,7 @@ export class BoardsController {
   ) {}
 
   // 전체 게시판 불러오기
+  @ApiTags('게시판')
   @Get('')
   @Render('layouts/board')
   async allBoardsPage(
@@ -45,7 +47,9 @@ export class BoardsController {
       page: { cur: page, total: countBoard, pageArr: pageArr },
     };
   }
+
   // 게시판 만들기
+  @ApiTags('게시판')
   @Get('create')
   @Render('template/createBoard')
   async createBoardPage() {
@@ -54,14 +58,15 @@ export class BoardsController {
       breads: [{ name: '자유 게시판' }, { name: '게시판 생성' }],
     };
   }
+
   // one 게시판 불러오기
+  @ApiTags('게시판')
   @Get(':id')
   @Render('template/boards')
   async oneBoardPage(@Param('id', ParseIntPipe) id: number) {
     const board = await this.boardsService.findOne(id);
     const comment = await this.commentService.findAll(id);
     const like = await this.likeService.find(id);
-    console.log(like);
     return {
       title: '게시판 test',
       breads: [
@@ -75,12 +80,16 @@ export class BoardsController {
       comment: comment,
     };
   }
+
   //게시판 create
+  @ApiTags('게시판')
   @Post()
   create(@Body() createBoardDto: CreateBoardDto) {
     return this.boardsService.create(createBoardDto);
   }
+
   // 게시판 update
+  @ApiTags('게시판')
   @Patch('')
   update(
     @Query('id', ParseIntPipe) id: number,
@@ -88,39 +97,49 @@ export class BoardsController {
   ) {
     return this.boardsService.update(id, updateBoardDto);
   }
+
   // 게시판 delete
+  @ApiTags('게시판')
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.boardsService.remove(id);
   }
+
   //댓글 서비스
+  @ApiTags('게시판 댓글')
   @Get('comment/:boardID')
   @UseInterceptors(dataInterceptor)
   async getBoardAllComment(@Param('boardID', ParseIntPipe) boardID: number) {
     return await this.commentService.findAll(boardID);
   }
 
+  @ApiTags('게시판 댓글')
   @Post('comment')
   createComment(@Body() createCommentDto: CreateCommentDto) {
     return this.commentService.create(createCommentDto);
   }
 
+  @ApiTags('게시판 댓글')
   @Patch('comment')
   updateComment(@Body() updateCommentDto: UpdateCommentDto) {
     return this.commentService.update(updateCommentDto);
   }
 
+  @ApiTags('게시판 댓글')
   @Delete('comment')
   removeComment(@Query('id', ParseIntPipe) id: number) {
     return this.commentService.remove(id);
   }
 
   //좋아요 싫어요 기능
+  @ApiTags('게시판 좋아요')
   @Get('like/:boardID')
   async getLike(@Param('boardID', ParseIntPipe) id: number) {
     const like = await this.likeService.find(id);
     return like.userLikes;
   }
+
+  @ApiTags('게시판 좋아요')
   @Patch('like')
   updateLike(
     @Query('id', ParseIntPipe) id: number,

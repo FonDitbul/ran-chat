@@ -48,6 +48,8 @@ export class BoardsRepository extends Repository<BoardEntity> {
         'board.title',
         'board.uid', // 게시판 작성유저 아이디
         'board.category', // 게시판 카테고리
+        'board.content', // 게시판 내용
+        'board.like', // 게시판 좋아요
         'board.createdAt', //생성 날짜
         'board.views', //조회수
       ])
