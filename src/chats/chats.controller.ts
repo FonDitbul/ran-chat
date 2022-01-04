@@ -1,11 +1,16 @@
 import { Controller, Get, Render } from '@nestjs/common';
 import { ChatsService } from './chats.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('채팅창')
+@ApiTags('랜덤 채팅')
 @Controller('chat')
 export class ChatsController {
   constructor(private readonly chatsService: ChatsService) {}
+
+  @ApiOperation({
+    summary: '랜덤 채팅방 불러오기',
+    description: '랜덤 채팅방 Rendering',
+  })
   @Get()
   @Render('layouts/chat')
   chattingPage() {

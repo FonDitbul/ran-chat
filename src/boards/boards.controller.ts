@@ -21,7 +21,7 @@ import { CommentService } from './services/comment.service';
 import { LikeService } from './services/like.service';
 import { ParsePagePipe } from '../common/pipes/ParsePage.pipe';
 import { dataInterceptor } from '../common/interceptors/data.interceptor';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @Controller('board')
 export class BoardsController {
@@ -31,8 +31,11 @@ export class BoardsController {
     private readonly likeService: LikeService,
   ) {}
 
-  // 전체 게시판 불러오기
   @ApiTags('게시판')
+  @ApiOperation({
+    summary: '전체 게시판 불러오기',
+    description: '전체 게시판 페이지',
+  })
   @Get('')
   @Render('layouts/board')
   async allBoardsPage(
@@ -48,8 +51,11 @@ export class BoardsController {
     };
   }
 
-  // 게시판 만들기
   @ApiTags('게시판')
+  @ApiOperation({
+    summary: '게시판 만들기',
+    description: '게시판 생성 페이지 Rendering',
+  })
   @Get('create')
   @Render('template/createBoard')
   async createBoardPage() {
@@ -59,8 +65,11 @@ export class BoardsController {
     };
   }
 
-  // one 게시판 불러오기
   @ApiTags('게시판')
+  @ApiOperation({
+    summary: '한 게시판 불러오기',
+    description: '한 게시판 상세페이지 ',
+  })
   @Get(':id')
   @Render('template/boards')
   async oneBoardPage(@Param('id', ParseIntPipe) id: number) {
@@ -83,6 +92,10 @@ export class BoardsController {
 
   //게시판 create
   @ApiTags('게시판')
+  @ApiOperation({
+    summary: '게시판 생성 API',
+    description: '게시판 생성 데이터 서버 전송',
+  })
   @Post()
   create(@Body() createBoardDto: CreateBoardDto) {
     return this.boardsService.create(createBoardDto);
@@ -90,6 +103,10 @@ export class BoardsController {
 
   // 게시판 update
   @ApiTags('게시판')
+  @ApiOperation({
+    summary: '게시판 업데이트 API',
+    description: '게시판 업데이트 데이터 서버 전송',
+  })
   @Patch('')
   update(
     @Query('id', ParseIntPipe) id: number,
@@ -100,6 +117,10 @@ export class BoardsController {
 
   // 게시판 delete
   @ApiTags('게시판')
+  @ApiOperation({
+    summary: '게시판 삭제 API',
+    description: '게시판 삭제 서버 전송',
+  })
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.boardsService.remove(id);
@@ -107,6 +128,10 @@ export class BoardsController {
 
   //댓글 서비스
   @ApiTags('게시판 댓글')
+  @ApiOperation({
+    summary: '댓글 불러오기',
+    description: '해당 게시판 댓글 불러오기',
+  })
   @Get('comment/:boardID')
   @UseInterceptors(dataInterceptor)
   async getBoardAllComment(@Param('boardID', ParseIntPipe) boardID: number) {
@@ -114,18 +139,30 @@ export class BoardsController {
   }
 
   @ApiTags('게시판 댓글')
+  @ApiOperation({
+    summary: '댓글 달기',
+    description: '해당 게시판 댓글 달기',
+  })
   @Post('comment')
   createComment(@Body() createCommentDto: CreateCommentDto) {
     return this.commentService.create(createCommentDto);
   }
 
   @ApiTags('게시판 댓글')
+  @ApiOperation({
+    summary: '댓글 업데이트',
+    description: '해당 댓글 업데이트',
+  })
   @Patch('comment')
   updateComment(@Body() updateCommentDto: UpdateCommentDto) {
     return this.commentService.update(updateCommentDto);
   }
 
   @ApiTags('게시판 댓글')
+  @ApiOperation({
+    summary: '댓글 삭제',
+    description: '해당 게시판 댓글 삭제',
+  })
   @Delete('comment')
   removeComment(@Query('id', ParseIntPipe) id: number) {
     return this.commentService.remove(id);
@@ -133,6 +170,10 @@ export class BoardsController {
 
   //좋아요 싫어요 기능
   @ApiTags('게시판 좋아요')
+  @ApiOperation({
+    summary: '게시판 좋아요 불러오기',
+    description: '해당 게시판 좋아요 불러오기',
+  })
   @Get('like/:boardID')
   async getLike(@Param('boardID', ParseIntPipe) id: number) {
     const like = await this.likeService.find(id);
@@ -140,6 +181,10 @@ export class BoardsController {
   }
 
   @ApiTags('게시판 좋아요')
+  @ApiOperation({
+    summary: '좋아요 업데이트',
+    description: '해당 게시판 좋아요 업데이트',
+  })
   @Patch('like')
   updateLike(
     @Query('id', ParseIntPipe) id: number,

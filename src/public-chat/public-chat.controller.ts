@@ -12,13 +12,17 @@ import {
 import { PublicChatService } from './public-chat.service';
 import { CreatePublicChatDto } from './dto/create-public-chat.dto';
 import { UpdatePublicChatDto } from './dto/update-public-chat.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('공개 채팅방')
 @Controller('public-chat')
 export class PublicChatController {
   constructor(private readonly publicChatService: PublicChatService) {}
 
+  @ApiOperation({
+    summary: '공개 채팅방 전체 불러오기',
+    description: '공개 채팅방 전체 불러오기 페이지 Render',
+  })
   @Get()
   @Render('layouts/publicChat')
   async publicChatPage() {
@@ -29,6 +33,10 @@ export class PublicChatController {
     };
   }
 
+  @ApiOperation({
+    summary: '한 공개 채팅방 불러오기',
+    description: '공개 채팅방, 채팅내역 불러오기',
+  })
   @Get('chatting/:id')
   @Render('template/publicChatting')
   async findOne(@Param('id', ParseIntPipe) id: number) {
@@ -42,11 +50,19 @@ export class PublicChatController {
     };
   }
 
+  @ApiOperation({
+    summary: '공개 채팅방 생성',
+    description: '공개 채팅방 생성하기',
+  })
   @Post()
   create(@Body() createPublicChatDto: CreatePublicChatDto) {
     return this.publicChatService.create(createPublicChatDto);
   }
 
+  @ApiOperation({
+    summary: '공개 채팅방 업데이트',
+    description: '공개 채팅방 업데이트 하기',
+  })
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -55,6 +71,10 @@ export class PublicChatController {
     return this.publicChatService.update(id, updatePublicChatDto);
   }
 
+  @ApiOperation({
+    summary: '공개 채팅방 삭제',
+    description: '공개 채팅방 삭제 하기',
+  })
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.publicChatService.remove(id);
