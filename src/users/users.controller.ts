@@ -12,7 +12,9 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('유저')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -33,9 +35,9 @@ export class UsersController {
     return { title: '??' };
   }
 
-  @Get('profile')
+  @Get('profile/:uid')
   @Render('template/profile')
-  profilePage() {
+  profilePage(@Param() uid: number) {
     return { title: 'profile' };
   }
 
