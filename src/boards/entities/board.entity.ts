@@ -7,6 +7,12 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { UserEntity } from '../../users/entities/user.entity';
+
+export enum category {
+  NOTICE = '공지사항',
+  BOARD = '게시판',
+}
+
 @Entity('board')
 export class BoardEntity {
   @PrimaryGeneratedColumn()
@@ -15,8 +21,8 @@ export class BoardEntity {
   @Column({ length: 32 })
   title: string;
 
-  @Column()
-  category: number;
+  @Column({ type: 'enum', enum: category, default: category.BOARD })
+  category: category;
 
   @Column()
   uid: number;

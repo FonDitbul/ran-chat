@@ -12,7 +12,9 @@ import {
 import { PublicChatService } from './public-chat.service';
 import { CreatePublicChatDto } from './dto/create-public-chat.dto';
 import { UpdatePublicChatDto } from './dto/update-public-chat.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('공개 채팅방')
 @Controller('public-chat')
 export class PublicChatController {
   constructor(private readonly publicChatService: PublicChatService) {}
