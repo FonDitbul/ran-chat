@@ -34,19 +34,20 @@
   //좋아요 클릭 이벤트
   const clickLike = async (event) => {
     const boardID = location.pathname.split('/')[2];
-    console.log(event.target);
-    console.log('좋아용~!');
-    console.log(likeDiv.innerText);
-    const Like = await getLike();
+    const userName = sessionStorage.getItem('userName');
+    const userResponse = await axios.get('/users/' + userName);
+    const uid = userResponse.data.id;
+    let Like = await getLike();
     likeDiv.innerText = Like + 1;
-    // await axios.post('/board/like', {});
+    await axios.patch(`/board/like?id=${boardID}&uid=${uid}`);
   };
 
-  likeDiv.addEventListener('click', updateLike);
+  likeDiv.addEventListener('click', clickLike);
+
   //reply 답글 만들기
-  const replyCreate = async () => {
-    console.log('답글 만들기');
-  };
-  const replyComment = document.getElementById('reply-comment');
-  replyComment.addEventListener('click', replyCreate);
+  // const replyCreate = async () => {
+  //   console.log('답글 만들기');
+  // };
+  // const replyComment = document.getElementById('reply-comment');
+  // replyComment.addEventListener('click', replyCreate);
 })();
