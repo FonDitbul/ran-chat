@@ -22,7 +22,7 @@ const createBoard = async (event) => {
   const uid = response.data.id;
   await axios.post('/board', {
     title: title,
-    category: 1,
+    category: '게시판',
     uid: uid,
     content: content,
   });
