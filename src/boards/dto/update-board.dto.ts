@@ -1,14 +1,13 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { IsNotEmpty } from 'class-validator';
 import { CreateBoardDto } from './create-board.dto';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
+import { BoardEntity } from '../entities/board.entity';
 
-export class UpdateBoardDto extends PartialType(CreateBoardDto) {
-  @ApiProperty({
-    example: 1,
-    description: '업데이트 게시판 ID, createBoarDto 참조',
-    required: true,
-  })
-  @IsNotEmpty()
-  readonly boardID: number;
-}
+export class UpdateBoardDto extends PickType(BoardEntity, [
+  'id',
+  'title',
+  'category',
+  'uid',
+  'content',
+] as const) {}

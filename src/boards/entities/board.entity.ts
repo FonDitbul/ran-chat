@@ -5,8 +5,11 @@ import {
   ManyToMany,
   JoinTable,
   PrimaryGeneratedColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 import { UserEntity } from '../../users/entities/user.entity';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
 
 export enum category {
   NOTICE = '공지사항',
@@ -15,21 +18,36 @@ export enum category {
 
 @Entity('board')
 export class BoardEntity {
+  @ApiProperty({
+    example: '게시판 ID',
+    description: '게시판 ID',
+    required: true,
+  })
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({
+    example: '게시판 제목',
+    description: '게시판 제목',
+    required: true,
+  })
+  @IsNotEmpty()
   @Column({ length: 32 })
   title: string;
 
+  @ApiProperty({
+    enum: ['공지사항', '게시판'],
+    required: false,
+  })
   @Column({ type: 'enum', enum: category, default: category.BOARD })
   category: category;
 
+  @ApiProperty({ example: 1, description: '유저아이디', required: true })
+  @IsNotEmpty()
   @Column()
   uid: number;
 
-  @CreateDateColumn()
-  readonly createdAt: Date;
-
+  @ApiProperty({ example: '테스트 게시판', description: '게시판 내용' })
   @Column()
   content: string;
 
@@ -48,4 +66,7 @@ export class BoardEntity {
 
   // @UpdateDateColumn()
   // readonly updatedAt: Date;
+
+  @CreateDateColumn()
+  readonly createdAt: Date;
 }
