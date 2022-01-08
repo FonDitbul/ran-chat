@@ -1,23 +1,7 @@
-import { IsNotEmpty } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
+import { UserEntity } from '../entities/user.entity';
 
-export class CreateUserDto {
-  @ApiProperty({
-    example: '개똥이',
-    description: '유저 이름',
-    required: true,
-  })
-  @IsNotEmpty()
-  readonly userName: string;
-
-  // @IsNotEmpty() // 나중에 추가
-  // readonly email: string;
-
-  @ApiProperty({
-    example: '1q2w3e4r',
-    description: '유저 비밀번호',
-    required: true,
-  })
-  @IsNotEmpty()
-  readonly password: string;
-}
+export class CreateUserDto extends PickType(UserEntity, [
+  'userName',
+  'password',
+] as const) {}

@@ -6,22 +6,34 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { PublicChatEntity } from '../../public-chat/entities/public-chat.entity';
-import { BoardEntity } from '../../boards/entities/board.entity';
-import { chatEntity } from '../../chats/entities/history-chat.entity';
-import { CommentEntity } from '../../boards/entities/comment.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('user')
 export class UserEntity {
+  @ApiProperty({
+    example: 1,
+    description: '유저 ID',
+    required: true,
+  })
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 32 })
+  @ApiProperty({
+    example: '개똥이',
+    description: '유저 이름',
+    required: true,
+  })
+  @Column({ unique: true, length: 32 })
   userName: string;
 
   // @Column({ unique: true })
   // email: string;
 
+  @ApiProperty({
+    example: '1q2w3e4r',
+    description: '유저 비밀번호',
+    required: true,
+  })
   @Column({ select: false })
   password: string;
 
