@@ -6,6 +6,9 @@ import {
   JoinTable,
   PrimaryGeneratedColumn,
   DeleteDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { UserEntity } from '../../users/entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
@@ -47,6 +50,10 @@ export class BoardEntity {
   @Column()
   uid: number;
 
+  @ManyToOne(() => UserEntity, (users) => users.board)
+  @JoinColumn({ name: 'uid' })
+  user: UserEntity;
+
   @ApiProperty({ example: '테스트 게시판', description: '게시판 내용' })
   @Column()
   content: string;
@@ -64,9 +71,12 @@ export class BoardEntity {
   @Column({ default: 0 })
   views: number;
 
-  // @UpdateDateColumn()
-  // readonly updatedAt: Date;
-
   @CreateDateColumn()
   readonly createdAt: Date;
+
+  @UpdateDateColumn()
+  readonly updatedAt: Date;
+
+  @DeleteDateColumn()
+  readonly deletedAt: Date | null;
 }

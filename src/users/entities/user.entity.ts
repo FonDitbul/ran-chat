@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { BoardEntity } from '../../boards/entities/board.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -36,6 +37,9 @@ export class UserEntity {
   })
   @Column({ select: false })
   password: string;
+
+  @OneToMany(() => BoardEntity, (board) => board.user)
+  board: BoardEntity[];
 
   // @OneToMany((type) => PublicChatEntity, (publicChat) => publicChat.user)
   // chat: chatEntity[];
