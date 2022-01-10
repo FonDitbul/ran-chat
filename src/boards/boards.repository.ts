@@ -53,13 +53,14 @@ export class BoardsRepository extends Repository<BoardEntity> {
         'board.createdAt', //생성 날짜
         'board.views', //조회수
       ])
-      .addSelect((subQuery) => {
-        return subQuery
-          .select(['user.userName'])
-          .from(UserEntity, 'user')
-          .where('board.uid = user.id')
-          .limit(1);
-      }, 'user_userName')
+      // .addSelect((subQuery) => {
+      //   return subQuery
+      //     .select(['user.userName'])
+      //     .from(UserEntity, 'user')
+      //     .where('board.uid = user.id')
+      //     .limit(1);
+      // }, 'user_userName')
+      .innerJoinAndSelect('board.user', 'user', 'board.uid = user.id')
       .where('board.id = :id', { id })
       .getRawOne();
     return getOneBoard;
