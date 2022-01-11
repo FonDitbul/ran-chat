@@ -2,12 +2,16 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { BoardEntity } from '../../boards/entities/board.entity';
+import { PublicChatEntity } from '../../public-chat/entities/public-chat.entity';
+import { chatEntity } from '../../chats/entities/history-chat.entity';
+import { CommentEntity } from '../../boards/entities/comment.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -38,11 +42,32 @@ export class UserEntity {
   @Column({ select: false })
   password: string;
 
+  //--relations--
   @OneToMany(() => BoardEntity, (board) => board.user)
-  board: BoardEntity[];
+  writeBoard: BoardEntity[];
 
-  // @OneToMany((type) => PublicChatEntity, (publicChat) => publicChat.user)
-  // chat: chatEntity[];
+  @OneToMany(() => PublicChatEntity, (publicChat) => publicChat.user)
+  publicChat: PublicChatEntity[];
+
+  @OneToMany(() => chatEntity, (chats) => chats.user)
+  chats: chatEntity[];
+
+  @ManyToMany(() => BoardEntity, (board) => board.userLikes)
+  @JoinTable({
+    name: 'user_likes_board',
+    joinColumn: {
+      name: 'uid',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'boardId',
+      referencedColumnName: 'id',
+    },
+  })
+  likeBoard: BoardEntity[];
+
+  @OneToMany(() => CommentEntity, (comments) => comments.user)
+  comments: CommentEntity[];
 
   // @Column({ default: '' })
   // imageLink: string;

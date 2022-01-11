@@ -63,4 +63,13 @@ export class CommentEntity {
 
   // @UpdateDateColumn()
   // readonly updatedAt: Date;
+
+  //--relations--
+  @ManyToOne(() => UserEntity, (users) => users.comments)
+  @JoinColumn({ name: 'uid' })
+  user: UserEntity;
+
+  @ManyToOne(() => BoardEntity, (boards) => boards.comments)
+  @JoinColumn({ name: 'boardID' })
+  board: BoardEntity;
 }

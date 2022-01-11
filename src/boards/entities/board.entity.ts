@@ -9,10 +9,12 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { UserEntity } from '../../users/entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
+import { CommentEntity } from './comment.entity';
 
 export enum category {
   NOTICE = '공지사항',
@@ -50,17 +52,9 @@ export class BoardEntity {
   @Column()
   uid: number;
 
-  @ManyToOne(() => UserEntity, (users) => users.board)
-  @JoinColumn({ name: 'uid' })
-  user: UserEntity;
-
   @ApiProperty({ example: '테스트 게시판', description: '게시판 내용' })
   @Column()
   content: string;
-
-  @ManyToMany(() => UserEntity)
-  @JoinTable()
-  userLikes: UserEntity[];
 
   @Column({ default: 0 })
   like: number;
@@ -79,4 +73,16 @@ export class BoardEntity {
 
   @DeleteDateColumn()
   readonly deletedAt: Date | null;
+
+  //--relations--
+  @ManyToOne(() => UserEntity, (users) => users.writeBoard)
+  @JoinColumn({ name: 'uid' })
+  user: UserEntity;
+
+  @ManyToMany(() => UserEntity, (users) => users.likeBoard)
+  @JoinTable()
+  userLikes: UserEntity[];
+
+  @OneToMany(() => CommentEntity, (comments) => comments.board)
+  comments: CommentEntity[];
 }
