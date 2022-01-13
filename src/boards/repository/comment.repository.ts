@@ -53,23 +53,17 @@ export class CommentRepository extends Repository<CommentEntity> {
   async findReplyComment(groupID: number) {
     const replyComment = await getRepository(Comment)
       .createQueryBuilder('comment')
-      .addSelect((subQuery) => {
-        return subQuery
-          .select(['user.userName'])
-          .from(UserEntity, 'user')
-          .where('comment.uid = user.id')
-          .limit(1);
-      }, 'user_userName')
+      .innerJoinAndSelect('comment.user', 'user', 'comment.uid = user.id')
       .andWhere('comment.groupID = :groupID', { groupID })
       .getRawMany();
     return replyComment;
   }
 }
 
-getConnectionOptions().then((connectionOptions) => {
-  return createConnection(
-    Object.assign(connectionOptions, {
-      logger: new MyCustomLogger(),
-    }),
-  );
-});
+// getConnectionOptions().then((connectionOptions) => {
+//   return createConnection(
+//     Object.assign(connectionOptions, {
+//       logger: new MyCustomLogger(),
+//     }),
+//   );
+// });

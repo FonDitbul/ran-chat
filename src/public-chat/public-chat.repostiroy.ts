@@ -11,14 +11,7 @@ export class PublicChatRepository extends Repository<PublicChatEntity> {
   async findAll() {
     const getAllChat = await getRepository(PublicChat)
       .createQueryBuilder('publicChat')
-      // .leftJoin('publicChat', 'user', 'publicChat.uid = user.id')
-      .addSelect((subQuery) => {
-        return subQuery
-          .select(['user.userName'])
-          .from(UserEntity, 'user')
-          .where('publicChat.uid = user.id')
-          .limit(1);
-      }, 'user_userName')
+      .innerJoinAndSelect('publicChat.user', 'user', 'publicChat.uid = user.id')
       .getRawMany();
     return getAllChat;
   }
