@@ -11,7 +11,7 @@ export class BoardsRepository extends Repository<BoardEntity> {
     const getAllBoards = await getRepository(Board)
       .createQueryBuilder('board')
       .select([
-        'board.id AS board_id',
+        'board.id',
         'board.title',
         'board.uid', // 게시판 작성유저 아이디
         'board.category', // 게시판 카테고리
@@ -37,14 +37,15 @@ export class BoardsRepository extends Repository<BoardEntity> {
       .orderBy('id', 'DESC')
       .offset(page * SHOW_LIMIT_BOARD)
       .limit(SHOW_LIMIT_BOARD)
-      .getRawMany();
+      .getMany();
     return getAllBoards;
   }
+
   async findOneBoard(id: number) {
     const getOneBoard = await getRepository(Board)
       .createQueryBuilder('board')
       .select([
-        'board.id AS board_id',
+        'board.id',
         'board.title',
         'board.uid', // 게시판 작성유저 아이디
         'board.category', // 게시판 카테고리
@@ -53,16 +54,9 @@ export class BoardsRepository extends Repository<BoardEntity> {
         'board.createdAt', //생성 날짜
         'board.views', //조회수
       ])
-      // .addSelect((subQuery) => {
-      //   return subQuery
-      //     .select(['user.userName'])
-      //     .from(UserEntity, 'user')
-      //     .where('board.uid = user.id')
-      //     .limit(1);
-      // }, 'user_userName')
       .innerJoinAndSelect('board.user', 'user', 'board.uid = user.id')
       .where('board.id = :id', { id })
-      .getRawOne();
+      .getOne();
     return getOneBoard;
   }
 
@@ -74,6 +68,7 @@ export class BoardsRepository extends Repository<BoardEntity> {
       .getOne();
     return boardLikes;
   }
+
   async updateBoard(id: number, updateBoardDto: UpdateBoardDto) {
     const { content } = updateBoardDto;
     const updateOneBoard = await getRepository(Board)

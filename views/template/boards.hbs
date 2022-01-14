@@ -26,12 +26,12 @@
       <div class="flex">
         <div class="space-y-1 flex flex-col w-full">
           <div class="flex w-full flex items-center">
-            <div class="border border-gray-200"><h1>{{data.board_title}}</h1></div>
+            <div class="border border-gray-200"><h1>{{data.title}}</h1></div>
           </div>
-          <div class="border border-gray-200 w-36 h-5">{{dateParser data.board_createdAt}}</div>
-          <div class="border border-gray-200 w-36 h-5">{{data.user_userName}}</div>
+          <div class="border border-gray-200 w-36 h-5">{{dateParser data.createdAt}}</div>
+          <div class="border border-gray-200 w-36 h-5">{{data.user.userName}}</div>
           <div class="border border-gray-200 w-full">
-            {{data.board_content}}
+            {{data.content}}
           </div>
         </div>
       </div>
@@ -43,11 +43,11 @@
               (좋아요)
             </span>
             <span id='like' class="border border-gray-200 w-20 h-5">
-              {{data.board_like}}
+              {{data.like}}
             </span>
           </div>
           <span class="bg-tertiary h-1 w-20 rounded"></span>
-<!--          <div id='dislike' class=" border border-gray-200 w-20 h-5 ">(싫어요) {{data.board_dislike}}</div>-->
+<!--          <div id='dislike' class=" border border-gray-200 w-20 h-5 ">(싫어요) {{data.dislike}}</div>-->
         </div>
         <!-- 개시판 수정하기 -->
         <button id='update-button-button'
@@ -62,9 +62,9 @@
       <h2>댓글</h2>
       {{#each comment}}
         <div class='flex'> <!-- root 댓글-->
-          <div class="border border-gray-200 w-36 h-5 ">{{user_userName}}</div>
+          <div class="border border-gray-200 w-36 h-5 ">{{userName}}</div>
           <div class="border border-gray-200">
-            {{comment_content}}
+            {{content}}
           </div>
           <div>
             좋아요
@@ -73,9 +73,9 @@
         </div>
         {{#each comment_reply}}
           <div class='flex pl-8'> <!-- reply 댓글 -->
-            <div class="border border-gray-200 w-36 h-5 ">{{user_userName}}</div>
+            <div class="border border-gray-200 w-36 h-5 ">{{userName}}</div>
             <div class="border border-gray-200">
-              {{comment_content}}
+              {{content}}
             </div>
             <div>
               <button>좋아요</button>

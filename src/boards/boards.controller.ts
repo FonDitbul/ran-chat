@@ -82,7 +82,7 @@ export class BoardsController {
         {
           name: '자유 게시판',
         },
-        { name: board.board_title },
+        { name: board.title },
       ],
       data: board,
       like: like.userLikes,

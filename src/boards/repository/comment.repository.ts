@@ -18,16 +18,10 @@ export class CommentRepository extends Repository<CommentEntity> {
   async findAllComment(boardID: number) {
     const getAllComment = await getRepository(Comment)
       .createQueryBuilder('comment')
-      .addSelect((subQuery) => {
-        return subQuery
-          .select(['user.userName'])
-          .from(UserEntity, 'user')
-          .where('comment.uid = user.id')
-          .limit(1);
-      }, 'user_userName')
+      .innerJoinAndSelect('comment.user', 'user', 'comment.uid = user.id')
       .andWhere('comment.boardID = :boardID', { boardID })
       .andWhere('comment.groupID = 0')
-      .getRawMany();
+      .getMany();
     return getAllComment;
   }
 
@@ -36,7 +30,7 @@ export class CommentRepository extends Repository<CommentEntity> {
       .createQueryBuilder('comment')
       .andWhere('comment.id = :id', { id })
       .andWhere('comment.boardID = :boardID', { boardID })
-      .getRawMany();
+      .getMany();
     return getOneComment;
   }
   async updateComment(updateCommentDto: UpdateCommentDto) {
@@ -55,7 +49,7 @@ export class CommentRepository extends Repository<CommentEntity> {
       .createQueryBuilder('comment')
       .innerJoinAndSelect('comment.user', 'user', 'comment.uid = user.id')
       .andWhere('comment.groupID = :groupID', { groupID })
-      .getRawMany();
+      .getMany();
     return replyComment;
   }
 }

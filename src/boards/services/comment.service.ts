@@ -10,7 +10,7 @@ export class CommentService {
   async findAll(boardID: number) {
     const getAllComment = await this.commentRepository.findAllComment(boardID);
     for (const reply of getAllComment) {
-      reply['comment_reply'] = await this.findReplyComment(reply.comment_id);
+      reply['reply'] = await this.findReplyComment(reply.id);
     }
     return getAllComment;
   }

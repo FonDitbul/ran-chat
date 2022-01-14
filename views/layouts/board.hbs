@@ -48,11 +48,11 @@
         <tbody class="text-sm font-normal text-gray-700">
         {{#each data}}
           <tr class="hover:bg-gray-100 border-b border-gray-200 py-4" >
-            <td class="px-4 py-4"><a href='/board/{{this.board_id}}'>{{this.board_title}}</a></td>
-            <td class="px-4 py-4">{{this.user_userName}}</td>
-            <td class="px-4 py-4">{{this.comment_count}}</td>
-            <td class="px-4 py-4">{{this.board_views}}</td>
-            <td class="px-4 py-4">{{dateParser this.board_createdAt}}</td>
+            <td class="px-4 py-4"><a href='/board/{{this.id}}'>{{this.title}}</a></td>
+            <td class="px-4 py-4">{{this.user.userName}}</td>
+            <td class="px-4 py-4">{{this.count}}</td>
+            <td class="px-4 py-4">{{this.views}}</td>
+            <td class="px-4 py-4">{{dateParser this.createdAt}}</td>
           </tr>
         {{/each}}
         </tbody>
