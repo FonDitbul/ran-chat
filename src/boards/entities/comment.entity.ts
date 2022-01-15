@@ -1,6 +1,5 @@
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -10,9 +9,10 @@ import { UserEntity } from '../../users/entities/user.entity';
 import { BoardEntity } from './board.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
+import { CommonEntity } from '../../common/entities/common.entity';
 
 @Entity('comment')
-export class CommentEntity {
+export class CommentEntity extends CommonEntity {
   @ApiProperty({
     example: 1,
     description: 'comment id',
@@ -57,12 +57,6 @@ export class CommentEntity {
   })
   @Column()
   content: string;
-
-  @CreateDateColumn()
-  readonly createdAt: Date;
-
-  // @UpdateDateColumn()
-  // readonly updatedAt: Date;
 
   //--relations--
   @ManyToOne(() => UserEntity, (users) => users.comments)
