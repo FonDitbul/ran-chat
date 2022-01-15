@@ -38,7 +38,7 @@ export class PublicChatController {
     description: '공개 채팅방, 채팅내역 불러오기',
   })
   @Get('chatting/:id')
-  @Render('template/publicChatting')
+  @Render('template/publicChattingRoom')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const { publicChat_title } = await this.publicChatService.findOne(id);
     const chatHistory = await this.publicChatService.findChatHistory(id);

@@ -71,7 +71,7 @@ export class BoardsController {
     description: '한 게시판 상세페이지 ',
   })
   @Get(':id')
-  @Render('template/boards')
+  @Render('template/oneBoard')
   async oneBoardPage(@Param('id', ParseIntPipe) id: number) {
     const board = await this.boardsService.findOne(id);
     const comment = await this.commentService.findAll(id);
