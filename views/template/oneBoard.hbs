@@ -62,7 +62,7 @@
       <h2>댓글</h2>
       {{#each comment}}
         <div class='flex'> <!-- root 댓글-->
-          <div class="border border-gray-200 w-36 h-5 ">{{userName}}</div>
+          <div class="border border-gray-200 w-36 h-5 ">{{user.userName}}</div>
           <div class="border border-gray-200">
             {{content}}
           </div>
@@ -71,9 +71,9 @@
             댓글 달기
           </div>
         </div>
-        {{#each comment_reply}}
+        {{#each reply}}
           <div class='flex pl-8'> <!-- reply 댓글 -->
-            <div class="border border-gray-200 w-36 h-5 ">{{userName}}</div>
+            <div class="border border-gray-200 w-36 h-5 ">{{user.userName}}</div>
             <div class="border border-gray-200">
               {{content}}
             </div>
