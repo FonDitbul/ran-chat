@@ -13,9 +13,10 @@ import { UserEntity } from '../../users/entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 import { chatEntity } from '../../chats/entities/history-chat.entity';
+import { CommonEntity } from '../../common/entities/common.entity';
 
 @Entity('publicChat')
-export class PublicChatEntity {
+export class PublicChatEntity extends CommonEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -26,12 +27,6 @@ export class PublicChatEntity {
   @IsNotEmpty()
   @Column('int', { name: 'uid' })
   uid: number;
-
-  @CreateDateColumn()
-  readonly createdAt: Date;
-
-  @UpdateDateColumn()
-  readonly updatedAt: Date;
 
   //--relations--
   @ManyToOne(() => UserEntity, (users) => users.publicChat)

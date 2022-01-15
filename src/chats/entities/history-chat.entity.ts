@@ -12,9 +12,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 import { UserEntity } from '../../users/entities/user.entity';
 import { PublicChatEntity } from '../../public-chat/entities/public-chat.entity';
+import { CommonEntity } from '../../common/entities/common.entity';
 
 @Entity('chats')
-export class chatEntity {
+export class chatEntity extends CommonEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -28,12 +29,6 @@ export class chatEntity {
 
   @Column()
   text: string;
-
-  @CreateDateColumn()
-  readonly createdAt: Date;
-
-  // @UpdateDateColumn()
-  // readonly updatedAt: Date;
 
   @Column({})
   roomID: number;

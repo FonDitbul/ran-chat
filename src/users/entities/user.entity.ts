@@ -12,9 +12,10 @@ import { BoardEntity } from '../../boards/entities/board.entity';
 import { PublicChatEntity } from '../../public-chat/entities/public-chat.entity';
 import { chatEntity } from '../../chats/entities/history-chat.entity';
 import { CommentEntity } from '../../boards/entities/comment.entity';
+import { CommonEntity } from '../../common/entities/common.entity';
 
 @Entity('user')
-export class UserEntity {
+export class UserEntity extends CommonEntity {
   @ApiProperty({
     example: 1,
     description: '유저 ID',

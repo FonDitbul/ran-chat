@@ -15,6 +15,7 @@ import { UserEntity } from '../../users/entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 import { CommentEntity } from './comment.entity';
+import { CommonEntity } from '../../common/entities/common.entity';
 
 export enum category {
   NOTICE = '공지사항',
@@ -22,7 +23,7 @@ export enum category {
 }
 
 @Entity('board')
-export class BoardEntity {
+export class BoardEntity extends CommonEntity {
   @ApiProperty({
     example: '게시판 ID',
     description: '게시판 ID',
@@ -65,22 +66,12 @@ export class BoardEntity {
   @Column({ default: 0 })
   views: number;
 
-  @CreateDateColumn()
-  readonly createdAt: Date;
-
-  @UpdateDateColumn()
-  readonly updatedAt: Date;
-
-  @DeleteDateColumn()
-  readonly deletedAt: Date | null;
-
   //--relations--
   @ManyToOne(() => UserEntity, (users) => users.writeBoard)
   @JoinColumn({ name: 'uid' })
   user: UserEntity;
 
   @ManyToMany(() => UserEntity, (users) => users.likeBoard)
-  @JoinTable()
   userLikes: UserEntity[];
 
   @OneToMany(() => CommentEntity, (comments) => comments.board)
