@@ -4,7 +4,7 @@ import { chatEntity as Chat, chatEntity } from './entities/history-chat.entity';
 @EntityRepository(chatEntity)
 export class ChatRepository extends Repository<chatEntity> {
   async findChatHistory() {
-    const getHistory = getRepository(Chat).createQueryBuilder('chat').getMany();
+    const getHistory = this.createQueryBuilder('chat').getMany();
     return await getHistory;
   }
 }

@@ -9,22 +9,19 @@ import { chatEntity as Chat } from '../chats/entities/history-chat.entity';
 @EntityRepository(PublicChatEntity)
 export class PublicChatRepository extends Repository<PublicChatEntity> {
   async findAll() {
-    const getAllChat = await getRepository(PublicChat)
-      .createQueryBuilder('publicChat')
+    const getAllChat = await this.createQueryBuilder('publicChat')
       .innerJoinAndSelect('publicChat.user', 'user', 'publicChat.uid = user.id')
       .getRawMany();
     return getAllChat;
   }
   async findOnePublicchat(id: number) {
-    const getOneChat = await getRepository(PublicChat)
-      .createQueryBuilder('publicChat')
+    const getOneChat = await this.createQueryBuilder('publicChat')
       .where('publicChat.id = :id', { id })
       .getRawOne();
     return getOneChat;
   }
   async findChatHistory(roomID: number) {
-    const getChatting = await getRepository(Chat)
-      .createQueryBuilder('chats')
+    const getChatting = await this.createQueryBuilder('chats')
       .where('chats.roomID = :roomID', { roomID })
       .getMany();
     return await getChatting;

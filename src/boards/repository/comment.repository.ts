@@ -16,8 +16,7 @@ import { UpdateCommentDto } from '../dto/update-comment.dto';
 @EntityRepository(CommentEntity)
 export class CommentRepository extends Repository<CommentEntity> {
   async findAllComment(boardID: number) {
-    const getAllComment = await getRepository(Comment)
-      .createQueryBuilder('comment')
+    const getAllComment = await this.createQueryBuilder('comment')
       .innerJoinAndSelect('comment.user', 'user', 'comment.uid = user.id')
       .andWhere('comment.boardID = :boardID', { boardID })
       .andWhere('comment.groupID = 0')
@@ -26,8 +25,7 @@ export class CommentRepository extends Repository<CommentEntity> {
   }
 
   async findOneComment(boardID: number, id: number) {
-    const getOneComment = await getRepository(Comment)
-      .createQueryBuilder('comment')
+    const getOneComment = await this.createQueryBuilder('comment')
       .andWhere('comment.id = :id', { id })
       .andWhere('comment.boardID = :boardID', { boardID })
       .getMany();
@@ -36,8 +34,7 @@ export class CommentRepository extends Repository<CommentEntity> {
   async updateComment(updateCommentDto: UpdateCommentDto) {
     const { id, boardID, content } = updateCommentDto;
 
-    const updateComment = await getRepository(Comment)
-      .createQueryBuilder('comment')
+    const updateComment = await this.createQueryBuilder('comment')
       .update('comment')
       .set({ content: content })
       .andWhere('comment.id = :id', { id })
@@ -45,8 +42,7 @@ export class CommentRepository extends Repository<CommentEntity> {
     return updateComment;
   }
   async findReplyComment(groupID: number) {
-    const replyComment = await getRepository(Comment)
-      .createQueryBuilder('comment')
+    const replyComment = this.createQueryBuilder('comment')
       .innerJoinAndSelect('comment.user', 'user', 'comment.uid = user.id')
       .andWhere('comment.groupID = :groupID', { groupID })
       .getMany();

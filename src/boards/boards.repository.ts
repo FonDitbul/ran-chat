@@ -34,6 +34,7 @@ export class BoardsRepository extends Repository<BoardEntity> {
     return getOneBoard;
   }
 
+  //좋아요 CRUD
   async findLike(id: number) {
     const boardLikes = await this.createQueryBuilder('board')
       .leftJoinAndSelect('board.userLikes', 'Like')
