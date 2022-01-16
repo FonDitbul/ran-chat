@@ -75,7 +75,6 @@ export class BoardsController {
   async oneBoardPage(@Param('id', ParseIntPipe) id: number) {
     const board = await this.boardsService.findOne(id);
     const comment = await this.commentService.findAll(id);
-    const like = await this.likeService.find(id);
     return {
       title: '게시판 test',
       breads: [
@@ -85,7 +84,6 @@ export class BoardsController {
         { name: board.title },
       ],
       data: board,
-      like: like.userLikes,
       comment: comment,
     };
   }
@@ -176,8 +174,7 @@ export class BoardsController {
   })
   @Get('like/:boardID')
   async getLike(@Param('boardID', ParseIntPipe) id: number) {
-    const like = await this.likeService.find(id);
-    return like.userLikes;
+    return await this.likeService.find(id);
   }
 
   @ApiTags('게시판 좋아요')

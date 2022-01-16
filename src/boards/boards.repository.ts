@@ -65,15 +65,19 @@ export class BoardsRepository extends Repository<BoardEntity> {
       where: { id: id },
     });
     const testFind = await this.createQueryBuilder('board')
-      .leftJoinAndSelect('board.userLikes', 'Like')
+      .innerJoinAndSelect('board.userLikes', 'Like')
+      .loadRelationCountAndMap(
+        'board.LikeCount',
+        'board.userLikes',
+        'LikeCount',
+      )
       .where('board.id = :id', { id })
-      .getMany();
-    console.log(testFind[0].userLikes);
+      .getOne();
+    // console.log(testFind);
     return boardLikes.userLikes;
   }
 
   async updateBoardLike(id, uid) {
-    //TODO userRepostiroy 불러오기
     const user = await getRepository(User)
       .createQueryBuilder('user')
       .where('user.id = :uid', { uid })
@@ -84,6 +88,6 @@ export class BoardsRepository extends Repository<BoardEntity> {
       .where('board.id = :id', { id })
       .getOne();
     board.userLikes.push(user);
-    return await getRepository(Board).save(board);
+    return this.save(board);
   }
 }
