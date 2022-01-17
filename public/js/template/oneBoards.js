@@ -17,7 +17,7 @@
   const createCommentForm = document.getElementById('create-comment-form');
   createCommentForm.addEventListener('submit', createComment);
 
-  // 좋아요 싫어요
+  // 좋아요 싫어요 Element
   const likeDiv = document.getElementById('like');
 
   // 좋아요 GET
@@ -27,27 +27,34 @@
     return boardLike;
   };
   //좋아요 POST
-  const updateLike = async (boardID, uid) => {
-    await axios.patch(`/board/like?id=${boardID}&uid=${uid}`);
+  const addLike = async (boardID, uid) => {
+    return await axios.post(`/board/like?id=${boardID}&uid=${uid}`);
+  };
+  const deleteLike = async (boardID, uid) => {
+    return await axios.patch(`/board/like?id=${boardID}&uid=${uid}`);
   };
   //좋아요 눌렀는지 확인
-  const validateLike = (boardID, uid) => {
+  const validateLike = async (boardID, uid, Likes) => {
     const sessionUid = sessionStorage.getItem('uid');
-    if (!sessionUid) return alert('로그인 후 이용해주세요!');
-    return sessionUid === uid;
+    for (let Like of Likes) {
+      if (Like.id === +sessionUid) return false;
+    }
+    return true;
   };
   //좋아요 클릭 이벤트
   const clickLike = async (event) => {
     const boardID = location.pathname.split('/')[2];
     const userName = sessionStorage.getItem('userName');
+    if (!userName) return alert('로그인 후 이용해주세요!');
     const userResponse = await axios.get('/users/' + userName);
     const uid = userResponse.data.id;
     let Like = await getLike(boardID);
-    likeDiv.innerText = Like + 1;
-    console.log(await getLike(boardID));
-    if (validateLike(boardID, uid)) {
+    if (await validateLike(boardID, uid, Like)) {
+      likeDiv.innerText = '(좋아요) ' + (Like.length + 1);
+      return await addLike(boardID, uid);
     }
-    await updateLike(boardID, uid);
+    likeDiv.innerText = '(좋아요) ' + (Like.length - 1);
+    return await deleteLike(boardID, uid);
   };
 
   likeDiv.addEventListener('click', clickLike);
