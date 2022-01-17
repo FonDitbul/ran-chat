@@ -45,10 +45,10 @@ export class UserEntity extends CommonEntity {
 
   //--relations--
   @OneToMany(() => BoardEntity, (board) => board.user)
-  writeBoard: BoardEntity[];
+  writeBoards: BoardEntity[];
 
   @OneToMany(() => PublicChatEntity, (publicChat) => publicChat.user)
-  publicChat: PublicChatEntity[];
+  publicChats: PublicChatEntity[];
 
   @OneToMany(() => chatEntity, (chats) => chats.user)
   chats: chatEntity[];
@@ -65,7 +65,7 @@ export class UserEntity extends CommonEntity {
       referencedColumnName: 'id',
     },
   })
-  likeBoard: BoardEntity[];
+  likeBoards: BoardEntity[];
 
   @OneToMany(() => CommentEntity, (comments) => comments.user)
   comments: CommentEntity[];

@@ -67,11 +67,11 @@ export class BoardEntity extends CommonEntity {
   views: number;
 
   //--relations--
-  @ManyToOne(() => UserEntity, (users) => users.writeBoard)
+  @ManyToOne(() => UserEntity, (users) => users.writeBoards)
   @JoinColumn({ name: 'uid' })
   user: UserEntity;
 
-  @ManyToMany(() => UserEntity, (users) => users.likeBoard)
+  @ManyToMany(() => UserEntity, (users) => users.likeBoards)
   userLikes: UserEntity[];
 
   @OneToMany(() => CommentEntity, (comments) => comments.board)
