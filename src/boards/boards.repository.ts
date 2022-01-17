@@ -1,8 +1,6 @@
-import { EntityRepository, getRepository, Repository } from 'typeorm';
-import { BoardEntity as Board, BoardEntity } from './entities/board.entity';
-import { UserEntity as User } from '../users/entities/user.entity';
+import { EntityRepository, Repository } from 'typeorm';
+import { BoardEntity } from './entities/board.entity';
 import { UpdateBoardDto } from './dto/update-board.dto';
-import { CommentEntity } from './entities/comment.entity';
 
 @EntityRepository(BoardEntity)
 export class BoardsRepository extends Repository<BoardEntity> {
@@ -22,6 +20,11 @@ export class BoardsRepository extends Repository<BoardEntity> {
         'board.commentsCount',
         'board.comments',
         'comments',
+      )
+      .loadRelationCountAndMap(
+        'board.LikeCount',
+        'board.userLikes',
+        'LikeCount',
       )
       .orderBy('board.id', 'DESC')
       .offset(page * SHOW_LIMIT_BOARD)
@@ -43,6 +46,11 @@ export class BoardsRepository extends Repository<BoardEntity> {
         'board.views', //조회수
       ])
       .innerJoinAndSelect('board.user', 'user', 'board.uid = user.id')
+      .loadRelationCountAndMap(
+        'board.LikeCount',
+        'board.userLikes',
+        'LikeCount',
+      )
       .where('board.id = :id', { id })
       .getOne();
     return getOneBoard;
@@ -58,13 +66,9 @@ export class BoardsRepository extends Repository<BoardEntity> {
     return updateOneBoard;
   }
 
-  //좋아요 CRUD
+  //좋아요
   async findLike(id: number) {
-    const boardLikes = await this.findOne({
-      relations: ['userLikes'],
-      where: { id: id },
-    });
-    const testFind = await this.createQueryBuilder('board')
+    const boardLikes = await this.createQueryBuilder('board')
       .innerJoinAndSelect('board.userLikes', 'Like')
       .loadRelationCountAndMap(
         'board.LikeCount',
@@ -73,21 +77,6 @@ export class BoardsRepository extends Repository<BoardEntity> {
       )
       .where('board.id = :id', { id })
       .getOne();
-    // console.log(testFind);
-    return boardLikes.userLikes;
-  }
-
-  async updateBoardLike(id, uid) {
-    const user = await getRepository(User)
-      .createQueryBuilder('user')
-      .where('user.id = :uid', { uid })
-      .getOne();
-
-    const board = await this.createQueryBuilder('board')
-      .leftJoinAndSelect('board.userLikes', 'Like')
-      .where('board.id = :id', { id })
-      .getOne();
-    board.userLikes.push(user);
-    return this.save(board);
+    return boardLikes;
   }
 }

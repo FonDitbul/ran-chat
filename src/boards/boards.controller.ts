@@ -179,14 +179,27 @@ export class BoardsController {
 
   @ApiTags('게시판 좋아요')
   @ApiOperation({
-    summary: '좋아요 업데이트',
+    summary: '좋아요 추가하기',
     description: '해당 게시판 좋아요 업데이트',
+  })
+  @Post('like')
+  addLike(
+    @Query('id', ParseIntPipe) id: number,
+    @Query('uid', ParseIntPipe) uid: number,
+  ) {
+    return this.likeService.add(id, uid);
+  }
+
+  @ApiTags('게시판 좋아요')
+  @ApiOperation({
+    summary: '좋아요 삭제하기',
+    description: '해당 게시판 좋아요 취소',
   })
   @Patch('like')
   updateLike(
     @Query('id', ParseIntPipe) id: number,
     @Query('uid', ParseIntPipe) uid: number,
   ) {
-    return this.likeService.update(id, uid);
+    return this.likeService.delete(id, uid);
   }
 }
