@@ -41,7 +41,7 @@
           <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">제목</th>
           <th class="px-4 py-2 " style="background-color:#f8f8f8">글쓴이</th>
           <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">댓글 수</th>
-          <th class="px-4 py-2 " style="background-color:#f8f8f8">조회수</th>
+          <th class="px-4 py-2 " style="background-color:#f8f8f8">좋아요</th>
           <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">날짜</th>
         </tr>
         </thead>
@@ -51,7 +51,7 @@
             <td class="px-4 py-4"><a href='/board/{{this.id}}'>{{this.title}}</a></td>
             <td class="px-4 py-4">{{this.user.userName}}</td>
             <td class="px-4 py-4">{{this.commentsCount}}</td>
-            <td class="px-4 py-4">{{this.views}}</td>
+            <td class="px-4 py-4">{{this.LikeCount}}</td>
             <td class="px-4 py-4">{{dateParser this.createdAt}}</td>
           </tr>
         {{/each}}
