@@ -29,7 +29,7 @@ export class PublicChatEntity extends CommonEntity {
   uid: number;
 
   //--relations--
-  @ManyToOne(() => UserEntity, (users) => users.publicChat)
+  @ManyToOne(() => UserEntity, (users) => users.publicChats)
   @JoinColumn({ name: 'uid' })
   user: UserEntity;
 
