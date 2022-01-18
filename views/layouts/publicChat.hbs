@@ -3,180 +3,183 @@
   <title>Random-Chatting</title>
   <link href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css' rel='stylesheet'/>
   <link href='css/styles.css' rel='stylesheet' />
+  <link href="favicon-chatting.png" rel="shortcut icon" type="image/x-icon">
 </head>
-{{> header }}
-<div>
-  <nav class="flex bg-gray-50 text-gray-700 border border-gray-200 py-3 px-5 rounded-lg dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
-    <ol class="inline-flex items-center space-x-1 md:space-x-3">
-      <li class="inline-flex items-center">
-        <a href="/" class="text-sm text-gray-700 hover:text-gray-900 inline-flex items-center dark:text-gray-400 dark:hover:text-white">
-          <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-          홈
-        </a>
-      </li>
-      {{#each breads}}
-        {{> breadcrumbList bread=name}}
-      {{/each}}
-    </ol>
-  </nav>
-  <hr>
-  <div class="container mx-auto px-4 sm:px-8">
-    <div class="py-8">
-      <div class="my-2 flex sm:flex-row flex-col">
-        <div class="flex flex-row mb-1 sm:mb-0">
-          <div class="relative">
-            <select
-              class="appearance-none h-full rounded-l border sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-              <option>All</option>
-              <option>Active</option>
-              <option>Inactive</option>
-            </select>
-            <div
-              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-              </svg>
+<body>
+  {{> header }}
+  <div>
+    <nav class="flex bg-gray-50 text-gray-700 border border-gray-200 py-3 px-5 rounded-lg dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <li class="inline-flex items-center">
+          <a href="/" class="text-sm text-gray-700 hover:text-gray-900 inline-flex items-center dark:text-gray-400 dark:hover:text-white">
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+            홈
+          </a>
+        </li>
+        {{#each breads}}
+          {{> breadcrumbList bread=name}}
+        {{/each}}
+      </ol>
+    </nav>
+    <hr>
+    <div class="container mx-auto px-4 sm:px-8">
+      <div class="py-8">
+        <div class="my-2 flex sm:flex-row flex-col">
+          <div class="flex flex-row mb-1 sm:mb-0">
+            <div class="relative">
+              <select
+                class="appearance-none h-full rounded-l border sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
+                <option>All</option>
+                <option>Active</option>
+                <option>Inactive</option>
+              </select>
+              <div
+                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
             </div>
           </div>
+          <div class="block relative">
+                      <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+                          <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
+                              <path
+                                d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
+                              </path>
+                          </svg>
+                      </span>
+            <input placeholder="Search"
+                   class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+          </div>
         </div>
-        <div class="block relative">
-                    <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
-                        <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
-                            <path
-                              d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
-                            </path>
-                        </svg>
-                    </span>
-          <input placeholder="Search"
-                 class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
-        </div>
-      </div>
-      <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-          <table class="min-w-full leading-normal">
-            <thead>
-            <tr>
-              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                방 이름
-              </th>
-              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                방장
-              </th>
-              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                생성시간
-              </th>
-              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                업데이트 시간 예정
-              </th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#each data}}
+        <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+          <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+            <table class="min-w-full leading-normal">
+              <thead>
               <tr>
-                <!--공개 채팅방 불러오기-->
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <div class="flex items-center">
-                    <!-- 이미지 태그 필요할때 주석 해제-->
-                    <!--                  <div class="flex-shrink-0 w-10 h-10">-->
-                    <!--                    <img class="w-full h-full rounded-full"-->
-                    <!--                         src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"-->
-                    <!--                         alt="" />-->
-                    <!--                  </div>-->
-                    <div class="ml-3">
-                      <p class="text-gray-900 whitespace-no-wrap">
-                        <a href='/public-chat/chatting/{{this.publicChat_id}}'+>{{this.publicChat_title}}</a>
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <p class="text-gray-900 whitespace-no-wrap">{{this.user_userName}}</p>
-                </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <p class="text-gray-900 whitespace-no-wrap">
-                    {{dateParser this.publicChat_createdAt}}
-                  </p>
-                </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <span
-                    class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                      <span aria-hidden
-                            class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                      <span class="relative">Activo</span>
-                  </span>
-                </td>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  방 이름
+                </th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  방장
+                </th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  생성시간
+                </th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  업데이트 시간 예정
+                </th>
               </tr>
-            {{/each}}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+              {{#each data}}
+                <tr>
+                  <!--공개 채팅방 불러오기-->
+                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <div class="flex items-center">
+                      <!-- 이미지 태그 필요할때 주석 해제-->
+                      <!--                  <div class="flex-shrink-0 w-10 h-10">-->
+                      <!--                    <img class="w-full h-full rounded-full"-->
+                      <!--                         src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"-->
+                      <!--                         alt="" />-->
+                      <!--                  </div>-->
+                      <div class="ml-3">
+                        <p class="text-gray-900 whitespace-no-wrap">
+                          <a href='/public-chat/chatting/{{this.publicChat_id}}'+>{{this.publicChat_title}}</a>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <p class="text-gray-900 whitespace-no-wrap">{{this.user_userName}}</p>
+                  </td>
+                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <p class="text-gray-900 whitespace-no-wrap">
+                      {{dateParser this.publicChat_createdAt}}
+                    </p>
+                  </td>
+                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <span
+                      class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                        <span aria-hidden
+                              class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                        <span class="relative">Activo</span>
+                    </span>
+                  </td>
+                </tr>
+              {{/each}}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <button id='create-modal-button' class="px-4 py-2 rounded-md text-sm font-medium border-0 focus:outline-none focus:ring transition text-white bg-gray-500 hover:bg-gray-600 active:bg-gray-700 focus:ring-gray-300">채팅방 생성</button>
-  <div id='create-room-modal' class='modal'>
-    <div class='modal-content'>
-      <p>채팅방 생성 modal</p>
-      <form id='create-room-form' class='modal-form'>
-        <input placeholder='채팅방 이름'>
-        <button id='create-room-button' class='close'>생성</button>
-        <button id='modal-close' class='close'>닫기</button>
-      </form>
+    <button id='create-modal-button' class="px-4 py-2 rounded-md text-sm font-medium border-0 focus:outline-none focus:ring transition text-white bg-gray-500 hover:bg-gray-600 active:bg-gray-700 focus:ring-gray-300">채팅방 생성</button>
+    <div id='create-room-modal' class='modal'>
+      <div class='modal-content'>
+        <p>채팅방 생성 modal</p>
+        <form id='create-room-form' class='modal-form'>
+          <input placeholder='채팅방 이름'>
+          <button id='create-room-button' class='close'>생성</button>
+          <button id='modal-close' class='close'>닫기</button>
+        </form>
+      </div>
     </div>
-  </div>
-  <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-    <div class="flex-1 flex justify-between sm:hidden">
-      <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-        Previous
-      </a>
-      <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-        Next
-      </a>
+    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+      <div class="flex-1 flex justify-between sm:hidden">
+        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+          Previous
+        </a>
+        <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+          Next
+        </a>
+      </div>
+      <div>
+        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+          <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <span class="sr-only">Previous</span>
+            <!-- Heroicon name: solid/chevron-left -->
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
+          <a href="#" aria-current="page" class="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+            1
+          </a>
+          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+            2
+          </a>
+          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium">
+            3
+          </a>
+          <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+            ...
+          </span>
+          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium">
+            8
+          </a>
+          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+            9
+          </a>
+          <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+            10
+          </a>
+          <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <span class="sr-only">Next</span>
+            <!-- Heroicon name: solid/chevron-right -->
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
+        </nav>
+      </div>
     </div>
-    <div>
-      <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-          <span class="sr-only">Previous</span>
-          <!-- Heroicon name: solid/chevron-left -->
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-          </svg>
-        </a>
-        <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
-        <a href="#" aria-current="page" class="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-          1
-        </a>
-        <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-          2
-        </a>
-        <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium">
-          3
-        </a>
-        <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
-          ...
-        </span>
-        <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium">
-          8
-        </a>
-        <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-          9
-        </a>
-        <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-          10
-        </a>
-        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-          <span class="sr-only">Next</span>
-          <!-- Heroicon name: solid/chevron-right -->
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-          </svg>
-        </a>
-      </nav>
-    </div>
-  </div>
 
-</div>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src='js/layouts/publicChat.js'></script>
+  </div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src='js/layouts/publicChat.js'></script>
+  {{> footer}}
+</body>
 </html>
-<!--https://tailwindcomponents.com/component/modal-3 모달-->

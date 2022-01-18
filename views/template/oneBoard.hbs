@@ -4,92 +4,93 @@
   <link href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css' rel='stylesheet'/>
   <link href='../css/styles.css' rel='stylesheet' />
 </head>
-{{> header }}
 <body>
-<div>
-  <nav class="flex bg-gray-50 text-gray-700 border border-gray-200 py-3 px-5 rounded-lg dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
-    <ol class="inline-flex items-center space-x-1 md:space-x-3">
-      <li class="inline-flex items-center">
-        <a href="/" class="text-sm text-gray-700 hover:text-gray-900 inline-flex items-center dark:text-gray-400 dark:hover:text-white">
-          <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-          홈
-        </a>
-      </li>
-      {{#each breads}}
-        {{> breadcrumbList bread=name}}
-      {{/each}}
-    </ol>
-  </nav>
-  <div class="mx-auto">
-    <div class="p-4 bg-white border border-primary rounded-md">
-      <!-- 게시판 상세 내용 -->
-      <div class="flex">
-        <div class="space-y-1 flex flex-col w-full">
-          <div class="flex w-full flex items-center">
-            <div class="border border-gray-200"><h1>{{data.title}}</h1></div>
+  {{> header }}
+  <div>
+    <nav class="flex bg-gray-50 text-gray-700 border border-gray-200 py-3 px-5 rounded-lg dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <li class="inline-flex items-center">
+          <a href="/" class="text-sm text-gray-700 hover:text-gray-900 inline-flex items-center dark:text-gray-400 dark:hover:text-white">
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+            홈
+          </a>
+        </li>
+        {{#each breads}}
+          {{> breadcrumbList bread=name}}
+        {{/each}}
+      </ol>
+    </nav>
+    <div class="mx-auto">
+      <div class="p-4 bg-white border border-primary rounded-md">
+        <!-- 게시판 상세 내용 -->
+        <div class="flex">
+          <div class="space-y-1 flex flex-col w-full">
+            <div class="flex w-full flex items-center">
+              <div class="border border-gray-200"><h1>{{data.title}}</h1></div>
+            </div>
+            <div class="border border-gray-200 w-36 h-5">{{dateParser data.createdAt}}</div>
+            <div class="border border-gray-200 w-36 h-5">{{data.user.userName}}</div>
+            <div class="border border-gray-200 w-full">
+              {{data.content}}
+            </div>
           </div>
-          <div class="border border-gray-200 w-36 h-5">{{dateParser data.createdAt}}</div>
-          <div class="border border-gray-200 w-36 h-5">{{data.user.userName}}</div>
-          <div class="border border-gray-200 w-full">
-            {{data.content}}
+        </div>
+        <!-- 좋아요 싫어요 -->
+        <div class="mt-4 flex items-center justify-between">
+          <div class="flex items-center gap-2 mx-auto" >
+            <div class="border border-gray-200 w-20 h-5">
+              <button id='like' class="border border-gray-200 w-20 h-5">
+                (좋아요) {{data.LikeCount}}
+              </button>
+            </div>
+            <span class="bg-tertiary h-1 w-20 rounded"></span>
+  <!--          <div id='dislike' class=" border border-gray-200 w-20 h-5 ">(싫어요) {{data.dislike}}</div>-->
           </div>
+          <!-- 개시판 수정하기 -->
+          <button id='update-button-button'
+                  class="px-4 py-2 rounded-md text-sm font-medium border-0
+                  focus:outline-none focus:ring transition text-white
+                  bg-gray-500 hover:bg-gray-600 active:bg-gray-700 focus:ring-gray-300">수정하기
+          </button>
         </div>
       </div>
-      <!-- 좋아요 싫어요 -->
-      <div class="mt-4 flex items-center justify-between">
-        <div class="flex items-center gap-2 mx-auto" >
-          <div class="border border-gray-200 w-20 h-5">
-            <button id='like' class="border border-gray-200 w-20 h-5">
-              (좋아요) {{data.LikeCount}}
-            </button>
-          </div>
-          <span class="bg-tertiary h-1 w-20 rounded"></span>
-<!--          <div id='dislike' class=" border border-gray-200 w-20 h-5 ">(싫어요) {{data.dislike}}</div>-->
-        </div>
-        <!-- 개시판 수정하기 -->
-        <button id='update-button-button'
-                class="px-4 py-2 rounded-md text-sm font-medium border-0
-                focus:outline-none focus:ring transition text-white
-                bg-gray-500 hover:bg-gray-600 active:bg-gray-700 focus:ring-gray-300">수정하기
-        </button>
-      </div>
-    </div>
-    <!--댓글 불러오기-->
-    <div class="p-4 bg-white border border-primary rounded-md">
-      <h2>댓글</h2>
-      {{#each comment}}
-        <div class='flex'> <!-- root 댓글-->
-          <div class="border border-gray-200 w-36 h-5 ">{{user.userName}}</div>
-          <div class="border border-gray-200">
-            {{content}}
-          </div>
-          <div>
-            좋아요
-            댓글 달기
-          </div>
-        </div>
-        {{#each reply}}
-          <div class='flex pl-8'> <!-- reply 댓글 -->
+      <!--댓글 불러오기-->
+      <div class="p-4 bg-white border border-primary rounded-md">
+        <h2>댓글</h2>
+        {{#each comment}}
+          <div class='flex'> <!-- root 댓글-->
             <div class="border border-gray-200 w-36 h-5 ">{{user.userName}}</div>
             <div class="border border-gray-200">
               {{content}}
             </div>
             <div>
-              <button>좋아요</button>
-              <button id='reply-comment'>댓글 달기</button>
+              좋아요
+              댓글 달기
             </div>
           </div>
+          {{#each reply}}
+            <div class='flex pl-8'> <!-- reply 댓글 -->
+              <div class="border border-gray-200 w-36 h-5 ">{{user.userName}}</div>
+              <div class="border border-gray-200">
+                {{content}}
+              </div>
+              <div>
+                <button>좋아요</button>
+                <button id='reply-comment'>댓글 달기</button>
+              </div>
+            </div>
+          {{/each}}
         {{/each}}
-      {{/each}}
+      </div>
+      <!-- 댓글 작성하기 -->
+      <form id='create-comment-form' class="p-4">
+        <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder='댓글 작성하기' required></textarea>
+        <button class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100">댓글 달기</button>
+      </form>
     </div>
-    <!-- 댓글 작성하기 -->
-    <form id='create-comment-form' class="p-4">
-      <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder='댓글 작성하기' required></textarea>
-      <button class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100">댓글 달기</button>
-    </form>
   </div>
-</div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src='../js/template/oneBoards.js'></script>
+  {{> footer}}
 </body>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src='../js/template/oneBoards.js'></script>
 </html>

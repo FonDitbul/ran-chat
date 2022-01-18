@@ -4,8 +4,9 @@
   <link href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css' rel='stylesheet'/>
   <link href='../../css/chatting.css' rel='stylesheet' />
 </head>
-{{>header}}
-  <body>
+
+<body>
+  {{>header}}
   <div id='chatting'>
     <nav class="flex bg-gray-50 text-gray-700 border border-gray-200 py-3 px-5 rounded-lg dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
       <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -57,9 +58,10 @@
     </div>
 
   </div>
-    <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
-    <script src='https://polyfill.io/v3/polyfill.min.js?features=default%2Ces2015%2Ces2016%2Ces2017%2Ces2018%2Ces2019'></script>
-    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js" integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs" crossorigin="anonymous"></script>
-    <script src='../../js/template/publicChattingRoom.js'></script>
-  </body>
+  {{>footer}}
+  <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
+  <script src='https://polyfill.io/v3/polyfill.min.js?features=default%2Ces2015%2Ces2016%2Ces2017%2Ces2018%2Ces2019'></script>
+  <script src="https://cdn.socket.io/4.3.2/socket.io.min.js" integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs" crossorigin="anonymous"></script>
+  <script src='../../js/template/publicChattingRoom.js'></script>
+</body>
 </html>
