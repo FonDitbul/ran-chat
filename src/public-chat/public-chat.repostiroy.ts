@@ -1,11 +1,5 @@
-import { EntityRepository, getRepository, Repository } from 'typeorm';
-import {
-  PublicChatEntity as PublicChat,
-  PublicChatEntity,
-} from './entities/public-chat.entity';
-import { UserEntity } from '../users/entities/user.entity';
-import { chatEntity as Chat } from '../chats/entities/history-chat.entity';
-
+import { EntityRepository, Repository } from 'typeorm';
+import { PublicChatEntity } from './entities/public-chat.entity';
 @EntityRepository(PublicChatEntity)
 export class PublicChatRepository extends Repository<PublicChatEntity> {
   async findAll() {
@@ -19,11 +13,5 @@ export class PublicChatRepository extends Repository<PublicChatEntity> {
       .where('publicChat.id = :id', { id })
       .getRawOne();
     return getOneChat;
-  }
-  async findChatHistory(roomID: number) {
-    const getChatting = await this.createQueryBuilder('chats')
-      .where('chats.roomID = :roomID', { roomID })
-      .getMany();
-    return await getChatting;
   }
 }

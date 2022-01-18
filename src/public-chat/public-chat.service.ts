@@ -2,10 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { CreatePublicChatDto } from './dto/create-public-chat.dto';
 import { UpdatePublicChatDto } from './dto/update-public-chat.dto';
 import { PublicChatRepository } from './public-chat.repostiroy';
+import { ChatRepository } from '../chats/chats.repository';
 
 @Injectable()
 export class PublicChatService {
-  constructor(private readonly publicChatRepository: PublicChatRepository) {}
+  constructor(
+    private readonly publicChatRepository: PublicChatRepository,
+    private readonly chatsRepository: ChatRepository,
+  ) {}
   async create(createPublicChatDto: CreatePublicChatDto) {
     return await this.publicChatRepository
       .save(createPublicChatDto)
@@ -26,7 +30,7 @@ export class PublicChatService {
   }
 
   async findChatHistory(roomID: number) {
-    return await this.publicChatRepository.findChatHistory(roomID);
+    return await this.chatsRepository.findChatHistory(roomID);
   }
 
   update(id: number, updatePublicChatDto: UpdatePublicChatDto) {

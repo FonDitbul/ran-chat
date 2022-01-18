@@ -17,9 +17,9 @@ export class ChatsController {
     return { title: '채팅창', breads: [{ name: '랜덤 채팅' }] };
   }
 
-  @Get(':id')
-  async getChatHistory() {
-    const chatHistory = await this.chatsService.findChatHistory();
-    return chatHistory;
-  }
+  // @Get(':id')
+  // async getChatHistory() {
+  //   const chatHistory = await this.chatsService.findChatHistory();
+  //   return chatHistory;
+  // }
 }
