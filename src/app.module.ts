@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { BoardsModule } from './boards/boards.module';
 import { PublicChatModule } from './public-chat/public-chat.module';
+import { RandomChatModule } from './random-chat/random-chat.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -13,8 +15,9 @@ import { PublicChatModule } from './public-chat/public-chat.module';
     BoardsModule,
     ChatsModule,
     PublicChatModule,
+    RandomChatModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [],
 })
 export class AppModule {}
