@@ -5,6 +5,7 @@ import { join } from 'path';
 import * as hbs from 'hbs';
 import { dateParser } from './common/helper/dateParser.helper';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { HttpExceptionFilter } from './common/filter/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -26,6 +27,7 @@ async function bootstrap() {
   hbs.registerPartials(join(__dirname, '..', '/views/partials'));
   hbs.registerHelper('dateParser', dateParser);
 
+  app.useGlobalFilters(new HttpExceptionFilter());
   await app.listen(3000);
 }
 bootstrap();
