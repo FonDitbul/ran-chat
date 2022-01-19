@@ -8,16 +8,24 @@ import {
   Delete,
   Render,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { LocalAuthGuard } from '../auth/local-auth.guard';
+import { User } from '../common/decorators/user.decorator';
+import { AuthService } from '../auth/auth.service';
 
 @ApiTags('유저')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly authService: AuthService,
+  ) {}
 
   @ApiOperation({ summary: '회원가입' })
   @Post()
@@ -26,9 +34,16 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: '로그인' })
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  logIn() {
-    return this.usersService.findAll();
+  async logIn(@User() user) {
+    return await this.authService.login(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('test')
+  getProfile(@User() user) {
+    return user;
   }
 
   @ApiOperation({ summary: '로그아웃' })
