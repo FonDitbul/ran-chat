@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from './users.repository';
 import { getRepository } from 'typeorm';
 import { UserEntity as User, UserEntity } from './entities/user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -27,16 +28,8 @@ export class UsersService {
     //create new user
     const newUser = new UserEntity();
     newUser.userName = userName;
-    newUser.password = password;
+    newUser.password = await bcrypt.hash(password, 12);
 
-    // const validate_error = await validate(newUser);
-    // if (validate_error.length > 0) {
-    //   const _error = { userName: 'UserInput is not valid check type' };
-    //   throw new HttpException(
-    //     { message: 'Input data validation failed', _error },
-    //     HttpStatus.BAD_REQUEST,
-    //   );
-    // } else {}
     return await this.userRepository.save(newUser).then((user) => {
       return {
         user: {
