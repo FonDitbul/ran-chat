@@ -8,11 +8,13 @@ import {
   Delete,
   Render,
   ParseIntPipe,
+  UseInterceptors,
 } from '@nestjs/common';
 import { PublicChatService } from './public-chat.service';
 import { CreatePublicChatDto } from './dto/create-public-chat.dto';
 import { UpdatePublicChatDto } from './dto/update-public-chat.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { returnInterceptor } from '../common/interceptors/data.interceptor';
 
 @ApiTags('공개 채팅방')
 @Controller('public-chat')
@@ -24,11 +26,11 @@ export class PublicChatController {
     description: '공개 채팅방 전체 불러오기 페이지 Render',
   })
   @Get()
+  @UseInterceptors(returnInterceptor)
   @Render('layouts/publicChat')
   async publicChatPage() {
     const roomList = await this.publicChatService.findAll();
     return {
-      breads: [{ name: '공개 채팅방' }],
       data: roomList,
     };
   }
@@ -38,12 +40,13 @@ export class PublicChatController {
     description: '공개 채팅방, 채팅내역 불러오기',
   })
   @Get('chatting/:id')
+  @UseInterceptors(returnInterceptor)
   @Render('template/publicChattingRoom')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const { publicChat_title } = await this.publicChatService.findOne(id);
     const chatHistory = await this.publicChatService.findChatHistory(id);
     return {
-      breads: [{ name: '공개 채팅방' }, { name: publicChat_title }],
+      breadsOne: { name: publicChat_title, url: 'public-chat/chatting' + id },
       roomID: id,
       roomTitle: publicChat_title,
       chatHistory,
