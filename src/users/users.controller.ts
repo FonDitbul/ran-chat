@@ -41,7 +41,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('test')
+  @Get('jwtAuth')
   getProfile(@User() user) {
     return user;
   }

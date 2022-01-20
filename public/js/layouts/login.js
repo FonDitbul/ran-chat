@@ -8,14 +8,22 @@ const submitLogin = async () => {
   if (!loginID) {
     return alert('유저 아이디를 입력해 주세요!');
   }
-  const response = await axios.get('/users/' + loginID);
-  const uid = response.data.id;
-  const userName = response.data.userName;
-  if (!response.data) {
-    return alert('존재하지 않는 아이디입니다!');
-  }
-  sessionStorage.setItem('uid', uid);
-  sessionStorage.setItem('userName', userName);
+  const login = await axios.post('/users/login', {
+    userName: loginId.value,
+    password: loginPassword.value,
+  });
+  // const response = await axios.get('/users/jwtAuth', {
+  //   headers: {
+  //     Authorization: 'Bearer ' + access_token,
+  //   },
+  // });
+  if (!login.data) return alert('존재하지 않는 아이디입니다!');
+  const accessToken = login.data.access_token;
+  const uid = login.data.userId;
+  const userName = login.data.username;
+  localStorage.setItem('access_token', accessToken);
+  localStorage.setItem('uid', uid);
+  localStorage.setItem('userName', userName);
   return window.location.replace('/');
 };
 
