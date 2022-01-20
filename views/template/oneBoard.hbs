@@ -5,7 +5,7 @@
   <link href='../css/styles.css' rel='stylesheet' />
 </head>
 <body>
-  {{> header }}
+  {{> header}}
   <div>
     <nav class="flex bg-gray-50 text-gray-700 border border-gray-200 py-3 px-5 rounded-lg dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
       <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -16,7 +16,7 @@
           </a>
         </li>
         {{#each breads}}
-          {{> breadcrumbList bread=name}}
+          {{> breadcrumbList bread=name url=url}}
         {{/each}}
       </ol>
     </nav>
@@ -89,8 +89,8 @@
       </form>
     </div>
   </div>
+  {{> footer}}
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src='../js/template/oneBoards.js'></script>
-  {{> footer}}
 </body>
 </html>
