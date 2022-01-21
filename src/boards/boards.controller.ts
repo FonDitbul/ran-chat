@@ -20,10 +20,7 @@ import { UpdateCommentDto } from './dto/update-comment.dto';
 import { CommentService } from './services/comment.service';
 import { LikeService } from './services/like.service';
 import { ParsePagePipe } from '../common/pipes/ParsePage.pipe';
-import {
-  dataInterceptor,
-  returnInterceptor,
-} from '../common/interceptors/data.interceptor';
+import { breadsInterceptor } from '../common/interceptors/breads.interceptor';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @Controller('board')
@@ -41,14 +38,13 @@ export class BoardsController {
   })
   @Get('')
   @Render('layouts/board')
+  @UseInterceptors(breadsInterceptor)
   async allBoardsPage(
     @Query('page', new DefaultValuePipe(1), ParsePagePipe) page: number,
   ) {
     const { getAllBoards, countBoard, pageArr } =
       await this.boardsService.findAll(page);
     return {
-      title: '자유 게시판',
-      breads: [{ name: '자유 게시판' }],
       data: getAllBoards,
       page: { cur: page, total: countBoard, pageArr: pageArr },
     };
@@ -75,7 +71,7 @@ export class BoardsController {
   })
   @Get(':id')
   @Render('template/oneBoard')
-  @UseInterceptors(returnInterceptor)
+  @UseInterceptors(breadsInterceptor)
   async oneBoardPage(@Param('id', ParseIntPipe) id: number) {
     const board = await this.boardsService.findOne(id);
     const comment = await this.commentService.findAll(id);
@@ -132,7 +128,6 @@ export class BoardsController {
     description: '해당 게시판 댓글 불러오기',
   })
   @Get('comment/:boardID')
-  @UseInterceptors(dataInterceptor)
   async getBoardAllComment(@Param('boardID', ParseIntPipe) boardID: number) {
     return await this.commentService.findAll(boardID);
   }

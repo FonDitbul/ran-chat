@@ -14,7 +14,7 @@ import { PublicChatService } from './public-chat.service';
 import { CreatePublicChatDto } from './dto/create-public-chat.dto';
 import { UpdatePublicChatDto } from './dto/update-public-chat.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { returnInterceptor } from '../common/interceptors/data.interceptor';
+import { breadsInterceptor } from '../common/interceptors/breads.interceptor';
 
 @ApiTags('공개 채팅방')
 @Controller('public-chat')
@@ -26,7 +26,7 @@ export class PublicChatController {
     description: '공개 채팅방 전체 불러오기 페이지 Render',
   })
   @Get()
-  @UseInterceptors(returnInterceptor)
+  @UseInterceptors(breadsInterceptor)
   @Render('layouts/publicChat')
   async publicChatPage() {
     const roomList = await this.publicChatService.findAll();
@@ -40,7 +40,7 @@ export class PublicChatController {
     description: '공개 채팅방, 채팅내역 불러오기',
   })
   @Get('chatting/:id')
-  @UseInterceptors(returnInterceptor)
+  @UseInterceptors(breadsInterceptor)
   @Render('template/publicChattingRoom')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const { publicChat_title } = await this.publicChatService.findOne(id);

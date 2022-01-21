@@ -1,6 +1,7 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Render, UseInterceptors } from '@nestjs/common';
 import { ChatsService } from './chats.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { breadsInterceptor } from '../common/interceptors/breads.interceptor';
 
 @ApiTags('랜덤 채팅')
 @Controller('random-chat')
@@ -12,9 +13,10 @@ export class ChatsController {
     description: '랜덤 채팅방 Rendering',
   })
   @Get()
+  @UseInterceptors(breadsInterceptor)
   @Render('layouts/randomChat')
   chattingPage() {
-    return { title: '채팅창', breads: [{ name: '랜덤 채팅' }] };
+    return {};
   }
 
   // @Get(':id')

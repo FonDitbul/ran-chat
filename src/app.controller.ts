@@ -1,4 +1,5 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Render, UseInterceptors } from '@nestjs/common';
+import { breadsInterceptor } from './common/interceptors/breads.interceptor';
 
 @Controller()
 export class AppController {
@@ -10,8 +11,9 @@ export class AppController {
   }
 
   @Get('personal-chat')
+  @UseInterceptors(breadsInterceptor)
   @Render('layouts/personalChat')
   personalChatPage() {
-    return { title: '??', breads: [{ name: '1대1 채팅방' }] };
+    return { title: '개인채팅' };
   }
 }
