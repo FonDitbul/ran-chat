@@ -54,5 +54,6 @@ const drawFunction = (userName, data) => {
   messageDiv.appendChild(messageInnerDiv);
   historyMessageDiv.appendChild(userNameSpan);
   historyMessageDiv.appendChild(messageDiv);
+  return true;
 };
 chatForm.addEventListener('submit', chatSubmit);

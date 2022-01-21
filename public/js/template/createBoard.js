@@ -18,8 +18,7 @@ const createBoard = async (event) => {
   const title = event.target.elements[0].value;
   const content = event.target.elements[1].value;
   const userName = sessionStorage.getItem('userName');
-  const response = await axios.get('/users/' + userName);
-  const uid = response.data.id;
+  const uid = sessionStorage.getItem('uid');
   await axios.post('/board', {
     title: title,
     category: '게시판',

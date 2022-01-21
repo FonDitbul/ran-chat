@@ -7,9 +7,7 @@ const createRoomform = document.getElementById('create-room-form');
 const createPublicRoom = async (event) => {
   event.preventDefault();
   const title = event.target.elements[0].value;
-  const userName = sessionStorage.getItem('userName');
-  const response = await axios.get('/users/' + userName);
-  const uid = response.data.id;
+  const uid = sessionStorage.getItem('uid');
   await axios.post('/public-chat', {
     title: title,
     uid: uid,

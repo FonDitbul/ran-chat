@@ -3,8 +3,8 @@
   const createComment = async (event) => {
     event.preventDefault();
     const userName = sessionStorage.getItem('userName');
-    const response = await axios.get('/users/' + userName);
-    const uid = response.data.id;
+    const uid = sessionStorage.getItem('uid');
+    if (!userName || !uid) return alert('로그인 후 이용해주세요!');
     const boardID = location.pathname.split('/')[2];
     const content = event.target.elements[0].value;
     await axios.post('/board/comment', {
@@ -24,9 +24,9 @@
   const getLike = async (boardID) => {
     const response = await axios.get('/board/like/' + boardID);
     const boardLike = response.data;
-    return boardLike;
+    return boardLike.userLikes;
   };
-  //좋아요 POST
+  //좋아요 서버에 전송
   const addLike = async (boardID, uid) => {
     return await axios.post(`/board/like?id=${boardID}&uid=${uid}`);
   };
@@ -48,7 +48,7 @@
     if (!userName) return alert('로그인 후 이용해주세요!');
     const userResponse = await axios.get('/users/' + userName);
     const uid = userResponse.data.id;
-    let Like = await getLike(boardID);
+    const Like = await getLike(boardID);
     if (await validateLike(boardID, uid, Like)) {
       likeDiv.innerText = '(좋아요) ' + (Like.length + 1);
       return await addLike(boardID, uid);
