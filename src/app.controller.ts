@@ -9,7 +9,7 @@ export class AppController {
     return { title: 'Random-Chatting' };
   }
 
-  @Get('personalChat')
+  @Get('personal-chat')
   @Render('layouts/personalChat')
   personalChatPage() {
     return { title: '??', breads: [{ name: '1대1 채팅방' }] };
