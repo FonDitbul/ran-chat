@@ -17,6 +17,8 @@ const createPublicRoom = async (event) => {
 createRoomform.addEventListener('submit', createPublicRoom);
 
 createModalButton.onclick = function () {
+  const access_token = localStorage.getItem('access_token');
+  if (!access_token) return alert('로그인 후 이용해 주세요.');
   createRoomModal.style.display = 'block';
 };
 
