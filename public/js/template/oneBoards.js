@@ -2,8 +2,8 @@
   //댓글 시스템
   const createComment = async (event) => {
     event.preventDefault();
-    const userName = sessionStorage.getItem('userName');
-    const uid = sessionStorage.getItem('uid');
+    const userName = localStorage.getItem('userName');
+    const uid = localStorage.getItem('uid');
     if (!userName || !uid) return alert('로그인 후 이용해주세요!');
     const boardID = location.pathname.split('/')[2];
     const content = event.target.elements[0].value;
@@ -19,6 +19,7 @@
 
   // 좋아요 싫어요 Element
   const likeDiv = document.getElementById('like');
+  const likeCount = document.getElementById('like-count');
 
   // 좋아요 GET
   const getLike = async (boardID) => {
@@ -35,25 +36,25 @@
   };
   //좋아요 눌렀는지 확인
   const validateLike = async (boardID, uid, Likes) => {
-    const sessionUid = sessionStorage.getItem('uid');
+    const localUid = localStorage.getItem('uid');
     for (let Like of Likes) {
-      if (Like.id === +sessionUid) return false;
+      if (Like.id === +localUid) return false;
     }
     return true;
   };
   //좋아요 클릭 이벤트
   const clickLike = async (event) => {
     const boardID = location.pathname.split('/')[2];
-    const userName = sessionStorage.getItem('userName');
+    const userName = localStorage.getItem('userName');
     if (!userName) return alert('로그인 후 이용해주세요!');
     const userResponse = await axios.get('/users/' + userName);
     const uid = userResponse.data.id;
     const Like = await getLike(boardID);
     if (await validateLike(boardID, uid, Like)) {
-      likeDiv.innerText = '(좋아요) ' + (Like.length + 1);
+      likeCount.innerText = Like.length + 1;
       return await addLike(boardID, uid);
     }
-    likeDiv.innerText = '(좋아요) ' + (Like.length - 1);
+    likeCount.innerText = Like.length - 1;
     return await deleteLike(boardID, uid);
   };
 
