@@ -19,8 +19,8 @@ const submitLogin = async () => {
   // });
   if (!login.data) return alert('존재하지 않는 아이디입니다!');
   const accessToken = login.data.access_token;
-  const uid = login.data.userId;
-  const userName = login.data.username;
+  const uid = login.data.uid;
+  const userName = login.data.userName;
   localStorage.setItem('access_token', accessToken);
   localStorage.setItem('uid', uid);
   localStorage.setItem('userName', userName);
