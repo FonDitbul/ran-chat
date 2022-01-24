@@ -52,6 +52,12 @@ export class CommentEntity extends CommonEntity {
   replyID: number | null; //대댓글 ID
 
   @ApiProperty({
+    description: '답글 하는 댓글 유저 닉네임',
+  })
+  @Column({ nullable: true })
+  replyUserName: string | null; //대댓글 ID
+
+  @ApiProperty({
     example: '예시 댓글 내용',
     description: '댓글 내용',
   })

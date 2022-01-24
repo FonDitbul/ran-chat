@@ -78,8 +78,9 @@
             </div>
           </div>
           {{#each reply}}
-            <div class='flex pl-8'> <!-- reply 댓글 -->
+            <div class='flex pl-8 bg-gray-200 rounded-md'> <!-- reply 댓글 -->
               <div class="border border-gray-200 w-36 h-5 ">{{user.userName}}</div>
+              <strong class='mx-2'>@{{replyUserName}}</strong>
               <div class="border border-gray-200">
                 {{content}}
               </div>
