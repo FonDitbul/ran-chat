@@ -41,7 +41,6 @@ export class BoardsRepository extends Repository<BoardEntity> {
         'board.uid', // 게시판 작성유저 아이디
         'board.category', // 게시판 카테고리
         'board.content', // 게시판 내용
-        'board.like', // 게시판 좋아요
         'board.createdAt', //생성 날짜
         'board.views', //조회수
       ])
@@ -66,7 +65,7 @@ export class BoardsRepository extends Repository<BoardEntity> {
     return updateOneBoard;
   }
 
-  //좋아요
+  //좋아요 find
   async findLike(id: number) {
     const boardLikes = await this.createQueryBuilder('board')
       .innerJoinAndSelect('board.userLikes', 'Like')
@@ -77,6 +76,13 @@ export class BoardsRepository extends Repository<BoardEntity> {
       )
       .where('board.id = :id', { id })
       .getOne();
+    if (!boardLikes) {
+      const tempLikes = await this.createQueryBuilder('board')
+        .where('board.id = :id', { id })
+        .getOne();
+      tempLikes.userLikes = [];
+      return tempLikes;
+    }
     return boardLikes;
   }
 }
