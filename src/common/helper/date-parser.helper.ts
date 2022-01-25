@@ -20,10 +20,10 @@ export const dateParser = (date) => {
     monthStr +
     '/' +
     dayStr +
-    ' [' +
+    ' ' +
     hoursStr +
     ':' +
     minutesStr +
-    ']'
+    ''
   );
 };

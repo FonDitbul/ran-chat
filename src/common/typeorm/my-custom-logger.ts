@@ -10,7 +10,7 @@ export class MyCustomLogger implements Logger {
   logMigration(message: string, queryRunner?: QueryRunner): any {}
 
   logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner): any {
-    console.log(query);
+    // console.log(query);
     /*    const queryList = query.split(',');
     const reservedWord = ['SELECT', 'FROM'];
     for (const queries of queryList) {

@@ -77,6 +77,7 @@ export class BoardsRepository extends Repository<BoardEntity> {
       .where('board.id = :id', { id })
       .getOne();
     if (!boardLikes) {
+      //좋아요 없을시 예외처리, 더 좋은방법 강구
       const tempLikes = await this.createQueryBuilder('board')
         .where('board.id = :id', { id })
         .getOne();

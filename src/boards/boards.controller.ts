@@ -19,7 +19,7 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { CommentService } from './services/comment.service';
 import { LikeService } from './services/like.service';
-import { ParsePagePipe } from '../common/pipes/ParsePage.pipe';
+import { ParsePagePipe } from '../common/pipes/parse-page.pipe';
 import { breadsInterceptor } from '../common/interceptors/breads.interceptor';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 

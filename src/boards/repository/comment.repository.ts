@@ -9,8 +9,7 @@ import {
   CommentEntity as Comment,
   CommentEntity,
 } from '../entities/comment.entity';
-import { MyCustomLogger } from '../../common/typeorm/MyCustomLogger';
-import { UserEntity } from '../../users/entities/user.entity';
+import { MyCustomLogger } from '../../common/typeorm/my-custom-logger';
 import { UpdateCommentDto } from '../dto/update-comment.dto';
 
 @EntityRepository(CommentEntity)
