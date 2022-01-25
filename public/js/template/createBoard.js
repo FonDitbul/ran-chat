@@ -17,8 +17,11 @@ const createBoard = async (event) => {
   event.preventDefault();
   const title = event.target.elements[0].value;
   const content = event.target.elements[1].value;
-  const userName = sessionStorage.getItem('userName');
   const uid = sessionStorage.getItem('uid');
+
+  if (!title) return alert('제목을 입력해 주세요!');
+  if (!content) return alert('내용을 입력해 주세요!');
+  if (!uid) return alert('로그인 후 이용해 주세요!');
   await axios.post('/board', {
     title: title,
     category: '게시판',
