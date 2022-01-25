@@ -58,11 +58,16 @@ export class BoardEntity extends CommonEntity {
   views: number;
 
   //--relations--
-  @ManyToOne(() => UserEntity, (users) => users.writeBoards)
+  @ManyToOne(() => UserEntity, (users) => users.writeBoards, {
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn({ name: 'uid' })
   user: UserEntity;
 
-  @ManyToMany(() => UserEntity, (users) => users.likeBoards, { eager: true })
+  @ManyToMany(() => UserEntity, (users) => users.likeBoards, {
+    eager: true,
+    createForeignKeyConstraints: false,
+  })
   @JoinTable({
     name: 'user_likes_board',
     joinColumn: {

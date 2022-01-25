@@ -53,7 +53,9 @@ export class UserEntity extends CommonEntity {
   @OneToMany(() => chatEntity, (chats) => chats.user)
   chats: chatEntity[];
 
-  @ManyToMany(() => BoardEntity, (board) => board.userLikes)
+  @ManyToMany(() => BoardEntity, (board) => board.userLikes, {
+    createForeignKeyConstraints: false,
+  })
   likeBoards: BoardEntity[];
 
   @OneToMany(() => CommentEntity, (comments) => comments.user)

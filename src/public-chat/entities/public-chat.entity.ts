@@ -29,10 +29,14 @@ export class PublicChatEntity extends CommonEntity {
   uid: number;
 
   //--relations--
-  @ManyToOne(() => UserEntity, (users) => users.publicChats)
+  @ManyToOne(() => UserEntity, (users) => users.publicChats, {
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn({ name: 'uid' })
   user: UserEntity;
 
-  @OneToMany(() => chatEntity, (chats) => chats.room)
+  @OneToMany(() => chatEntity, (chats) => chats.room, {
+    createForeignKeyConstraints: false,
+  })
   chats: chatEntity[];
 }

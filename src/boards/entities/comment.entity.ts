@@ -65,11 +65,15 @@ export class CommentEntity extends CommonEntity {
   content: string;
 
   //--relations--
-  @ManyToOne(() => UserEntity, (users) => users.comments)
+  @ManyToOne(() => UserEntity, (users) => users.comments, {
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn({ name: 'uid' })
   user: UserEntity;
 
-  @ManyToOne(() => BoardEntity, (boards) => boards.comments)
+  @ManyToOne(() => BoardEntity, (boards) => boards.comments, {
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn({ name: 'boardID' })
   board: BoardEntity;
 }
