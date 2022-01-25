@@ -58,12 +58,6 @@ export class BoardEntity extends CommonEntity {
   content: string;
 
   @Column({ default: 0 })
-  like: number;
-
-  @Column({ default: 0 })
-  dislike: number;
-
-  @Column({ default: 0 })
   views: number;
 
   //--relations--
@@ -71,7 +65,18 @@ export class BoardEntity extends CommonEntity {
   @JoinColumn({ name: 'uid' })
   user: UserEntity;
 
-  @ManyToMany(() => UserEntity, (users) => users.likeBoards)
+  @ManyToMany(() => UserEntity, (users) => users.likeBoards, { eager: true })
+  @JoinTable({
+    name: 'user_likes_board',
+    joinColumn: {
+      name: 'boardId',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'uid',
+      referencedColumnName: 'id',
+    },
+  })
   userLikes: UserEntity[];
 
   @OneToMany(() => CommentEntity, (comments) => comments.board)

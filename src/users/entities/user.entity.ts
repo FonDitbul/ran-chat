@@ -54,17 +54,6 @@ export class UserEntity extends CommonEntity {
   chats: chatEntity[];
 
   @ManyToMany(() => BoardEntity, (board) => board.userLikes)
-  @JoinTable({
-    name: 'user_likes_board',
-    joinColumn: {
-      name: 'uid',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'boardId',
-      referencedColumnName: 'id',
-    },
-  })
   likeBoards: BoardEntity[];
 
   @OneToMany(() => CommentEntity, (comments) => comments.user)
