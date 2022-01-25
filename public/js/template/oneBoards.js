@@ -46,9 +46,8 @@
   const clickLike = async (event) => {
     const boardID = location.pathname.split('/')[2];
     const userName = localStorage.getItem('userName');
-    if (!userName) return alert('로그인 후 이용해주세요!');
-    const userResponse = await axios.get('/users/' + userName);
-    const uid = userResponse.data.id;
+    const uid = localStorage.getItem('uid');
+    if (!userName || !uid) return alert('로그인 후 이용해주세요!');
     const Like = await getLike(boardID);
     if (await validateLike(boardID, uid, Like)) {
       likeCount.innerText = Like.length + 1;
