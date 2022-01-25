@@ -1,4 +1,12 @@
 (() => {
+  // 내용 렌더링
+  const contentRender = (content) => {
+    content.innerHTML = content.innerText;
+    return content;
+  };
+  const getContent = document.getElementById('content');
+  contentRender(getContent);
+
   //댓글 시스템
   const createComment = async (event) => {
     event.preventDefault();
