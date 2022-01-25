@@ -48,45 +48,50 @@
           </div>
         </div>
         <!-- 좋아요 싫어요 -->
-        <div class="mt-4 flex items-center justify-between">
+        <div class="mt-4 flex items-center">
           <div class="flex items-center mx-auto" >
-            <div class="items-center">
-              <button id='like' class='items-center'>
-                <img src='../../../heart-icon-2243.png' class='m-4 h-4 float-left'>
-                <span id='like-count' class='m-4 h-4'>{{data.LikeCount}}</span>
+            <div class="items-center bg-gray-100 rounded-md">
+              <button id='like' class='flex items-center'>
+                <img src='../../../heart-icon-2243.png' class='m-4 h-4'/>
+                <span> 좋아요 </span>
+                <strong id='like-count' class='mx-3 text-red-400'>{{data.LikeCount}}</strong>
               </button>
             </div>
-            <span class="bg-tertiary h-1 w-20 rounded"></span>
-  <!--          <div id='dislike' class=" border border-gray-200 w-20 h-5 ">(싫어요) {{data.dislike}}</div>-->
           </div>
         </div>
       </div>
       <!--댓글 불러오기-->
       <div class="p-4 bg-white border border-primary rounded-md">
-        <h2>댓글</h2>
+        <div class='flex items-center'>
+          <img src='../../../comment_text_icon_138728.png' class='m-6 h-6'/>
+          <span class='font-bold text-xl'>댓글</span>
+        </div>
         {{#each comment}}
-          <div class='flex'> <!-- root 댓글-->
-            <div class="w-36 h-10">
-              {{user.userName}}
+          <div class='flex rounded-md my-3 mx-5 border border-slate-300'> <!-- root 댓글-->
+            <div class="flex w-36 h-10 border border-slate-300 bg-gray-200 items-center">
+              <strong class='flex'>{{user.userName}}</strong>
+              <span class='ml-2 text-sm'>1일전</span>
             </div>
-            <div class="">
-              {{content}}
+            <div class="flex px-2 items-center">
+              <span>{{content}}</span>
             </div>
             <div>
-              좋아요
-              댓글 달기
+<!--              댓글 달기-->
             </div>
           </div>
           {{#each reply}}
-            <div class='flex pl-8 bg-gray-200 rounded-md'> <!-- reply 댓글 -->
-              <div class="border border-gray-200 w-36 h-5 ">{{user.userName}}</div>
-              <strong class='mx-2'>@{{replyUserName}}</strong>
-              <div class="border border-gray-200">
-                {{content}}
+            <div class='flex ml-16 my-3 border border-slate-300 rounded-md'> <!-- reply 댓글 -->
+              <div class="flex w-36 h-10 border border-slate-300 bg-gray-200 items-center">
+                <strong>{{user.userName}}</strong>
+                <span class='ml-2 text-sm'>10분전</span>
+              </div>
+              <div class='items-center'>
+                <strong class='mx-2'>@{{replyUserName}}</strong>
+                <span>{{content}}</span>
               </div>
               <div>
-                <button>좋아요</button>
-                <button id='reply-comment'>댓글 달기</button>
+<!--                <button>좋아요</button>-->
+<!--                <button id='reply-comment'>댓글 달기</button>-->
               </div>
             </div>
           {{/each}}
