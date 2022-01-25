@@ -3,6 +3,8 @@
   <title>Random-Chatting</title>
   <link href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css' rel='stylesheet'/>
   <link href='../css/styles.css' rel='stylesheet' />
+  <!--답글 함수 선언-->
+  <script src='../js/template/oneBoardReplyComment.js'></script>
 </head>
 <body>
   {{> header}}
@@ -66,22 +68,32 @@
           <img src='../../../comment_text_icon_138728.png' class='m-6 h-6'/>
           <span class='font-bold text-xl'>댓글</span>
         </div>
+        <!-- root 댓글-->
         {{#each comment}}
-          <div class='flex rounded-md my-3 mx-5 border border-slate-300'> <!-- root 댓글-->
-            <div class="flex w-36 h-10 border border-slate-300 bg-gray-200 items-center">
+          <div class='flex rounded-md mt-3 mx-5 border border-slate-300'>
+            <div class="flex w-1/12 h-10 border border-slate-300 bg-gray-200 items-center">
               <strong class='flex'>{{user.userName}}</strong>
               <span class='ml-2 text-sm'>1일전</span>
             </div>
-            <div class="flex px-2 items-center">
+            <div class="flex w-6/12 px-2 items-center">
               <span>{{content}}</span>
             </div>
-            <div>
-<!--              댓글 달기-->
-            </div>
           </div>
+          <div class='flex ml-52'>
+            <span name='groupID' style='display: none'>{{id}}</span>
+            <span name='replyID' style='display: none'>{{id}}</span>
+            <span name='replyUserName' style='display: none'>{{user.userName}}</span>
+            <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder='댓글 작성하기' required
+                      style='display: none'></textarea>
+            <button class='bg-white text-gray-700 text-xs py-1 px-1 border border-gray-400 rounded-lg tracking-wide mr-1  hover:bg-gray-100'
+                    onclick='ReplyComment(this)'>
+              대댓글 달기
+            </button>
+          </div>
+          <!-- reply 댓글 -->
           {{#each reply}}
-            <div class='flex ml-16 my-3 border border-slate-300 rounded-md'> <!-- reply 댓글 -->
-              <div class="flex w-36 h-10 border border-slate-300 bg-gray-200 items-center">
+            <div class='flex ml-16 my-3 border border-slate-300 rounded-md'>
+              <div class="flex w-1/12 h-10 border border-slate-300 bg-gray-200 items-center">
                 <strong>{{user.userName}}</strong>
                 <span class='ml-2 text-sm'>10분전</span>
               </div>
@@ -89,18 +101,25 @@
                 <strong class='mx-2'>@{{replyUserName}}</strong>
                 <span>{{content}}</span>
               </div>
-              <div>
-<!--                <button>좋아요</button>-->
-<!--                <button id='reply-comment'>댓글 달기</button>-->
-              </div>
+            </div>
+            <div class='flex ml-60'>
+              <span name='groupID' style='display: none'>{{groupID}}</span>
+              <span name='replyID' style='display: none'>{{id}}</span>
+              <span name='replyUserName' style='display: none'>{{user.userName}}</span>
+              <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder='댓글 작성하기' required
+                        style='display: none'></textarea>
+              <button class='bg-white text-gray-700 text-xs py-1 px-1 border border-gray-400 rounded-lg tracking-wide mr-1  hover:bg-gray-100'
+                      onclick='ReplyComment(this)'>
+                대댓글 달기
+              </button>
             </div>
           {{/each}}
         {{/each}}
       </div>
       <!-- 댓글 작성하기 -->
-      <form id='create-comment-form' class="p-4">
+      <form id='create-comment-form' class="p-4 mx-5">
         <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder='댓글 작성하기' required></textarea>
-        <button class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100">댓글 달기</button>
+        <button class="bg-white text-gray-700 font-medium py-1 px-4 my-2 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100">댓글 달기</button>
       </form>
     </div>
   </div>

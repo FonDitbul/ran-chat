@@ -7,5 +7,6 @@ export class CreateCommentDto extends PickType(CommentEntity, [
   'boardID',
   'groupID',
   'replyID',
+  'replyUserName',
   'content',
 ] as const) {}
