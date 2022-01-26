@@ -1,5 +1,5 @@
-export const dateParser = (date) => {
-  const year = (date.getFullYear() - 2000).toString();
+export const dateParserHelper = (date) => {
+  const year = date.getFullYear().toString();
   const month: number = date.getMonth() + 1;
   const day: number = date.getDate();
   const hours = date.getHours(); // 시
@@ -15,15 +15,6 @@ export const dateParser = (date) => {
   const secondsStr: string =
     seconds < 10 ? '0' + seconds.toString() : seconds.toString();
   return (
-    year +
-    '/' +
-    monthStr +
-    '/' +
-    dayStr +
-    ' ' +
-    hoursStr +
-    ':' +
-    minutesStr +
-    ''
+    year + '.' + monthStr + '.' + dayStr + ' ' + hoursStr + ':' + minutesStr
   );
 };

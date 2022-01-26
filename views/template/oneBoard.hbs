@@ -73,7 +73,7 @@
           <div class='flex rounded-md mt-3 mx-5 border border-slate-300'>
             <div class="flex w-1/12 h-10 border border-slate-300 bg-gray-200 items-center">
               <strong class='flex'>{{user.userName}}</strong>
-              <span class='ml-2 text-sm'>1일전</span>
+              <span class='ml-2 text-sm'>{{dayBefore createdAt}}</span>
             </div>
             <div class="flex w-6/12 px-2 items-center">
               <span>{{content}}</span>
@@ -95,7 +95,7 @@
             <div class='flex ml-16 my-3 border border-slate-300 rounded-md'>
               <div class="flex w-1/12 h-10 border border-slate-300 bg-gray-200 items-center">
                 <strong>{{user.userName}}</strong>
-                <span class='ml-2 text-sm'>10분전</span>
+                <span class='ml-2 text-sm'>{{dayBefore createdAt}}</span>
               </div>
               <div class='items-center'>
                 <strong class='mx-2'>@{{replyUserName}}</strong>

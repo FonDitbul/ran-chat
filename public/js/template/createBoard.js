@@ -17,7 +17,7 @@ const createBoard = async (event) => {
   event.preventDefault();
   const title = event.target.elements[0].value;
   const content = event.target.elements[1].value;
-  const uid = sessionStorage.getItem('uid');
+  const uid = localStorage.getItem('uid');
 
   if (!title) return alert('제목을 입력해 주세요!');
   if (!content) return alert('내용을 입력해 주세요!');
