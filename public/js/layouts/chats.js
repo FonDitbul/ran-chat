@@ -48,7 +48,7 @@
     return createDiv;
   };
 
-  // 랜덤채팅 시작하기
+  // 랜덤채팅 시작하기 버튼
   const ranChatMatchButton = document.getElementById('ran-chat-match');
   const onClickMatchButton = (event) => {
     event.target.innerText = '... 매칭을 기다리는 중 ...';
@@ -62,4 +62,11 @@
     return (element.style.display = 'none');
   };
   ranChatMatchButton.addEventListener('click', onClickMatchButton);
+
+  //랜덤 채팅 메세지 적기 div
+  const chatForm = document.getElementById('chat-form');
+  const onClickChatForm = (event) => {
+    event.preventDefault();
+  };
+  chatForm.addEventListener('click', onClickChatForm);
 })();
