@@ -42,3 +42,8 @@ h2{
     text-decoration: none;
     cursor: pointer;
 }
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}

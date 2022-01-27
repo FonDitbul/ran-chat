@@ -12,13 +12,13 @@
   });
 
   socket.on('recMsg', function (res) {
-    drawFunction(res.userName, res.text);
+    drawFunction(res.userName, res.text, historyMessageDiv);
   });
 
   const chatSubmit = (event) => {
     event.preventDefault();
     const value = event.target.elements[0].value;
-    drawFunction('나', value);
+    drawFunction('나', value, historyMessageDiv);
     socket.emit('reqMsg', {
       roomID: roomID,
       uid: localStorage.getItem('uid'),
@@ -28,7 +28,7 @@
     event.target.elements[0].value = '';
   };
 
-  const drawFunction = (userName, data) => {
+  const drawFunction = (userName, data, historyMessageDiv) => {
     const userNameSpan = document.createElement('span');
     const messageDiv = document.createElement('div');
     const messageInnerDiv = document.createElement('div');
@@ -55,7 +55,7 @@
     messageDiv.appendChild(messageInnerDiv);
     historyMessageDiv.appendChild(userNameSpan);
     historyMessageDiv.appendChild(messageDiv);
-    return true;
+    return historyMessageDiv;
   };
   chatForm.addEventListener('submit', chatSubmit);
 })();

@@ -27,42 +27,46 @@
         {{/each}}
       </ol>
     </nav>
-    <div class='mx-auto my-5'>
-      <strong>랜덤 채팅 하기~</strong>
-      <span> 총 인원 수 : 4명</span>
+    <div class='flex w-1/2 items-center mx-auto my-5 justify-between'>
+      <strong>랜덤 채팅 하기 </strong>
+      <span> 랜덤채팅 대기인원 : 4명</span>
     </div>
     <!-- 랜덤채팅 BOX-->
-    <div class='w-1/2 h-3/4 border-2 rounded container mx-auto my-5'>
+    <div class='w-1/2 h-1/2 border-2 rounded container mx-auto my-5'>
       <!-- 채팅 내역 부분-->
-      <div id='message' class="w-full h-3/4 overflow-y-auto">
-        <p>test 텍스트</p>
-        <p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p>
-        <p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p><p>test 텍스트</p>
+      <div id='message' class="w-full h-full overflow-y-auto">
+        <span>랜덤 채팅</span>
+        <p></p>
+        <span>낯선이와 다양한 이야기를 나눠보세요!</span>
       </div>
-      <!-- 랜덤채팅 시작 버튼, 채팅시 비활성화-->
-      <button id='ran-chat-match' class='w-full justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-400 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500'>
-        랜덤채팅 시작하기
-      </button>
-      <!-- 채팅버튼 default 비활성화-->
-      <div class="w-full h-12 py-2 px-4 flex items-center justify-between border border-gray-300 row-end-auto">
-        <button class="outline-none focus:outline-none">
-          <svg class="text-gray-400 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
+      <section>
+        <!-- 랜덤채팅 시작 버튼, 채팅시 비활성화-->
+        <button id='ran-chat-match' class='w-full justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-gray-400 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500'>
+          랜덤채팅 시작하기
         </button>
-        <button class="outline-none focus:outline-none ml-1">
-          <svg class="text-gray-400 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-          </svg>
-        </button>
-        <input aria-placeholder="메시지를 입력하세요" placeholder="메시지를 입력하세요"
-               class="py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 outline-none focus:text-gray-700" type="text" name="message" required/>
-        <button class="outline-none focus:outline-none" type="submit">
-          <svg class=" text-gray-600 h-7 w-7 origin-center transform rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-          </svg>
-        </button>
-      </div>
+        <!-- 채팅버튼 default 비활성화-->
+        <div class="w-full py-2 px-4 flex items-center justify-between border border-gray-300 rounded row-end-auto" style='display:none;'>
+          <button class="outline-none focus:outline-none">
+            <svg class="text-gray-400 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </button>
+          <button class="outline-none focus:outline-none ml-1">
+            <svg class="text-gray-400 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+            </svg>
+          </button>
+          <form class='outline-none w-full flex' id='chat-form'>
+            <input aria-placeholder="메시지를 입력하세요" placeholder="메시지를 입력하세요"
+                   class="py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 outline-none focus:text-gray-700" type="text" name="message" required/>
+            <button class="outline-none focus:outline-none" type="submit">
+              <svg class=" text-gray-600 h-7 w-7 origin-center transform rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+              </svg>
+            </button>
+          </form>
+        </div>
+      </section>
     </div>
   </div>
   <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
