@@ -4,6 +4,7 @@
 
   const chatForm = document.getElementById('chat-form');
   const historyMessageDiv = document.getElementById('message');
+  historyMessageDiv.scrollTop = historyMessageDiv.scrollHeight;
 
   socket.emit('joinRoom', {
     userName: localStorage.getItem('userName'),
@@ -55,6 +56,7 @@
     messageDiv.appendChild(messageInnerDiv);
     historyMessageDiv.appendChild(userNameSpan);
     historyMessageDiv.appendChild(messageDiv);
+    historyMessageDiv.scrollTop = historyMessageDiv.scrollHeight;
     return historyMessageDiv;
   };
   chatForm.addEventListener('submit', chatSubmit);

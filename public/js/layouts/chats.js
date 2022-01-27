@@ -36,6 +36,7 @@
     innerDiv.appendChild(textSpan);
     messageDiv.appendChild(innerDiv);
     messageDivElement.appendChild(messageDiv);
+    messageDivElement.scrollTop = messageDivElement.scrollHeight;
     return messageDivElement;
   };
   const drawChattingContent = (text) => {
