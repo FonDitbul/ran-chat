@@ -7,6 +7,7 @@ import { dateParserHelper } from './common/helper/date-parser.helper';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './common/filter/http-exception.filter';
 import { dayBeforeHelper } from './common/helper/day-before.helper';
+import { imageServerHelper } from './common/helper/image-server.helper';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -28,6 +29,7 @@ async function bootstrap() {
   hbs.registerPartials(join(__dirname, '..', '/views/partials'));
   hbs.registerHelper('dateParser', dateParserHelper);
   hbs.registerHelper('dayBefore', dayBeforeHelper);
+  hbs.registerHelper('imageServer', imageServerHelper);
 
   app.useGlobalFilters(new HttpExceptionFilter());
   await app.listen(3000);
