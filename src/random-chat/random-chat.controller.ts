@@ -1,4 +1,4 @@
-import { Controller, Get, Render, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Render, UseInterceptors } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { breadsInterceptor } from '../common/interceptors/breads.interceptor';
 
@@ -18,9 +18,13 @@ export class RandomChatController {
     return {};
   }
 
-  // @Get(':id')
-  // async getChatHistory() {
-  //   const chatHistory = await this.chatsService.findChatHistory();
-  //   return chatHistory;
-  // }
+  @Post('match')
+  async matchRandomUser() {
+    return '랜덤 유저 매칭 요청';
+  }
+
+  @Get('match')
+  async connectRandomUser() {
+    return '랜덤유저 연결 성공';
+  }
 }
