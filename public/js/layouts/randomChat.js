@@ -5,15 +5,19 @@
   //socket on 리스트
   socket.on('randomUserEntry', (data) => {
     //랜덤 유저 매칭 성공
-    MESSAGE_DIV.appendChild(drawChattingContent('상대방님이 입장하셨습니다.'));
+    return MESSAGE_DIV.appendChild(
+      drawChattingContent('상대방님이 입장하셨습니다.'),
+    );
   });
   socket.on('randomUserExit', (data) => {
     //랜덤 유저 disconnect
-    MESSAGE_DIV.appendChild(drawChattingContent('상대방님이 퇴장하셨습니다.'));
+    return MESSAGE_DIV.appendChild(
+      drawChattingContent('상대방님이 퇴장하셨습니다.'),
+    );
   });
   socket.on('chatting', (data) => {
     //채팅 받았을 때
-    drawChattingContent(data.userName, data.text);
+    return drawChattingContent(data.userName, data.text);
   });
 
   socket.emit('matchingUser', {});
