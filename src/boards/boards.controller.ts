@@ -22,6 +22,7 @@ import { LikeService } from './services/like.service';
 import { ParsePagePipe } from '../common/pipes/parse-page.pipe';
 import { breadsInterceptor } from '../common/interceptors/breads.interceptor';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { timeLoggingInterceptor } from '../common/interceptors/logging.interceptor';
 
 @Controller('board')
 export class BoardsController {
@@ -42,11 +43,11 @@ export class BoardsController {
   async allBoardsPage(
     @Query('page', new DefaultValuePipe(1), ParsePagePipe) page: number,
   ) {
-    const { getAllBoards, countBoard, pageArr } =
-      await this.boardsService.findAll(page);
+    const { getAllBoards, totalCountBoard } =
+      await this.boardsService.findAllBoard(page);
     return {
       data: getAllBoards,
-      page: { cur: page, total: countBoard, pageArr: pageArr },
+      page: { curPage: page, totalCountBoard },
     };
   }
 

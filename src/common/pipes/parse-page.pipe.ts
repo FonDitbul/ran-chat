@@ -12,6 +12,6 @@ export class ParsePagePipe implements PipeTransform<string, number> {
     if (isNaN(val)) {
       throw new BadRequestException('Validation failed');
     }
-    return val - 1;
+    return val;
   }
 }

@@ -17,22 +17,11 @@ export class BoardsService {
       });
   }
 
-  async findAll(page: number) {
-    const getAllBoards = await this.boardsRepository.findAll(page);
-    //임시 board pagination
-    //getManyAndCount 로 변경
-    const countBoard = await this.boardsRepository.count({});
-    const curPage = page + 1;
-    const startPage = parseInt(String(curPage / 10 - 1)) + 1;
-    const endPage =
-      parseInt(String(countBoard / 10)) * 10 < countBoard
-        ? parseInt(String(countBoard % 10)) * 10
-        : countBoard;
-    const pageArr = [];
-    for (let i = startPage; i <= 10; i++) {
-      pageArr.push(i);
-    }
-    return { getAllBoards, countBoard, pageArr };
+  async findAllBoard(page: number) {
+    const allBoards = await this.boardsRepository.findAll(page - 1);
+    const getAllBoards = allBoards[0];
+    const totalCountBoard = allBoards[1];
+    return { getAllBoards, totalCountBoard };
   }
 
   async findOne(id: number) {

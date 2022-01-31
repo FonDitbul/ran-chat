@@ -5,7 +5,7 @@ import { UpdateBoardDto } from './dto/update-board.dto';
 @EntityRepository(BoardEntity)
 export class BoardsRepository extends Repository<BoardEntity> {
   async findAll(page: number) {
-    const SHOW_LIMIT_BOARD = 10;
+    const SHOW_LIMIT_BOARD = 15;
     // 다른 표현식
     // const getAllBoards = await this.find({
     //   relations: ['user', 'comments'],
@@ -29,7 +29,7 @@ export class BoardsRepository extends Repository<BoardEntity> {
       .orderBy('board.id', 'DESC')
       .offset(page * SHOW_LIMIT_BOARD)
       .limit(SHOW_LIMIT_BOARD)
-      .getMany();
+      .getManyAndCount();
     return getAllBoards;
   }
 
