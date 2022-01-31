@@ -1,5 +1,4 @@
 import { IsNotEmpty } from 'class-validator';
-import { Column } from 'typeorm';
 
 export class CreateChatDto {
   @IsNotEmpty()
@@ -11,5 +10,5 @@ export class CreateChatDto {
   // @IsNotEmpty()
   // readonly date;
 
-  readonly roomID: number;
+  readonly roomID: string;
 }
