@@ -8,6 +8,12 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './common/filter/http-exception.filter';
 import { dayBeforeHelper } from './common/helper/day-before.helper';
 import { imageServerHelper } from './common/helper/image-server.helper';
+import {
+  isCurPage,
+  nextCurPage,
+  pageToArray,
+  preCurPage,
+} from './common/helper/paging.helper';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -27,9 +33,16 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');
   hbs.registerPartials(join(__dirname, '..', '/views/partials'));
+  //hbs 템플릿 helper 함수 등록
   hbs.registerHelper('dateParser', dateParserHelper);
   hbs.registerHelper('dayBefore', dayBeforeHelper);
   hbs.registerHelper('imageServer', imageServerHelper);
+
+  //hbs pagination 관련 helper 함수
+  hbs.registerHelper('pageToArray', pageToArray);
+  hbs.registerHelper('isCurPage', isCurPage);
+  hbs.registerHelper('preCurPage', preCurPage);
+  hbs.registerHelper('nextCurPage', nextCurPage);
 
   app.useGlobalFilters(new HttpExceptionFilter());
   await app.listen(3000);
