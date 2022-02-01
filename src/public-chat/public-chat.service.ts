@@ -21,8 +21,11 @@ export class PublicChatService {
       });
   }
 
-  async findAll() {
-    return await this.publicChatRepository.findAll();
+  async findAll(page: number) {
+    const allPublicRoom = await this.publicChatRepository.findAll(page - 1);
+    const roomList = allPublicRoom[0];
+    const totalCountPublicChat = allPublicRoom[1];
+    return { roomList, totalCountPublicChat };
   }
 
   async findOne(id: number) {

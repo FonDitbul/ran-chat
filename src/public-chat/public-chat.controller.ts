@@ -9,12 +9,15 @@ import {
   Render,
   ParseIntPipe,
   UseInterceptors,
+  Query,
+  DefaultValuePipe,
 } from '@nestjs/common';
 import { PublicChatService } from './public-chat.service';
 import { CreatePublicChatDto } from './dto/create-public-chat.dto';
 import { UpdatePublicChatDto } from './dto/update-public-chat.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { breadsInterceptor } from '../common/interceptors/breads.interceptor';
+import { ParsePagePipe } from '../common/pipes/parse-page.pipe';
 
 @ApiTags('공개 채팅방')
 @Controller('public-chat')
@@ -28,10 +31,15 @@ export class PublicChatController {
   @Get()
   @UseInterceptors(breadsInterceptor)
   @Render('layouts/publicChat')
-  async publicChatPage() {
-    const roomList = await this.publicChatService.findAll();
+  async publicChatPage(
+    @Query('page', new DefaultValuePipe(1), ParsePagePipe) page: number,
+  ) {
+    const { roomList, totalCountPublicChat } =
+      await this.publicChatService.findAll(page);
+    console.log(roomList);
     return {
       data: roomList,
+      page: { curPage: page, totalCountPublicChat },
     };
   }
 
