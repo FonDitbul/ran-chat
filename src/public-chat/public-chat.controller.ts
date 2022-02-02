@@ -36,7 +36,6 @@ export class PublicChatController {
   ) {
     const { roomList, totalCountPublicChat } =
       await this.publicChatService.findAll(page);
-    console.log(roomList);
     return {
       data: roomList,
       page: { curPage: page, totalCountPublicChat },

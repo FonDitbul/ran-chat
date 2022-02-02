@@ -3,7 +3,7 @@ import { PublicChatEntity } from './entities/public-chat.entity';
 @EntityRepository(PublicChatEntity)
 export class PublicChatRepository extends Repository<PublicChatEntity> {
   async findAll(page: number) {
-    const SHOW_LIMIT_CHAT_ROOM = 15;
+    const SHOW_LIMIT_CHAT_ROOM = 10;
     const getAllChat = await this.createQueryBuilder('publicChat')
       .innerJoinAndSelect('publicChat.user', 'user', 'publicChat.uid = user.id')
       .orderBy('publicChat.id', 'DESC')

@@ -57,11 +57,12 @@ export class BoardsController {
     description: '게시판 생성 페이지 Rendering',
   })
   @Get('create')
+  @UseInterceptors(breadsInterceptor)
   @Render('template/createBoard')
   async createBoardPage() {
     return {
       title: '게시판 만들기',
-      breads: [{ name: '자유 게시판' }, { name: '게시판 생성' }],
+      breadsOne: { name: '게시판 생성', url: 'board/create' },
     };
   }
 
