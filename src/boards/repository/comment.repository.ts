@@ -1,14 +1,5 @@
-import {
-  createConnection,
-  EntityRepository,
-  getConnectionOptions,
-  getRepository,
-  Repository,
-} from 'typeorm';
-import {
-  CommentEntity as Comment,
-  CommentEntity,
-} from '../entities/comment.entity';
+import { EntityRepository, Repository } from 'typeorm';
+import { CommentEntity } from '../entities/comment.entity';
 import { MyCustomLogger } from '../../common/typeorm/my-custom-logger';
 import { UpdateCommentDto } from '../dto/update-comment.dto';
 
