@@ -1,8 +1,11 @@
-const SHOW_BOARD = 15; // 게시판 개수 (서버와 동일한 변수)
 const SHOW_PAGING_NUM = 10; // PAGING 개수
 
-export const pageToArray = (curPage: number, totalCount: number) => {
-  const totalPage = Math.ceil(totalCount / SHOW_BOARD); //총 페이지 개수
+export const pageToArray = (
+  curPage: number, // 현재 페이지
+  totalCount: number, //총 데이터 개수
+  showData: number, //paging limit
+) => {
+  const totalPage = Math.ceil(totalCount / showData); //총 페이지 개수
   const endPage: number = //페이지 끝 번호
     totalPage < Math.ceil(curPage / SHOW_PAGING_NUM) * SHOW_PAGING_NUM
       ? totalPage
@@ -24,12 +27,16 @@ export const isCurPage = (curPage: number, page: number) => {
   return false;
 };
 
-export const preCurPage = (curPage) => {
+export const preCurPage = (curPage: number) => {
   if (curPage <= 1) return 1;
   return curPage - 1;
 };
 
-export const nextCurPage = (curPage, totalCount: number) => {
-  if (Math.ceil(totalCount / SHOW_BOARD) <= curPage) return curPage;
+export const nextCurPage = (
+  curPage: number,
+  totalCount: number,
+  showData: number,
+) => {
+  if (Math.ceil(totalCount / showData) <= curPage) return curPage;
   return curPage + 1;
 };
