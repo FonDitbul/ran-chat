@@ -1,14 +1,15 @@
 import { Controller, Get, Post, Render, UseInterceptors } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { breadsInterceptor } from '../common/interceptors/breads.interceptor';
+import { RandomChatService } from './random-chat.service';
 
 @ApiTags('랜덤 채팅')
 @Controller('random-chat')
 export class RandomChatController {
-  constructor() {}
+  constructor(readonly randomChatService: RandomChatService) {}
 
   @ApiOperation({
-    summary: '랜덤 채팅방 불러오기',
+    summary: '랜덤 채팅방',
     description: '랜덤 채팅방 Rendering',
   })
   @Get()
@@ -16,15 +17,5 @@ export class RandomChatController {
   @Render('layouts/randomChat')
   chattingPage() {
     return {};
-  }
-
-  @Post('match')
-  async matchRandomUser() {
-    return '랜덤 유저 매칭 요청';
-  }
-
-  @Get('match')
-  async connectRandomUser() {
-    return '랜덤유저 연결 성공';
   }
 }
