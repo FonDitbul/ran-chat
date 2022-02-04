@@ -17,6 +17,7 @@ export class RandomChatGateway
   private logger = new Logger('chat');
   // 랜덤 채팅 대기 QUEUE
   private ranChatQueue = new RanDomChatQueue<string>();
+  private prefixRoom = 'ran-chat-';
 
   //socket 연결
   handleConnection(@ConnectedSocket() socket: Socket) {
@@ -34,14 +35,13 @@ export class RandomChatGateway
     if (this.ranChatQueue.isEmpty) {
       this.ranChatQueue.enqueue(socket.id);
       // await socket.leave(socket.id);
-      await socket.join('ran-chat-' + socket.id);
-      console.log('firstroom', socket.rooms);
+      await socket.join(this.prefixRoom + socket.id);
       return;
     }
     const otherUser = this.ranChatQueue.dequeue();
-    await socket.join('ran-chat-' + otherUser);
+    await socket.join(this.prefixRoom + otherUser);
     socket
-      .in('ran-chat-' + otherUser)
+      .in(this.prefixRoom + otherUser)
       .emit('randomUserEntry', { room: otherUser });
     return socket.emit('randomUserEntry', { room: otherUser });
   }
@@ -49,7 +49,7 @@ export class RandomChatGateway
   @SubscribeMessage('reqMsg')
   async handleMessage(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     console.log(socket.rooms);
-    return socket.in('ran-chat-' + data.room).emit('recMsg', {
+    return socket.in(this.prefixRoom + data.room).emit('recMsg', {
       text: data.text,
     });
   }

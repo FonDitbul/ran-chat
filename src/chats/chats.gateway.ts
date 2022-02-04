@@ -16,6 +16,7 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(private readonly chatRepository: ChatRepository) {}
 
   private logger = new Logger('chat');
+  private prefixRoom = 'publicRoom-';
 
   async handleConnection(@ConnectedSocket() socket: Socket) {
     this.logger.log(`connected : ${socket.id}`);
@@ -27,7 +28,7 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('joinRoom') //공개 채팅방 join
   async handleJoinRoom(@MessageBody() data, @ConnectedSocket() socket: Socket) {
-    await socket.join(data.roomID);
+    await socket.join(this.prefixRoom + data.roomID);
   }
 
   @SubscribeMessage('leaveRoom') //공개 채팅방 leave
@@ -35,7 +36,7 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @MessageBody() data,
     @ConnectedSocket() socket: Socket,
   ) {
-    await socket.leave(data.roomID);
+    await socket.leave(this.prefixRoom + data.roomID);
   }
 
   @SubscribeMessage('reqMsg') //공개 채팅방 데이터 주고 받기
@@ -48,7 +49,7 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     await this.chatRepository.save(chatting).catch((error) => {
       this.logger.log(`error : ${error}`);
     });
-    socket.in(data.roomID).emit('recMsg', {
+    socket.in(this.prefixRoom + data.roomID).emit('recMsg', {
       userName: data.userName,
       text: data.text,
     });
