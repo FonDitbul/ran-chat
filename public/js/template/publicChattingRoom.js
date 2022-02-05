@@ -9,7 +9,7 @@
   socket.emit('joinRoom', {
     userName: localStorage.getItem('userName'),
     uid: localStorage.getItem('uid'),
-    roomID: 'chatting' + roomID,
+    roomID: roomID,
   });
 
   socket.on('recMsg', function (res) {
