@@ -43,7 +43,7 @@ export class CommentEntity extends CommonEntity {
     description: '대댓글 root 댓글 ID',
   })
   @Column({ default: 0 })
-  groupID: number; // group ID
+  rootID: number; // root ID
 
   @ApiProperty({
     description: '답글 하는 댓글 ID',

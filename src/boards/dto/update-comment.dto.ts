@@ -8,7 +8,7 @@ export class UpdateCommentDto extends PickType(CommentEntity, [
   'id',
   'uid',
   'boardID',
-  'groupID',
+  'rootID',
   'replyID',
   'content',
 ] as const) {}

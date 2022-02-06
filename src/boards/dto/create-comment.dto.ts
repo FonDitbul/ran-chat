@@ -5,7 +5,7 @@ import { CommentEntity } from '../entities/comment.entity';
 export class CreateCommentDto extends PickType(CommentEntity, [
   'uid',
   'boardID',
-  'groupID',
+  'rootID',
   'replyID',
   'replyUserName',
   'content',
