@@ -11,6 +11,7 @@ const checkName = (url) => {
   if (url === 'public-chat') return '공개 채팅방';
   if (url === 'random-chat') return '랜덤 채팅';
   if (url === 'personal-chat') return '1대1 채팅방';
+  if (url.split('?')[1]) return checkName(url.split('?')[0]);
 };
 @Injectable()
 export class breadsInterceptor<T> implements NestInterceptor<T> {
