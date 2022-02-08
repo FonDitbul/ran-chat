@@ -9,7 +9,7 @@ export class CommentRepository extends Repository<CommentEntity> {
     const getAllComment = await this.createQueryBuilder('comment')
       .innerJoinAndSelect('comment.user', 'user', 'comment.uid = user.id')
       .andWhere('comment.boardID = :boardID', { boardID })
-      .andWhere('comment.groupID = 0')
+      .andWhere('comment.rootID = 0')
       .getMany();
     return getAllComment;
   }
@@ -31,10 +31,10 @@ export class CommentRepository extends Repository<CommentEntity> {
       .andWhere('comment.boardID = :boardID', { boardID });
     return updateComment;
   }
-  async findReplyComment(groupID: number) {
+  async findReplyComment(rootID: number) {
     const replyComment = this.createQueryBuilder('comment')
       .innerJoinAndSelect('comment.user', 'user', 'comment.uid = user.id')
-      .andWhere('comment.groupID = :groupID', { groupID })
+      .andWhere('comment.rootID = :rootID', { rootID })
       .getMany();
     return replyComment;
   }

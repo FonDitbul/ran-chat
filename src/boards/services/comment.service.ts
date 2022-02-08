@@ -37,7 +37,7 @@ export class CommentService {
   async remove(id: number) {
     return await this.commentRepository.delete({ id: id });
   }
-  async findReplyComment(groupID: number) {
-    return await this.commentRepository.findReplyComment(groupID);
+  async findReplyComment(replyID: number) {
+    return await this.commentRepository.findReplyComment(replyID);
   }
 }

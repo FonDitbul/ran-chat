@@ -1,6 +1,6 @@
 const ReplyComment = async (comment) => {
   const replyData = comment.parentElement.getElementsByTagName('span');
-  const groupID = replyData[0].innerText;
+  const rootID = replyData[0].innerText;
   const replyID = replyData[1].innerText;
   const replyUserName = replyData[2].innerText;
   const commentTextarea =
@@ -18,7 +18,7 @@ const ReplyComment = async (comment) => {
   await axios.post('/board/comment', {
     uid: uid,
     boardID: boardID,
-    groupID: groupID,
+    rootID: rootID,
     replyID: replyID,
     replyUserName: replyUserName,
     content: content,
