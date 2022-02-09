@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreatePublicChatDto } from './dto/create-public-chat.dto';
 import { UpdatePublicChatDto } from './dto/update-public-chat.dto';
 import { PublicChatRepository } from './public-chat.repostiroy';
@@ -17,7 +17,13 @@ export class PublicChatService {
         return Room;
       })
       .catch((error) => {
-        console.log(error);
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            error: error,
+          },
+          HttpStatus.BAD_REQUEST,
+        );
       });
   }
 

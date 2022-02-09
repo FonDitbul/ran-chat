@@ -14,21 +14,12 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const err = exception.getResponse() as
       | { message: any; statusCode: number }
       | { error: string; statusCode: 400; message: string[] }; //class validator
-    if (typeof err !== 'string' && err.statusCode === 400) {
-      return (
-        response
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .status(status)
-          .send({ success: false, statusCode: status, data: err.message })
-      );
-    }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    response.status(status).send({
+    return response.status(status).send({
       success: false,
       statusCode: status,
-      data: err.message,
+      error: err,
     });
   }
 }

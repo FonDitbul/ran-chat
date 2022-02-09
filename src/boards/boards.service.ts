@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 import { BoardsRepository } from './boards.repository';
@@ -13,7 +13,13 @@ export class BoardsService {
         return Board;
       })
       .catch((error) => {
-        return error;
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            error: error,
+          },
+          HttpStatus.BAD_REQUEST,
+        );
       });
   }
 
