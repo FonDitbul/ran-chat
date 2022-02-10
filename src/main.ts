@@ -45,6 +45,6 @@ async function bootstrap() {
   hbs.registerHelper('nextCurPage', nextCurPage);
 
   app.useGlobalFilters(new HttpExceptionFilter());
-  await app.listen(3000);
+  await app.listen(process.env.SERVER_PORT || 3000);
 }
 bootstrap();
