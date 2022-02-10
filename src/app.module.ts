@@ -7,10 +7,15 @@ import { BoardsModule } from './boards/boards.module';
 import { PublicChatModule } from './public-chat/public-chat.module';
 import { RandomChatModule } from './random-chat/random-chat.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({}),
+    ConfigModule.forRoot({
+      envFilePath: '.dev.env',
+      isGlobal: true,
+    }),
     UsersModule,
     BoardsModule,
     ChatsModule,
