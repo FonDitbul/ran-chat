@@ -36,7 +36,7 @@
             </div>
             <div class="flex w-full h-10 bg-gray-200 items-center">
               <strong class='text-xl mx-3'>{{data.user.userName}}</strong>
-              <img src='../../../time_icon_124838.png' class='h-5 w-5 mx-2'/>
+              <img src='{{imageServer}}/time_icon_124838.png' class='h-5 w-5 mx-2'/>
               <p class='mx-2'>{{dateParser data.createdAt}}</p>
               <!-- 개시판 수정하기 -->
               <button id='update-button-button'
@@ -55,7 +55,7 @@
           <div class="flex items-center mx-auto" >
             <div class="items-center bg-gray-100 rounded-md">
               <button id='like' class='flex items-center'>
-                <img src='../../../heart-icon-2243.png' class='m-4 h-4'/>
+                <img src='{{imageServer}}/heart-icon-2243.png' class='m-4 h-4'/>
                 <span> 좋아요 </span>
                 <strong id='like-count' class='mx-3 text-red-400'>{{data.LikeCount}}</strong>
               </button>
@@ -66,7 +66,7 @@
       <!--댓글 불러오기-->
       <div class="p-4 bg-white border border-primary rounded-md">
         <div class='flex items-center'>
-          <img src='../../../comment_text_icon_138728.png' class='m-6 h-6'/>
+          <img src='{{imageServer}}/comment_text_icon_138728.png' class='m-6 h-6'/>
           <span class='font-bold text-xl'>댓글</span>
         </div>
         <!-- root 댓글-->
@@ -126,6 +126,6 @@
   </div>
   {{> footer}}
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src='../js/template/oneBoards.js'></script>
+  <script src='{{imageServer}}/js/template/oneBoards.js'></script>
 </body>
 </html>

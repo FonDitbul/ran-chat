@@ -8,7 +8,7 @@
     href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css'
     rel='stylesheet'
   />
-  <link href='css/styles.css' rel='stylesheet' />
+  <link href='{{imageServer}}/css/styles.css' rel='stylesheet' />
   <link href="{{imageServer}}/favicon-chatting.png" rel="shortcut icon" type="image/x-icon">
 </head>
 <body>
@@ -29,15 +29,14 @@
     </nav>
     <div class='flex w-1/2 items-center mx-auto my-5 justify-between'>
       <strong>랜덤 채팅 하기 </strong>
-      <span> 랜덤채팅 대기인원 : 4명</span>
+<!--      <span> 랜덤채팅 대기인원 : 4명</span>-->
+      <button id='exit-chat' class="px-4 py-2 rounded-md text-sm font-medium border-0 focus:outline-none focus:ring transition text-white bg-gray-500 hover:bg-gray-600 active:bg-gray-700 focus:ring-gray-300">
+        나가기</button>
     </div>
     <!-- 랜덤채팅 BOX-->
     <div class='w-1/2 h-1/2 border-2 rounded container mx-auto my-5'>
       <!-- 채팅 내역 부분-->
       <div id='message' class="w-full h-full overflow-y-auto">
-        <span>랜덤 채팅</span>
-        <p></p>
-        <span>낯선이와 다양한 이야기를 나눠보세요!</span>
       </div>
       <section>
         <!-- 랜덤채팅 시작 버튼, 채팅시 비활성화-->
@@ -45,7 +44,7 @@
           랜덤채팅 시작하기
         </button>
         <!-- 채팅버튼 default 비활성화-->
-        <div class="w-full py-2 px-4 flex items-center justify-between border border-gray-300 rounded row-end-auto" style='display:none;'>
+        <div id='chatting-form' class="w-full py-2 px-4 flex items-center justify-between border border-gray-300 rounded row-end-auto" style='display:none;'>
           <button class="outline-none focus:outline-none">
             <svg class="text-gray-400 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -75,7 +74,7 @@
   ></script>
   <script src="https://cdn.socket.io/4.3.2/socket.io.min.js" integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src='js/layouts/randomChat.js'></script>
+  <script src='{{imageServer}}/js/layouts/randomChat.js'></script>
   {{> footer}}
 </body>
 </html>

@@ -25,7 +25,7 @@
     localStorage.setItem('access_token', accessToken);
     localStorage.setItem('uid', uid);
     localStorage.setItem('userName', userName);
-    return window.location.reload();
+    return (window.location.href = '/');
   };
 
   loginButton.addEventListener('click', submitLogin);
