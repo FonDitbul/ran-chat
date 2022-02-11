@@ -9,6 +9,7 @@ import {
   Render,
   ParseIntPipe,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -66,9 +67,9 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: '해당 유저 프로필' })
-  @Get('profile/:uid')
+  @Get('profile')
   @Render('template/profile')
-  profilePage(@Param() uid: number) {
+  profilePage(@Query('uid', ParseIntPipe) uid: number) {
     return { title: 'profile' };
   }
 
