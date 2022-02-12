@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, getConnection, Repository } from 'typeorm';
 import { BoardEntity } from './entities/board.entity';
 import { UpdateBoardDto } from './dto/update-board.dto';
 
@@ -56,10 +56,10 @@ export class BoardsRepository extends Repository<BoardEntity> {
   }
 
   async updateBoard(id: number, updateBoardDto: UpdateBoardDto) {
-    const { content } = updateBoardDto;
+    const { content, title } = updateBoardDto;
     const updateOneBoard = await this.createQueryBuilder()
       .update('board')
-      .set({ content: content })
+      .set({ title: title, content: content })
       .where('board.id = :id', { id })
       .execute();
     return updateOneBoard;

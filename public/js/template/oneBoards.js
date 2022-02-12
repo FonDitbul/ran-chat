@@ -1,11 +1,13 @@
 (() => {
   // 내용 렌더링
   const contentRender = (content) => {
-    content.innerHTML = content.innerText;
-    return content;
+    const spanTag = document.createElement('span');
+    spanTag.innerHTML = content.innerText;
+    content.innerText = '';
+    return spanTag;
   };
   const getContent = document.getElementById('content');
-  contentRender(getContent);
+  getContent.appendChild(contentRender(getContent));
 
   //댓글 시스템
   const createComment = async (event) => {
@@ -67,10 +69,43 @@
 
   likeDiv.addEventListener('click', clickLike);
 
-  //reply 답글 만들기
-  // const replyCreate = async () => {
-  //   console.log('답글 만들기');
-  // };
-  // const replyComment = document.getElementById('reply-comment');
-  // replyComment.addEventListener('click', replyCreate);
+  //햄버거 버튼 작동
+  const burgerButton = document.getElementById('burger-button');
+  const modifyBoardUl = document.getElementById('modify-board');
+  const burgerButtonClick = () => {
+    if (modifyBoardUl.style.display === 'none') {
+      return (modifyBoardUl.style.display = '');
+    }
+    return (modifyBoardUl.style.display = 'none');
+  };
+  burgerButton.addEventListener('click', burgerButtonClick);
+
+  // 수정, 삭제 버튼
+  const updateButton = document.getElementById('update-button');
+  const deleteButton = document.getElementById('delete-button');
+  const modifyButtonClick = async (event) => {
+    const boardID = window.location.pathname.split('/')[2];
+    const userName = localStorage.getItem('userName');
+    const uid = localStorage.getItem('uid');
+    if (!userName || !uid) return alert('로그인 후 이용해주세요!');
+
+    if (event.target.id === 'update-button') {
+      return window.location.replace('/board/update?boardID=' + boardID);
+    }
+    if (event.target.id === 'delete-button') {
+      try {
+        const response = await axios.delete(
+          '/board/?id=' + boardID + '&uid=' + uid,
+        );
+        if (response.statusCode) alert(response.error.message);
+        return window.location.replace('/board');
+      } catch (error) {
+        alert('유효 하지 않은 유저입니다!');
+        return window.location.reload();
+      }
+    }
+    return null;
+  };
+  updateButton.addEventListener('click', modifyButtonClick);
+  deleteButton.addEventListener('click', modifyButtonClick);
 })();

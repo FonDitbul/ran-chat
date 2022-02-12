@@ -1,6 +1,6 @@
 <html lang='en'>
 <head>
-  <title>Random-Chatting</title>
+  <title>{{data.title}}</title>
   <link href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css' rel='stylesheet'/>
   <link href='{{imageServer}}/css/styles.css' rel='stylesheet' />
   <link href="{{imageServer}}/favicon-chatting.png" rel="shortcut icon" type="image/x-icon">
@@ -35,15 +35,33 @@
               <hr>
             </div>
             <div class="flex w-full h-10 bg-gray-200 items-center">
-              <strong class='text-xl mx-3'>{{data.user.userName}}</strong>
-              <img src='{{imageServer}}/time_icon_124838.png' class='h-5 w-5 mx-2'/>
-              <p class='mx-2'>{{dateParser data.createdAt}}</p>
-              <!-- 개시판 수정하기 -->
-              <button id='update-button-button'
-                      class="px-4 py-2 rounded-md text-sm border-0
+              <!-- 유저아이디, 게시판 작성 시간-->
+              <div class='flex w-1/2 items-center'>
+                <strong class='text-xl mx-3'>{{data.user.userName}}</strong>
+                <img src='{{imageServer}}/time_icon_124838.png' class='h-5 w-5 mx-2'/>
+                <p class='mx-2'>{{dateParser data.createdAt}}</p>
+              </div>
+              <!-- 개시판 수정, 삭제 햄버거메뉴 -->
+              <div class='w-1/2 flex flex-row-reverse items-center px-2'>
+                <button id='burger-button' class='flex inset-y-0 right-0 h-10 w-10'><img src='{{imageServer}}/pngwing.png'/></button>
+                <ul id='modify-board' style='display: none' class='relative w-26 h-26 top-8'>
+                  <li>
+                    <button id='update-button'
+                            class="px-4 py-2 my-1 rounded-md text-sm border-0
                   focus:outline-none focus:ring transition text-white
                   bg-gray-400 hover:bg-gray-600 active:bg-gray-700 focus:ring-gray-300">수정하기
-              </button>
+                    </button>
+                  </li>
+                  <li>
+                    <button id='delete-button'
+                            class="px-4 py-2 my-1 rounded-md text-sm border-0
+                  focus:outline-none focus:ring transition text-white
+                  bg-gray-400 hover:bg-gray-600 active:bg-gray-700 focus:ring-gray-300">삭제하기
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
             </div>
             <div id='content' class="border border-gray-200 w-full">
               {{data.content}}

@@ -8,6 +8,5 @@ export class UpdateBoardDto extends PickType(BoardEntity, [
   'id',
   'title',
   'category',
-  'uid',
   'content',
 ] as const) {}

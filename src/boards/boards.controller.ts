@@ -68,6 +68,26 @@ export class BoardsController {
 
   @ApiTags('게시판')
   @ApiOperation({
+    summary: '게시판 업데이트',
+    description: '게시판 업데이트 페이지 Rendering',
+  })
+  @Get('update')
+  @UseInterceptors(breadsInterceptor)
+  @Render('template/createBoard')
+  async updateBoardPage(@Query('id', ParsePagePipe) id: number) {
+    const updateBoard = await this.boardsService.findOne(id);
+    return {
+      title: '게시판 업데이트',
+      breadsOne: {
+        name: '게시판 업데이트',
+        url: 'board/update?id=' + id,
+      },
+      data: updateBoard,
+    };
+  }
+
+  @ApiTags('게시판')
+  @ApiOperation({
     summary: '한 게시판 불러오기',
     description: '한 게시판 상세페이지 ',
   })
@@ -107,9 +127,10 @@ export class BoardsController {
   @Patch('')
   update(
     @Query('id', ParseIntPipe) id: number,
+    @Query('uid', ParseIntPipe) uid: number,
     @Body() updateBoardDto: UpdateBoardDto,
   ) {
-    return this.boardsService.update(id, updateBoardDto);
+    return this.boardsService.update(id, uid, updateBoardDto);
   }
 
   // 게시판 delete
