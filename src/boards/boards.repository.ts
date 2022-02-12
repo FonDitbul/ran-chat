@@ -1,6 +1,7 @@
 import { EntityRepository, getConnection, Repository } from 'typeorm';
 import { BoardEntity } from './entities/board.entity';
 import { UpdateBoardDto } from './dto/update-board.dto';
+import { CommentEntity } from './entities/comment.entity';
 
 @EntityRepository(BoardEntity)
 export class BoardsRepository extends Repository<BoardEntity> {
@@ -63,6 +64,30 @@ export class BoardsRepository extends Repository<BoardEntity> {
       .where('board.id = :id', { id })
       .execute();
     return updateOneBoard;
+  }
+
+  async deleteBoardAndRelation(id: number) {
+    const queryRunner = getConnection().createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      await queryRunner.manager
+        .getRepository(CommentEntity)
+        .softDelete({ boardID: id });
+      await queryRunner.manager
+        .getRepository(BoardEntity)
+        .softDelete({ id: id });
+      const boardLike = await this.findLike(id);
+      boardLike.userLikes = [];
+      await queryRunner.manager.save(boardLike);
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      console.error(error);
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
   }
 
   //좋아요 find

@@ -47,7 +47,11 @@ export class BoardsService {
     return await this.boardsRepository.updateBoard(id, updateBoardDto);
   }
 
-  async remove(id: number) {
-    return await this.boardsRepository.delete({ id: id });
+  async remove(id: number, uid: number) {
+    const board = await this.boardsRepository.findOneBoard(id);
+    if (!board) throw new BadRequestException('존재하지 않는 게시판 입니다.');
+    if (uid !== board.uid)
+      throw new ForbiddenException('유효하지 않은 유저입니다.');
+    return await this.boardsRepository.deleteBoardAndRelation(id);
   }
 }

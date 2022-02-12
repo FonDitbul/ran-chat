@@ -139,9 +139,12 @@ export class BoardsController {
     summary: '게시판 삭제 API',
     description: '게시판 삭제 서버 전송',
   })
-  @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.boardsService.remove(id);
+  @Delete('')
+  remove(
+    @Query('id', ParseIntPipe) id: number,
+    @Query('uid', ParseIntPipe) uid: number,
+  ) {
+    return this.boardsService.remove(id, uid);
   }
 
   //댓글 서비스
