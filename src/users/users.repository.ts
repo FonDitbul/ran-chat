@@ -1,5 +1,6 @@
-import { EntityRepository, getRepository, Repository } from 'typeorm';
-import { UserEntity as User, UserEntity } from './entities/user.entity';
+import { EntityRepository, getConnection, Repository } from 'typeorm';
+import { UserEntity } from './entities/user.entity';
+import { BoardEntity } from '../boards/entities/board.entity';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
@@ -20,5 +21,37 @@ export class UserRepository extends Repository<UserEntity> {
       .where('user.id = :id', { id })
       .getOne();
     return getOneUser.userName;
+  }
+
+  async deleteUserAndRelation(id: number) {
+    const queryRunner = getConnection().createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      //유저 좋아요 삭제
+      const userLike = await this.findOne({
+        relations: ['likeBoards'],
+        where: { id: id },
+      });
+      userLike.likeBoards = [];
+      await queryRunner.manager.save(userLike);
+
+      // 해당 유저 작성 게시판 삭제
+      await queryRunner.manager
+        .getRepository(BoardEntity)
+        .softDelete({ uid: id });
+
+      //유저 삭제
+      await queryRunner.manager
+        .getRepository(UserEntity)
+        .softDelete({ id: id });
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      console.error(error);
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
   }
 }
