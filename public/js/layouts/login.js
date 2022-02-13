@@ -5,27 +5,34 @@
   const loginButton = document.getElementById('login-button');
 
   const submitLogin = async () => {
-    const loginID = loginId.value;
-    if (!loginID) {
-      return alert('유저 아이디를 입력해 주세요!');
+    const loginIdValue = loginId.value;
+    const loginPasswordValue = loginPassword.value;
+
+    if (!loginIdValue) return alert('유저 아이디를 입력해 주세요!');
+    if (!loginPasswordValue) return alert('패스워드를 입력해 주세요.');
+
+    try {
+      const login = await axios.post('/users/login', {
+        userName: loginIdValue,
+        password: loginPasswordValue,
+      });
+      // const response = await axios.get('/users/jwtAuth', {
+      //   headers: {
+      //     Authorization: 'Bearer ' + access_token,
+      //   },
+      // });
+      if (!login.data) return alert('존재하지 않는 아이디입니다!');
+      const accessToken = login.data.access_token;
+      const uid = login.data.uid;
+      const userName = login.data.userName;
+      localStorage.setItem('access_token', accessToken);
+      localStorage.setItem('uid', uid);
+      localStorage.setItem('userName', userName);
+      // return (window.location.href = '/');
+    } catch (e) {
+      alert('로그인 실패!');
+      console.log(e);
     }
-    const login = await axios.post('/users/login', {
-      userName: loginId.value,
-      password: loginPassword.value,
-    });
-    // const response = await axios.get('/users/jwtAuth', {
-    //   headers: {
-    //     Authorization: 'Bearer ' + access_token,
-    //   },
-    // });
-    if (!login.data) return alert('존재하지 않는 아이디입니다!');
-    const accessToken = login.data.access_token;
-    const uid = login.data.uid;
-    const userName = login.data.userName;
-    localStorage.setItem('access_token', accessToken);
-    localStorage.setItem('uid', uid);
-    localStorage.setItem('userName', userName);
-    return (window.location.href = '/');
   };
 
   loginButton.addEventListener('click', submitLogin);
