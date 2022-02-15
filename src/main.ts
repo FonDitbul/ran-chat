@@ -7,7 +7,7 @@ import { dateParserHelper } from './common/helper/date-parser.helper';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './common/filter/http-exception.filter';
 import { dayBeforeHelper } from './common/helper/day-before.helper';
-import { imageServerHelper } from './common/helper/image-server.helper';
+import { staticServerHelper } from './common/helper/static-server.helper';
 import {
   isCurPage,
   nextCurPage,
@@ -36,7 +36,7 @@ async function bootstrap() {
   //hbs 템플릿 helper 함수 등록
   hbs.registerHelper('dateParser', dateParserHelper);
   hbs.registerHelper('dayBefore', dayBeforeHelper);
-  hbs.registerHelper('imageServer', imageServerHelper);
+  hbs.registerHelper('staticServer', staticServerHelper);
 
   //hbs pagination 관련 helper 함수
   hbs.registerHelper('pageToArray', pageToArray);

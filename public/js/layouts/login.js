@@ -28,7 +28,7 @@
       localStorage.setItem('access_token', accessToken);
       localStorage.setItem('uid', uid);
       localStorage.setItem('userName', userName);
-      // return (window.location.href = '/');
+      return (window.location.href = '/');
     } catch (e) {
       alert('로그인 실패!');
       console.log(e);

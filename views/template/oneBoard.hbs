@@ -2,10 +2,10 @@
 <head>
   <title>{{data.title}}</title>
   <link href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css' rel='stylesheet'/>
-  <link href='{{imageServer}}/css/styles.css' rel='stylesheet' />
-  <link href="{{imageServer}}/favicon-chatting.png" rel="shortcut icon" type="image/x-icon">
+  <link href='{{staticServer}}/css/styles.css' rel='stylesheet' />
+  <link href="{{staticServer}}/image/favicon-chatting.png" rel="shortcut icon" type="image/x-icon">
   <!--답글 함수 선언-->
-  <script src='{{imageServer}}/js/template/oneBoardReplyComment.js'></script>
+  <script src='{{staticServer}}/js/template/oneBoardReplyComment.js'></script>
 </head>
 <body>
   {{> header}}
@@ -38,12 +38,12 @@
               <!-- 유저아이디, 게시판 작성 시간-->
               <div class='flex w-1/2 items-center'>
                 <strong class='text-xl mx-3'>{{data.user.userName}}</strong>
-                <img src='{{imageServer}}/time_icon_124838.png' class='h-5 w-5 mx-2'/>
+                <img src='{{staticServer}}/image/time_icon_124838.png' class='h-5 w-5 mx-2'/>
                 <p class='mx-2'>{{dateParser data.createdAt}}</p>
               </div>
               <!-- 개시판 수정, 삭제 햄버거메뉴 -->
               <div class='w-1/2 flex flex-row-reverse items-center px-2'>
-                <button id='burger-button' class='flex inset-y-0 right-0 h-10 w-10'><img src='{{imageServer}}/pngwing.png'/></button>
+                <button id='burger-button' class='flex inset-y-0 right-0 h-10 w-10'><img src='{{staticServer}}/image/pngwing.png'/></button>
                 <ul id='modify-board' style='display: none' class='relative w-26 h-26 top-8'>
                   <li>
                     <button id='update-button'
@@ -73,7 +73,7 @@
           <div class="flex items-center mx-auto" >
             <div class="items-center bg-gray-100 rounded-md">
               <button id='like' class='flex items-center'>
-                <img src='{{imageServer}}/heart-icon-2243.png' class='m-4 h-4'/>
+                <img src='{{staticServer}}/image/heart-icon-2243.png' class='m-4 h-4'/>
                 <span> 좋아요 </span>
                 <strong id='like-count' class='mx-3 text-red-400'>{{data.LikeCount}}</strong>
               </button>
@@ -84,7 +84,7 @@
       <!--댓글 불러오기-->
       <div class="p-4 bg-white border border-primary rounded-md">
         <div class='flex items-center'>
-          <img src='{{imageServer}}/comment_text_icon_138728.png' class='m-6 h-6'/>
+          <img src='{{staticServer}}/image/comment_text_icon_138728.png' class='m-6 h-6'/>
           <span class='font-bold text-xl'>댓글</span>
         </div>
         <!-- root 댓글-->
@@ -144,6 +144,6 @@
   </div>
   {{> footer}}
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src='{{imageServer}}/js/template/oneBoards.js'></script>
+  <script src='{{staticServer}}/js/template/oneBoards.js'></script>
 </body>
 </html>
