@@ -22,11 +22,13 @@
           ! ------------------------------------------------------------
           !-->
         <div class='w-full'>
-          <div class='w-full bg-blue-600 h-48 rounded-t-lg'>백그라운드</div>
+          <div class='w-full bg-blue-600 h-48 rounded-t-lg'>
+              <img src='https://source.unsplash.com/category/nature/1600x500' alt='백그라운드'/>
+            </div>
           <div class='absolute -mt-20 ml-5'>
-            <div
-              class='bg-gray-200 border border-gray-300 h-36 w-40 rounded-lg shadow-md border-b border-primary'
-            >프로필 사진</div>
+            <div class='bg-gray-200 border border-gray-300 h-36 w-40 shadow-md border-b border-primary'>
+              <img src='{{staticServer}}/{{data.profileImg}}' alt='프로필사진'/>
+            </div>
           </div>
         </div>
 
@@ -35,61 +37,72 @@
           ! Profile general information
           ! ------------------------------------------------------------
           !-->
-        <div
-          class='bg-primary border border-primary rounded-b-lg p-5 pt-20 flex flex-col'
-        >
-          <div class='mb-1 bg-gray-200 border border-gray-300 h-5 w-40'>유저네임</div>
-          <div class='mb-1 bg-gray-200 border border-gray-300 h-5 w-96'>유저 상세 정보</div>
+        <div class='bg-primary border border-primary rounded-b-lg p-5 pt-20 flex flex-col'>
+          <div class='my-1 bg-gray-200 border border-gray-300 h-6 w-40'>
+            <span>{{data.userName}}</span>
+          </div>
+<!--          <div class='mb-1 bg-gray-200 border border-gray-300 h-6 w-96'>유저 상세 정보</div>-->
           <div class='text-sm mt-2 text-gray-800'>
-            가입일
+            <strong>가입일</strong>
             <div class='flex flex-row ml-auto space-x-2 items-center'>
-              <div
-                class='mb-1 bg-gray-200 border border-gray-300 h-5 w-20 text-gray-800'
-              >2021/12/12</div>
-              <div class='bg-blue-200 rounded-full h-1 w-1'></div>
-              <div
-                class='mb-1 bg-gray-200 border border-gray-300 h-5 w-20 text-gray-800'
-              >13:50</div>
+              <div class='mb-1 bg-gray-200 border border-gray-300 h-6 w-32 text-gray-800'>
+                <span>{{dateParser data.createdAt}}</span>
+              </div>
             </div>
           </div>
 
           <div class='pt-8 flex gap-8'>
-            <div class='flex flex-col'>
-              <div
-                class='mb-1 bg-gray-200 border border-gray-300 h-5 w-20'
-              >게시판 수</div>
-              <div
-                class='mb-1 bg-gray-200 border border-gray-300 h-5 w-20'
-              >20</div>
+            <div class='flex flex-col place-items-center'>
+              <div class='mb-1 bg-gray-200 border border-gray-300 h-6 w-24 place-items-center'>
+                <strong>게시판 수</strong>
+              </div>
+              <div class='mb-1 bg-gray-200 border border-gray-300 h-6 w-24'>
+                <span>{{data.writeBoardsCount}}</span>
+              </div>
             </div>
             <div class='flex flex-col'>
-              <div
-                class='mb-1 bg-gray-200 border border-gray-300 h-5 w-20'
-              >댓글 개수</div>
-              <div
-                class='mb-1 bg-gray-200 border border-gray-300 h-5 w-20'
-              >30</div>
+              <div class='mb-1 bg-gray-200 border border-gray-300 h-6 w-24'>
+                <strong>댓글 개수</strong>
+              </div>
+              <div class='mb-1 bg-gray-200 border border-gray-300 h-6 w-24'>
+                <span>{{data.commentsCount}}</span>
+              </div>
             </div>
             <div class='flex flex-col'>
-              <div
-                class='mb-1 bg-gray-200 border border-gray-300 h-5 w-20'
-              >좋아요 수</div>
-              <div
-                class='mb-1 bg-gray-200 border border-gray-300 h-5 w-20'
-              >300</div>
+              <div class='mb-1 bg-gray-200 border border-gray-300 h-6 w-24'>
+                <strong>좋아요 수</strong>
+              </div>
+              <div class='mb-1 bg-gray-200 border border-gray-300 h-6 w-24'>
+                <span>{{data.likeBoardsCount}}</span>
+              </div>
+            </div>
+            <div class='flex flex-col'>
+              <div class='mb-1 bg-gray-200 border border-gray-300 h-6 w-24'>
+                <strong>공개 채팅방</strong>
+              </div>
+              <div class='mb-1 bg-gray-200 border border-gray-300 h-6 w-24'>
+                <span>{{data.publicChatCount}}</span>
+              </div>
             </div>
           </div>
           <div class='py-5 break-all bbcode'>
-            <div
-              class='mb-1 bg-gray-200 border border-gray-300 h-5 w-44'
-            >자기소개</div>
-            <div
-              class='mb-1 bg-gray-200 border border-gray-300 h-5 w-full h-40'
-            >홀롤롤롤로로로로로로롤로로로로로로로로롤</div>
+            <div class='mb-1 bg-gray-200 border border-gray-300 h-6 w-32'>
+              <strong>자기소개</strong>
+            </div>
+            <div class='my-1 bg-gray-200 border border-gray-300 h-6 w-full h-40'>
+              <span>안녕하세요 반갑습니다.</span>
+            </div>
           </div>
           <div class='flex'>
-            <button id='logout-button' class='m-2'>로그아웃</button>
-            <button id='user-delete-button' class='m-2'>계정탈퇴</button>
+            <button id='user-update-button' class='px-4 py-2 m-2 rounded-md font-medium border-0 focus:outline-none focus:ring transition text-white bg-gray-500 hover:bg-gray-600 active:bg-gray-700 focus:ring-gray-300'>
+              수정하기
+            </button>
+            <button id='logout-button' class='px-4 py-2 m-2 rounded-md font-medium border-0 focus:outline-none focus:ring transition text-white bg-gray-500 hover:bg-gray-600 active:bg-gray-700 focus:ring-gray-300'>
+              로그아웃
+            </button>
+            <button id='user-delete-button' class='px-4 py-2 m-2 rounded-md font-medium border-0 focus:outline-none focus:ring transition text-white bg-gray-500 hover:bg-gray-600 active:bg-gray-700 focus:ring-gray-300'>
+              계정탈퇴
+            </button>
           </div>
         </div>
       </div>

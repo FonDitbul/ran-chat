@@ -8,7 +8,7 @@
   const createPublicRoom = async (event) => {
     event.preventDefault();
     const title = event.target.elements[0].value;
-    const uid = sessionStorage.getItem('uid');
+    const uid = localStorage.getItem('uid');
     await axios.post('/public-chat', {
       title: title,
       uid: uid,
