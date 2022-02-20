@@ -23,6 +23,33 @@ export class UserRepository extends Repository<UserEntity> {
     return getOneUser.userName;
   }
 
+  async findUserProfile(id: number) {
+    const getOneUser = await this.createQueryBuilder('user')
+      .loadRelationCountAndMap(
+        'user.commentsCount',
+        'user.comments',
+        'comments',
+      )
+      .loadRelationCountAndMap(
+        'user.writeBoardsCount',
+        'user.writeBoards',
+        'writeBoards',
+      )
+      .loadRelationCountAndMap(
+        'user.likeBoardsCount',
+        'user.likeBoards',
+        'likeBoards',
+      )
+      .loadRelationCountAndMap(
+        'user.publicChatCount',
+        'user.publicChats',
+        'publiChats',
+      )
+      .where('user.id = :id', { id })
+      .getOne();
+    return getOneUser;
+  }
+
   async deleteUserAndRelation(id: number) {
     const queryRunner = getConnection().createQueryRunner();
     await queryRunner.connect();

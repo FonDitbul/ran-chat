@@ -43,6 +43,13 @@ export class UserEntity extends CommonEntity {
   @Column({ select: false })
   password: string;
 
+  @ApiProperty({
+    example: 'profile/basic_blue.jpg',
+    description: '유저 프로필 사진',
+  })
+  @Column({ nullable: true })
+  profileImg: string;
+
   //--relations--
   @OneToMany(() => BoardEntity, (board) => board.user)
   writeBoards: BoardEntity[];

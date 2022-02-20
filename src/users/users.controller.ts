@@ -47,18 +47,6 @@ export class UsersController {
     return user;
   }
 
-  @ApiOperation({ summary: '로그아웃' })
-  @Post('logout')
-  logOut() {
-    return this.usersService.findAll();
-  }
-
-  @ApiOperation({ summary: '전체 유저 불러오기' })
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
-  }
-
   @ApiOperation({ summary: '로그인 페이지 보여주기' })
   @Get('auth/login')
   @Render('layouts/login')
@@ -69,8 +57,9 @@ export class UsersController {
   @ApiOperation({ summary: '해당 유저 프로필' })
   @Get('profile')
   @Render('template/profile')
-  profilePage(@Query('uid', ParseIntPipe) uid: number) {
-    return { title: 'profile' };
+  async profilePage(@Query('uid', ParseIntPipe) id: number) {
+    const user = await this.usersService.findUserProfile(id);
+    return { title: 'profile', data: user };
   }
 
   @ApiOperation({ summary: '유저 이름으로 id 가져오기' })

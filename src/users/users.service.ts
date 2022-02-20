@@ -17,11 +17,11 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const { userName, password } = createUserDto;
-    const getByuserName = getRepository(UserEntity)
+    const getByUserName = getRepository(UserEntity)
       .createQueryBuilder('user')
       .where('user.userName = :userName', { userName });
 
-    const byUserName = await getByuserName.getOne();
+    const byUserName = await getByUserName.getOne();
     if (byUserName) {
       const error = { userName: 'userName is already exists' };
       throw new HttpException(
@@ -34,6 +34,7 @@ export class UsersService {
     const newUser = new UserEntity();
     newUser.userName = userName;
     newUser.password = await bcrypt.hash(password, 12);
+    newUser.profileImg = 'profile/basic_blue.jpg';
 
     return await this.userRepository.save(newUser).then((user) => {
       return {
@@ -55,6 +56,10 @@ export class UsersService {
 
   async findOneByUserID(id: number) {
     return await this.userRepository.findOneByUserID(id);
+  }
+
+  async findUserProfile(id: number) {
+    return await this.userRepository.findUserProfile(id);
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
