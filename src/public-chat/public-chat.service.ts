@@ -35,11 +35,12 @@ export class PublicChatService {
   }
 
   async findOne(id: number) {
-    return await this.publicChatRepository.findOnePublicchat(id);
+    return await this.publicChatRepository.findOnePublicChat(id);
   }
 
   async findChatHistory(roomID: number) {
-    return await this.chatsRepository.findChatHistory(roomID);
+    const chatting = await this.chatsRepository.findChatHistory(roomID);
+    return chatting.reverse();
   }
 
   update(id: number, updatePublicChatDto: UpdatePublicChatDto) {

@@ -1,6 +1,7 @@
 import { EntityRepository, getConnection, Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { BoardEntity } from '../boards/entities/board.entity';
+import { PublicChatEntity } from '../public-chat/entities/public-chat.entity';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
@@ -66,6 +67,11 @@ export class UserRepository extends Repository<UserEntity> {
       // 해당 유저 작성 게시판 삭제
       await queryRunner.manager
         .getRepository(BoardEntity)
+        .softDelete({ uid: id });
+
+      // 해당 유저 채팅방 삭제
+      await queryRunner.manager
+        .getRepository(PublicChatEntity)
         .softDelete({ uid: id });
 
       //유저 삭제
