@@ -74,12 +74,12 @@ export class BoardsRepository extends Repository<BoardEntity> {
       await queryRunner.manager
         .getRepository(CommentEntity)
         .softDelete({ boardID: id });
-      await queryRunner.manager
-        .getRepository(BoardEntity)
-        .softDelete({ id: id });
       const boardLike = await this.findLike(id);
       boardLike.userLikes = [];
       await queryRunner.manager.save(boardLike);
+      await queryRunner.manager
+        .getRepository(BoardEntity)
+        .softDelete({ id: id });
       await queryRunner.commitTransaction();
     } catch (error) {
       console.error(error);

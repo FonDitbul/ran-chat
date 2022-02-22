@@ -94,10 +94,11 @@
     }
     if (event.target.id === 'delete-button') {
       try {
+        console.log('?');
         const response = await axios.delete(
           '/board/?id=' + boardID + '&uid=' + uid,
         );
-        if (response.statusCode) alert(response.error.message);
+        if (response.statusCode) return alert(response.error.message);
         return window.location.replace('/board');
       } catch (error) {
         alert('유효 하지 않은 유저입니다!');
