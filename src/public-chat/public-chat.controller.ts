@@ -86,7 +86,10 @@ export class PublicChatController {
     description: '공개 채팅방 삭제 하기',
   })
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.publicChatService.remove(id);
+  remove(
+    @Param('id', ParseIntPipe) id: number,
+    @Query('uid', ParseIntPipe) uid: number,
+  ) {
+    return this.publicChatService.remove(id, uid);
   }
 }
