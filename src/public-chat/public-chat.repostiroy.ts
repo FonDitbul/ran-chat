@@ -1,5 +1,6 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, getConnection, Repository } from 'typeorm';
 import { PublicChatEntity } from './entities/public-chat.entity';
+import { chatEntity } from '../chats/entities/history-chat.entity';
 @EntityRepository(PublicChatEntity)
 export class PublicChatRepository extends Repository<PublicChatEntity> {
   constructor() {
@@ -22,5 +23,24 @@ export class PublicChatRepository extends Repository<PublicChatEntity> {
       .where('publicChat.id = :id', { id })
       .getRawOne();
     return getOneChat;
+  }
+
+  async removePublicChat(id: number) {
+    const queryRunner = getConnection().createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      await queryRunner.manager
+        .getRepository(chatEntity)
+        .softDelete({ roomID: id });
+      await queryRunner.manager
+        .getRepository(PublicChatEntity)
+        .softDelete({ id: id });
+    } catch (error) {
+      console.error(error);
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
   }
 }

@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { CreatePublicChatDto } from './dto/create-public-chat.dto';
 import { UpdatePublicChatDto } from './dto/update-public-chat.dto';
 import { PublicChatRepository } from './public-chat.repostiroy';
@@ -47,7 +53,12 @@ export class PublicChatService {
     return `This action updates a #${id} publicChat`;
   }
 
-  async remove(id: number) {
-    return await this.publicChatRepository.delete({ id: id });
+  async remove(id: number, uid: number) {
+    const chatRoom = await this.publicChatRepository.findOnePublicChat(id);
+    if (!chatRoom) throw new BadRequestException('존재하지 않는 게시판입니다.');
+    if (chatRoom.uid !== uid) {
+      throw new ForbiddenException('유효한 유저가 아닙니다');
+    }
+    return await this.publicChatRepository.removePublicChat(id);
   }
 }
