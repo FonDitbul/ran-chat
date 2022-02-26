@@ -43,6 +43,21 @@ export class PublicChatController {
   }
 
   @ApiOperation({
+    summary: '한 채팅방 내역 불러오기',
+  })
+  @Get('chatting/history')
+  async findHistory(
+    @Query('offset') offset: number,
+    @Query('id', ParseIntPipe) id: number,
+  ) {
+    const chatHistory = await this.publicChatService.findChatHistory(
+      id,
+      offset,
+    );
+    return chatHistory;
+  }
+
+  @ApiOperation({
     summary: '한 공개 채팅방 불러오기',
     description: '공개 채팅방, 채팅내역 불러오기',
   })
@@ -51,7 +66,7 @@ export class PublicChatController {
   @Render('template/publicChattingRoom')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const { publicChat_title } = await this.publicChatService.findOne(id);
-    const chatHistory = await this.publicChatService.findChatHistory(id);
+    const chatHistory = await this.publicChatService.findChatHistory(id, 0);
     return {
       breadsOne: { name: publicChat_title, url: 'public-chat/chatting' + id },
       roomID: id,

@@ -44,8 +44,11 @@ export class PublicChatService {
     return await this.publicChatRepository.findOnePublicChat(id);
   }
 
-  async findChatHistory(roomID: number) {
-    const chatting = await this.chatsRepository.findChatHistory(roomID);
+  async findChatHistory(roomID: number, offset: number) {
+    const chatting = await this.chatsRepository.findOffsetHistory(
+      roomID,
+      offset,
+    );
     return chatting.reverse();
   }
 

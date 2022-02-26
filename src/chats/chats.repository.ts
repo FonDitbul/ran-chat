@@ -25,10 +25,19 @@ export class ChatRepository extends Repository<chatEntity> {
     const getChatting = await this.createQueryBuilder('chats')
       .where('chats.roomID = :roomID', { roomID })
       .offset(offset * this.showLimitChat)
+      .orderBy('chats.createdAt', 'DESC')
       .limit(this.showLimitChat)
       .getMany();
     return getChatting;
   }
 
-  async findCursorHistory(roomID: number, offset: number) {}
+  // async findCursorHistory(roomID: number, offset: number) {
+  //   const getChatting = await this.createQueryBuilder('chats')
+  //     .where('chats.roomID = :roomID', { roomID })
+  //     .andWhere()
+  //     .offset(offset * this.showLimitChat)
+  //     .orderBy('chats.createdAt', 'DESC')
+  //     .limit(this.showLimitChat)
+  //     .getMany();
+  // }
 }
