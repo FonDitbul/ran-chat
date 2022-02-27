@@ -60,4 +60,52 @@
     return historyMessageDiv;
   };
   chatForm.addEventListener('submit', chatSubmit);
+
+  // message lazy loading
+  let offset = 1;
+  const loadChatDrawFunction = (userName, data, historyMessageDiv) => {
+    const userNameSpan = document.createElement('span');
+    const messageDiv = document.createElement('div');
+    const messageInnerDiv = document.createElement('div');
+    const messageTextSpan = document.createElement('span');
+    const messageTimeSpan = document.createElement('span');
+    messageDiv.className = 'w-full flex justify-start';
+    messageInnerDiv.className =
+      'bg-gray-100 rounded px-4 py-2 my-2 text-gray-700 relative';
+    messageInnerDiv.style.maxWidth = '200px';
+    messageTextSpan.className = 'block';
+    messageTimeSpan.className = 'block text-xs text-right';
+    userNameSpan.innerText = userName;
+    messageTextSpan.innerText = data;
+    messageTimeSpan.innerText = '11:30pm';
+    if (userName === '나') {
+      userNameSpan.innerText = '';
+      messageDiv.className = 'w-full flex justify-end';
+      messageInnerDiv.className =
+        'bg-indigo-600 w-3/4 ml-auto mr-4 my-2 p-2 rounded-lg clearfix break-all text-white';
+    }
+    messageInnerDiv.appendChild(messageTextSpan);
+    messageInnerDiv.appendChild(messageTimeSpan);
+    messageDiv.appendChild(messageInnerDiv);
+    historyMessageDiv.prepend(messageDiv);
+    historyMessageDiv.prepend(userNameSpan);
+
+    return historyMessageDiv;
+  };
+  historyMessageDiv.addEventListener('scroll', async function (e) {
+    if (e.target.scrollTop === 0) {
+      try {
+        const response = await axios.get(
+          'history?id=' + roomID + '&offset=' + offset,
+        );
+        console.log(response);
+        for (let chat of response.data.reverse()) {
+          loadChatDrawFunction(chat.userName, chat.text, historyMessageDiv);
+        }
+        offset++;
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  });
 })();

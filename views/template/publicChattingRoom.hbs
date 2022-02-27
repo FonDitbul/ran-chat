@@ -34,7 +34,7 @@
         <div class="w-full flex justify-start">
           <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
             <span class="block">{{this.text}}</span>
-            <span class="block text-xs text-right">{{dayBefore this.createdAt}}</span>
+            <span class="block text-xs text-right">{{chattingTime this.createdAt}}</span>
           </div>
         </div>
       {{/each}}
@@ -64,6 +64,7 @@
   </div>
   {{>footer}}
   <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src='https://polyfill.io/v3/polyfill.min.js?features=default%2Ces2015%2Ces2016%2Ces2017%2Ces2018%2Ces2019'></script>
   <script src="https://cdn.socket.io/4.3.2/socket.io.min.js" integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs" crossorigin="anonymous"></script>
   <script src='{{staticServer}}/js/template/publicChattingRoom.js'></script>

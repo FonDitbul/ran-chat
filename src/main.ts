@@ -14,6 +14,7 @@ import {
   pageToArray,
   preCurPage,
 } from './common/helper/paging.helper';
+import { chattingTimeParserHelper } from './common/helper/chatting-time-parser.helper';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -36,6 +37,7 @@ async function bootstrap() {
   //hbs 템플릿 helper 함수 등록
   hbs.registerHelper('dateParser', dateParserHelper);
   hbs.registerHelper('dayBefore', dayBeforeHelper);
+  hbs.registerHelper('chattingTime', chattingTimeParserHelper);
   hbs.registerHelper('staticServer', staticServerHelper);
 
   //hbs pagination 관련 helper 함수
